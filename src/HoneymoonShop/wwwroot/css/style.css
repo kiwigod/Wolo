@@ -1,0 +1,137 @@
+@media only screen and (max-width:768px) {
+    .list-center>li{
+        text-align: center;
+    }
+    li{
+        font-size: 1.5em;
+    }
+}
+
+#center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.img-spacing-footer{
+    padding-bottom: 1.8em;
+}
+
+.list-nopad>li{
+    padding: 0px;
+    background-color: #fce8e7;
+    border: #fce8e7;
+}
+
+.list-nopadbot>li{
+    padding-bottom: 0px;
+    background-color: #fce8e7;
+    border: #fce8e7;
+}
+
+.tab-indent>b{
+    padding-left:1em;
+}
+
+/*===================heading.html===================*/
+.tablet-fsize{
+    font-size: 1.2em
+}
+
+button>b{
+    color: white;
+}
+
+.index-button{
+    width:15em;
+    font-size: 1.3em;
+}
+
+.max-height-center{
+    height: 100%;
+    text-align: center;
+    padding-top: 1em;
+}
+
+@media only screen and (max-width:767px) {
+    .thinner-xs{
+        width:85vw;
+    }
+    
+    .disappear-xs{
+        display: none;
+    }
+    
+    .nopad-xs{
+        padding: 0;
+    }
+    
+    .index-button{
+        width: inherit;
+    }
+    
+    .appear-xs{
+        display: block;
+    }
+    
+    .show-sm{
+        display: none;
+    }
+}
+
+@media only screen and (min-width:768px){
+    .appear-xs{
+        display: none;
+    }
+    
+    .show-sm{
+        display: none;
+    }
+    @media only screen and (max-width:1200px) {
+        .scale-nav>li>a>b{
+            font-size: 96%;
+        }
+        .show-sm{
+            display: none;
+        }
+    }
+    @media only screen and (max-width:992px) {
+        .hide-sm{
+            display: none;
+        }
+        .show-sm{
+            display: block;
+        }
+    }
+}
+
+@media only screen and(min-width:992px) {
+    .dissapear-md{
+        display: none;
+    }
+}
+
+.navbar-pink{
+    background-image: linear-gradient(to bottom, #FAC9C4 0, #FAC9C4 100%);
+}
+ 
+.navbar-transparent{
+    background-color: rgba(0,0,0,0);
+    border: none;
+} 
+ 
+.primary-button{
+    background:#f0597c;
+    border-color: #f0597c;
+}
+
+.primary-button:hover{
+    background:#ee446c;
+    border-color: #ee446c;
+}
+
+.header-background {
+    height: 100vh;
+    background-image: url("http://placehold.it/4096x2160");
+    background-size: 100% 100%;
+}
