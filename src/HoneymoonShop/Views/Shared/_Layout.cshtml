@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA_Compatible" content="IE=Edge">
@@ -9,41 +9,8 @@
     <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <title>@ViewData["Title"] - HoneymoonShop</title>
-
-    @*<environment names="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment names="Staging,Production">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>*@
 </head>
 <body>
-    @*<div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">HoneymoonShop</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-                @await Html.PartialAsync("_LoginPartial")
-            </div>
-        </div>
-    </div>*@
-
     <div class="container" style="background-image: url(@ViewData["Background"]);    height: @ViewData["HeaderHeight"];        background-size: 100% 100%;">
         <div class="container-fluid navbar-pink" style="padding:0">
             <div class="row disappear-xs" style="height:100%">
@@ -86,11 +53,11 @@
                             <li><a href="#"><b>DE WINKEL</b></a></li>
                             <li><a href="#"><b>BLOG</b></a></li>
                             <li><a href="#"><b>CONTACT</b></a></li>
-                            <form class="navbar-form navbar-left">
+                            <li><form class="navbar-form navbar-left">
                                 <div class="input-group">
                                     <button type="button" class="btn btn-default primary-button"><b>AFSPRAAK MAKEN</b></button>
                                 </div>
-                            </form>
+                            </form> </li>
                         </ul>
                         <ul class="appear-xs nav navbar-nav thinner-xs">
                             <li><a href="#"><b>WEBSITE</b></a></li>
@@ -110,95 +77,77 @@
                 </div>
             </nav>
         </div>
-        @*<div class="container body-content">*@
-            @RenderBody()
-            <hr>
-            <footer>
-                <div class="container">
-                    <div class="row" style="padding-right:4em; padding-left:4em">
-                        <div class="col-lg-4 col-md-4 img-spacing-footer"> <img id="center" src="http://placehold.it/320x190" class="img-responsive"> </div>
-                        <div class="col-lg-4 col-md-4 img-spacing-footer"> <img id="center" src="http://placehold.it/320x190" class="img-responsive"> </div>
-                        <div class="col-lg-4 col-md-4"> <img id="center" src="http://placehold.it/320x190" class="img-responsive"> </div>
-                    </div>
-                    <div class="row" style="padding-right:5em; padding-left:5em; margin-top:2em">
-                        <div class="col-md-12" style="text-align:center">
-                            <ul class="list-group list-nopad">
-                                <li class="list-group-item">Korte Hoogstraat 4, 3011 GL Rotterdam</li>
-                                <li class="list-group-item"><b>email</b> info@honeymoonshop.nl</li>
-                                <li class="list-group-item"><b>tel</b> (010) 412 61 43</li>
-                                <li class="list-group-item"><b>whatsapp</b> (06) 25 19 99 27</li>
-                            </ul>
-                            <ul class="list-group list-nopad">
-                                <li class="list-group-item"><b>Openingstijden</b></li>
-                                <li class="list-group-item"><b>MA</b> 12.00-17.30</li>
-                                <li class="list-group-item"><b>DI t/m VR</b> 09.30-17.30</li>
-                                <li class="list-group-item"><b>ZA</b> 09.30-18.00</li>
-                                <li class="list-group-item"><b>DI t/m VR</b> 11.00-17.00</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12" style="margin-top:2.5em"> <img id="center" src="http://placehold.it/200x50" class="img-responsive"></div>
-                    </div>
-                    <div class="row" style="margin-top:4em; padding-left:5em; padding-right:5em">
-                        <div class="col-md-4 col-sm-4">
-                            <ul class="list-group list-nopadbot list-center">
-                                <li class="list-group-item" style="color:#f0597c"><b>WINKEL</b></li>
-                                <li class="list-group-item"><a href="#">Over de Honeymoon shop</a></li>
-                                <li class="list-group-item"><a href="#">Servicepunten</a></li>
-                                <li class="list-group-item"><a href="#">Routebeschrijving</a></li>
-                                <li class="list-group-item"><a href="#">Beurzen en evenementen</a></li>
-                                <li class="list-group-item"><a href="#">Vacatures</a></li>
-                                <li class="list-group-item"><a href="#">Verkoopvoorwaarden</a></li>
-                                <li class="list-group-item"><a href="#">CBW erkend</a></li>
-                                <li class="list-group-item"><a href="#">Contact</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                            <ul class="list-group list-nopadbot list-center">
-                                <li class="list-group-item" style="color:#f0597c"><b>SERVICE</b></li>
-                                <li class="list-group-item"><a href="#">Beoordelingen</a></li>
-                                <li class="list-group-item"><a href="#">Dressfinder</a></li>
-                                <li class="list-group-item"><a href="#">Gratis trouwmagazine</a></li>
-                                <li class="list-group-item"><a href="#">Niewsbrief</a></li>
-                                <li class="list-group-item"><a href="#">Veel gestelde vragen</a></li>
-                                <li class="list-group-item"><a href="#">CBW erkend</a></li>
-                                <li class="list-group-item"><a href="#">Reinigen van je trouwjurk</a></li>
-                                <li class="list-group-item"><a href="#">10 redenen om je afspraak te maken</a></li>
-                                <li class="list-group-item"><a href="#">The Perfect Match</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                            <ul class="list-group list-nopadbot list-center">
-                                <li class="list-group-item" style="color:#f0597c"><b>ACTIES</b></li>
-                                <li class="list-group-item"><a href="#">The Grand Wedding Show</a></li>
-                                <li class="list-group-item"><a href="#">Summer Sale</a></li>
-                                <li class="list-group-item"><a href="#">Trouwjurken onder de 1000 euro</a></li>
-                                <li class="list-group-item"><a href="#">Trouwjurken voor de volslanke bruid</a></li>
-                            </ul>
-                        </div>
-                    </div>
+        @RenderSection("HeaderOverlay", required: true)
+    </div>
+    @RenderBody()
+    <hr>
+    <footer>
+        <div class="container">
+            <div class="row" style="padding-right:4em; padding-left:4em">
+                <div class="col-lg-4 col-md-4 img-spacing-footer"> <img id="center" src="http://placehold.it/320x190" class="img-responsive"> </div>
+                <div class="col-lg-4 col-md-4 img-spacing-footer"> <img id="center" src="http://placehold.it/320x190" class="img-responsive"> </div>
+                <div class="col-lg-4 col-md-4"> <img id="center" src="http://placehold.it/320x190" class="img-responsive"> </div>
+            </div>
+            <div class="row" style="padding-right:5em; padding-left:5em; margin-top:2em">
+                <div class="col-md-12" style="text-align:center">
+                    <ul class="list-group list-nopad">
+                        <li class="list-group-item">Korte Hoogstraat 4, 3011 GL Rotterdam</li>
+                        <li class="list-group-item"><b>email</b> info@honeymoonshop.nl</li>
+                        <li class="list-group-item"><b>tel</b> (010) 412 61 43</li>
+                        <li class="list-group-item"><b>whatsapp</b> (06) 25 19 99 27</li>
+                    </ul>
+                    <ul class="list-group list-nopad">
+                        <li class="list-group-item"><b>Openingstijden</b></li>
+                        <li class="list-group-item"><b>MA</b> 12.00-17.30</li>
+                        <li class="list-group-item"><b>DI t/m VR</b> 09.30-17.30</li>
+                        <li class="list-group-item"><b>ZA</b> 09.30-18.00</li>
+                        <li class="list-group-item"><b>DI t/m VR</b> 11.00-17.00</li>
+                    </ul>
                 </div>
-            </footer>
-        @*</div>*@
-
-        @*<environment names="Development">
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
-        </environment>
-        <environment names="Staging,Production">
-            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                    asp-fallback-test="window.jQuery">
-            </script>
-            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
-                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
-            </script>
-            <script src="~/js/site.min.js" asp-append-version="true"></script>
-        </environment>*@
-
-        @RenderSection("scripts", required: false)
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="margin-top:2.5em"> <img id="center" src="http://placehold.it/200x50" class="img-responsive"></div>
+            </div>
+            <div class="row" style="margin-top:4em; padding-left:5em; padding-right:5em">
+                <div class="col-md-4 col-sm-4">
+                    <ul class="list-group list-nopadbot list-center">
+                        <li class="list-group-item" style="color:#f0597c"><b>WINKEL</b></li>
+                        <li class="list-group-item"><a href="#">Over de Honeymoon shop</a></li>
+                        <li class="list-group-item"><a href="#">Servicepunten</a></li>
+                        <li class="list-group-item"><a href="#">Routebeschrijving</a></li>
+                        <li class="list-group-item"><a href="#">Beurzen en evenementen</a></li>
+                        <li class="list-group-item"><a href="#">Vacatures</a></li>
+                        <li class="list-group-item"><a href="#">Verkoopvoorwaarden</a></li>
+                        <li class="list-group-item"><a href="#">CBW erkend</a></li>
+                        <li class="list-group-item"><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <ul class="list-group list-nopadbot list-center">
+                        <li class="list-group-item" style="color:#f0597c"><b>SERVICE</b></li>
+                        <li class="list-group-item"><a href="#">Beoordelingen</a></li>
+                        <li class="list-group-item"><a href="#">Dressfinder</a></li>
+                        <li class="list-group-item"><a href="#">Gratis trouwmagazine</a></li>
+                        <li class="list-group-item"><a href="#">Niewsbrief</a></li>
+                        <li class="list-group-item"><a href="#">Veel gestelde vragen</a></li>
+                        <li class="list-group-item"><a href="#">CBW erkend</a></li>
+                        <li class="list-group-item"><a href="#">Reinigen van je trouwjurk</a></li>
+                        <li class="list-group-item"><a href="#">10 redenen om je afspraak te maken</a></li>
+                        <li class="list-group-item"><a href="#">The Perfect Match</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <ul class="list-group list-nopadbot list-center">
+                        <li class="list-group-item" style="color:#f0597c"><b>ACTIES</b></li>
+                        <li class="list-group-item"><a href="#">The Grand Wedding Show</a></li>
+                        <li class="list-group-item"><a href="#">Summer Sale</a></li>
+                        <li class="list-group-item"><a href="#">Trouwjurken onder de 1000 euro</a></li>
+                        <li class="list-group-item"><a href="#">Trouwjurken voor de volslanke bruid</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    @RenderSection("scripts", required: false)
 </body>
 </html>
