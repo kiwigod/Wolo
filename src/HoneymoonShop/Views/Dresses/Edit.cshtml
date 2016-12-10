@@ -1,0 +1,80 @@
+@model HoneymoonShop.Models.Dress
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>Dress</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="ID" />
+        <div class="form-group">
+            <label asp-for="ColorID" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="ColorID" class="form-control" asp-items="ViewBag.ColorID"></select>
+                <span asp-validation-for="ColorID" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ManuID" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="ManuID" class="form-control" asp-items="ViewBag.ManuID"></select>
+                <span asp-validation-for="ManuID" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="NecklineID" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="NecklineID" class="form-control" asp-items="ViewBag.NecklineID"></select>
+                <span asp-validation-for="NecklineID" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="SilhouetteID" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="SilhouetteID" class="form-control" asp-items="ViewBag.SilhouetteID"></select>
+                <span asp-validation-for="SilhouetteID" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="StyleID" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="StyleID" class="form-control" asp-items="ViewBag.StyleID"></select>
+                <span asp-validation-for="StyleID" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+</body>
+</html>

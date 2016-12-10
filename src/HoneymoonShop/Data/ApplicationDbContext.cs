@@ -10,6 +10,10 @@ namespace HoneymoonShop.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Dress> Dress { get; set; }
+
+        public DbSet<Feature> Feature { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -21,6 +25,30 @@ namespace HoneymoonShop.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+            builder.Entity<DressFeature>()
+                .HasKey(f => new { f.DressID, f.FeatureID });
+
+            builder.Entity<DressFeature>()
+                .HasOne(df => df.Dress)
+                .WithMany(d => d.DressFeatures)
+                .HasForeignKey(df => df.DressID);
+
+            builder.Entity<DressFeature>()
+                .HasOne(df => df.Feature)
+                .WithMany(f => f.DressFeatures)
+                .HasForeignKey(df => df.FeatureID);
         }
+
+        public DbSet<DressFeature> DressFeature { get; set; }
+
+        public DbSet<Color> Color { get; set; }
+
+        public DbSet<Manu> Manu { get; set; }
+
+        public DbSet<Neckline> Neckline { get; set; }
+
+        public DbSet<Silhouette> Silhouette { get; set; }
+
+        public DbSet<Style> Style { get; set; }
     }
 }
