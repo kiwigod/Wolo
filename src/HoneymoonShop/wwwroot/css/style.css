@@ -1,8 +1,8 @@
 @media only screen and (max-width:768px) {
-    .list-center>li{
+    .list-center>li {
         text-align: center;
     }
-    li{
+    li {
         font-size: 1.5em;
     }
 }
@@ -13,120 +13,122 @@
     margin-right: auto;
 }
 
-.img-spacing-footer{
+.img-spacing-footer {
     padding-bottom: 1.8em;
 }
 
-.list-nopad>li{
+.list-nopad>li {
     padding: 0px;
     background-color: #fce8e7;
     border: #fce8e7;
 }
 
-.list-nopadbot>li{
+.list-nopadbot>li {
     padding-bottom: 0px;
     background-color: #fce8e7;
     border: #fce8e7;
 }
 
-.tab-indent>b{
-    padding-left:1em;
+.tab-indent>b {
+    padding-left: 1em;
 }
 
+
 /*===================heading.html===================*/
-.tablet-fsize{
+
+.tablet-fsize {
     font-size: 1.2em
 }
 
-button>b{
+button>b {
     color: white;
 }
 
-.index-button{
-    width:15em;
+.index-button {
+    width: 15em;
     font-size: 1.3em;
 }
 
-.max-height-center{
+.max-height-center {
     height: 100%;
     text-align: center;
     padding-top: 1em;
 }
 
 @media only screen and (max-width:767px) {
-    .thinner-xs{
-        width:85vw;
+    .thinner-xs {
+        width: 85vw;
     }
-    
-    .disappear-xs{
+    .disappear-xs {
         display: none;
     }
-    
-    .nopad-xs{
+    .nopad-xs {
         padding: 0;
     }
-    
-    .index-button{
+    .index-button {
         width: inherit;
     }
-    
-    .appear-xs{
+    .appear-xs {
         display: block;
     }
-    
-    .show-sm{
+    .show-sm {
+        display: none;
+    }
+    .hide-xs {
         display: none;
     }
 }
 
-@media only screen and (min-width:768px){
-    .appear-xs{
+@media only screen and (min-width:768px) {
+    .appear-xs {
         display: none;
     }
-    
-    .show-sm{
+    .show-sm {
         display: none;
     }
     @media only screen and (max-width:1200px) {
-        .scale-nav>li>a>b{
+        .scale-nav>li>a>b {
             font-size: 96%;
         }
-        .show-sm{
+        .show-sm {
+            display: none;
+        }
+        .hide-md {
             display: none;
         }
     }
     @media only screen and (max-width:992px) {
-        .hide-sm{
+        .hide-sm {
             display: none;
         }
-        .show-sm{
+        .show-sm {
             display: block;
         }
     }
 }
 
 @media only screen and(min-width:992px) {
-    .dissapear-md{
+    .dissapear-md {
         display: none;
     }
 }
 
-.navbar-pink{
+.navbar-pink {
     background-image: linear-gradient(to bottom, #FAC9C4 0, #FAC9C4 100%);
 }
- 
-.navbar-transparent{
-    background-color: rgba(0,0,0,0);
+
+.navbar-transparent {
+    background-color: rgba(0, 0, 0, 0);
     border: none;
-} 
- 
-.primary-button{
-    background:#f0597c;
+}
+
+.primary-button {
+    background: #f0597c;
     border-color: #f0597c;
 }
 
-.primary-button:hover{
-    background:#ee446c;
+.primary-button:hover {
+    background: #ee446c;
     border-color: #ee446c;
 }
 
@@ -134,4 +136,101 @@ button>b{
     height: 100vh;
     background-image: url("http://placehold.it/4096x2160");
     background-size: 100% 100%;
+}
+
+
+/*******************Homepage.html**********************/
+
+.circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    font-size: 60px;
+    color: #fff;
+    line-height: 100px;
+    text-align: center;
+    background: #f0597c;
+}
+
+.circle-s {
+    padding-right: 0.3em;
+    padding-left: 0.3em;
+    display: inline;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 30px;
+    color: #fff;
+    line-height: 40px;
+    background: #f0597c;
+}
+
+.button-transparent{
+    background-color: rgba(0,0,0,0);
+    border: none;
+    padding: 0;
+}
+
+
+@media only screen and (min-width: 992px) {
+    .jurk-pak-height {
+        height: 100vh;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .jurk-pak-height {
+        height: auto;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .hide-lg {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .show-xs {
+        display: block;
+    }
+}
+
+/*************Doosje***************************/
+@media only screen and (min-width: 768px) {
+    .padding-box {
+        padding-left: 8em;
+        padding-right: 8em;
+    }
+    .padding-box-right {
+        padding-right: 3em;
+    }
+}
+ 
+@media only screen and (max-width: 767px) {
+    .padding-box {
+        margin-left: 0%;
+        margin-right: 0%;
+    }
+    .padding-box-right {
+        margin-right: 0%;
+    }
+}
+
+.box{
+    margin-bottom: 4.5em;
+    box-sizing: border-box;
+    background-color: white;
+    padding: 1.3em;
+    box-shadow: 0px 0px 10px darkgrey;
+}
+.box>hr{
+    margin-left: 0;
+    width: 10em;
+    border-top: 4px solid pink;
+}
+
+/*******Carousel************/
+.carousel-inner>.item>img{
+    margin: 0 auto;
 }
