@@ -1,0 +1,50 @@
+@model DressFeature
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddFeature</title>
+</head>
+<body>
+    <ul>
+        @foreach (string s in ViewBag.CurrentFeatures)
+        {
+            <li>@s</li>
+        }
+    </ul>
+    <form asp-action="AddFeature">
+        <div class="form-horizontal">
+            <h4>Dress</h4>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FeatureID" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <select asp-for="FeatureID" class="form-control" asp-items="ViewBag.AvailableFeatures"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="DressID" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <select asp-for="DressID" class="form-control" asp-items="ViewBag.Dress"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Add Feature" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+</body>
+</html>
