@@ -50,5 +50,7 @@ namespace HoneymoonShop.Data
         public DbSet<Silhouette> Silhouette { get; set; }
 
         public DbSet<Style> Style { get; set; }
+
+        public DbSet<Category> Category { get; set; }
     }
 }

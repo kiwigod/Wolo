@@ -20,10 +20,24 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="ID" />
         <div class="form-group">
+            <label asp-for="CategoryID" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="CategoryID" class="form-control" asp-items="ViewBag.CategoryID"></select>
+                <span asp-validation-for="CategoryID" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
             <label asp-for="ColorID" class="control-label col-md-2"></label>
             <div class="col-md-10">
                 <select asp-for="ColorID" class="form-control" asp-items="ViewBag.ColorID"></select>
                 <span asp-validation-for="ColorID" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger" />
             </div>
         </div>
         <div class="form-group">

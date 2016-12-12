@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using HoneymoonShop.Data;
 
-namespace HoneymoonShop.Data.Migrations
+namespace HoneymoonShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -65,6 +65,18 @@ namespace HoneymoonShop.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("HoneymoonShop.Models.Category", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Category");
+                });
+
             modelBuilder.Entity("HoneymoonShop.Models.Color", b =>
                 {
                     b.Property<int>("ID")
@@ -82,7 +94,11 @@ namespace HoneymoonShop.Data.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("CategoryID");
+
                     b.Property<int>("ColorID");
+
+                    b.Property<string>("Description");
 
                     b.Property<int>("ManuID");
 
@@ -95,6 +111,8 @@ namespace HoneymoonShop.Data.Migrations
                     b.Property<int>("StyleID");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("CategoryID");
 
                     b.HasIndex("ColorID");
 
@@ -293,6 +311,11 @@ namespace HoneymoonShop.Data.Migrations
 
             modelBuilder.Entity("HoneymoonShop.Models.Dress", b =>
                 {
+                    b.HasOne("HoneymoonShop.Models.Category", "Category")
+                        .WithMany("Dresses")
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("HoneymoonShop.Models.Color", "Color")
                         .WithMany("Dresses")
                         .HasForeignKey("ColorID")
