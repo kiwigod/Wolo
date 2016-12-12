@@ -7,16 +7,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HoneymoonShop.Data;
 using HoneymoonShop.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using System.Text.RegularExpressions;
 
 namespace HoneymoonShop.Controllers
 {
     public class DressesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IHostingEnvironment _env;
 
-        public DressesController(ApplicationDbContext context)
+        public DressesController(ApplicationDbContext context, IHostingEnvironment env)
         {
-            _context = context;    
+            _context = context;
+            _env = env;
         }
 
         // GET: Dresses
@@ -75,6 +81,82 @@ namespace HoneymoonShop.Controllers
             return View(dress);
         }
 
+        // GET: Dresses/AddImage
+        public IActionResult AddImage(int? id)
+        {
+            var dress = _context.Dress.Where(d => d.ID == id).First();
+            var manu = _context.Manu.Where(m => m.ID == dress.ManuID).First().Name.Replace(" ", string.Empty);
+
+            string path = Path.Combine(_env.WebRootPath, "images/dress");
+            DirectoryInfo di = new DirectoryInfo(path);
+            List<string> files = new List<string>();
+
+            foreach (string s in Directory.GetFiles(path))
+            {
+                string startw = dress.ID.ToString() + manu;
+                string ss = s.Replace(path + "\\", string.Empty);
+                if (ss.StartsWith(startw))
+                {
+                    files.Add(ss);
+                }
+            }
+            ViewData["Images"] = files;
+            return View();
+        }
+
+        // POST: Dresses/AddImage
+        // Saves images in the images/dress folder, can only upload up to 3 images
+        // TODO: return usefull message when trying to upload more than 3 images or when uploaded file is not accepted
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddImage(int? id, ICollection<IFormFile> files)
+        {
+            var uploads = Path.Combine(_env.WebRootPath, "images/dress");
+            var manu = _context.Manu.Where(m => m.ID == _context.Dress.Where(d => d.ID == id).First().ManuID).First().Name.Replace(" ", string.Empty);
+            foreach (var file in files)
+            {
+                if (file.Length > 0)
+                {
+                    string[] s = file.FileName.Split('.');
+                    string[] accepted = { "jpg", "jpeg", "png", "webp", "bmp"};
+                    foreach (string type in accepted)
+                    {
+                        if (s[1] == type)
+                        {
+                            try
+                            {
+                                var FileStream = new FileStream(Path.Combine(uploads, id + manu + "1." + s[1]), FileMode.Create);
+                                await file.CopyToAsync(FileStream);
+                            }
+                            catch
+                            {
+                                try
+                                {
+                                    var FileStream = new FileStream(Path.Combine(uploads, id + manu + "2." + s[1]), FileMode.Create);
+                                    await file.CopyToAsync(FileStream);
+                                }
+                                catch
+                                {
+                                    try
+                                    {
+                                        var FileStream = new FileStream(Path.Combine(uploads, id + manu + "3." + s[1]), FileMode.Create);
+                                        await file.CopyToAsync(FileStream);
+                                    }
+                                    catch
+                                    {
+                                        return NotFound();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return RedirectToAction("AddImage", id);
+        }
+
+        // GET: Dresses/AddFeature/5
+        // Add features to a specific dress (maybe replace function to DressFeaturesController?)
         public async Task<IActionResult> AddFeature(int? id)
         {
             if (id == null)
@@ -120,6 +202,7 @@ namespace HoneymoonShop.Controllers
             return View();
         }
 
+        // POST: Dresses/AddFeature/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddFeature(int? id, [Bind("DressID,FeatureID")] DressFeature df)

@@ -10,13 +10,4 @@ $(document).ready(function(){
         $("#text1").text(text[parseInt(buttonText) - 1]);
         $("#text2").text(text[parseInt(buttonText) - 1]);
     });
-
-    $("#add-dropdown-button").click(function () {
-        var newDropdown = $(dropdowns[dropdowns.length - 1]).clone();
-        newDropdown.attr("id", "feature".concat(dropdowns.length));
-        newDropdown.css("display", "block");
-        newDropdown.appendTo("#features");
-        dropdowns.push(newDropdown);
-    });
-
 });
