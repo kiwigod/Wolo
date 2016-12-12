@@ -1,0 +1,80 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>Overview</title>
+</head>
+<body>
+
+<form method="get" asp-action="FilterDress">
+    <!--Manu-->
+    <h4>Brand</h4>
+    <div style="display:inline">
+        @foreach (Manu m in ViewBag.ManuID)
+        {
+            <input type="checkbox" name="manu[]" value="@m.ID" style="position:initial" /> @m.Name
+        }
+    </div>
+
+    <!--Style-->
+    <h4>Style</h4>
+    <div style="display:inline">
+        @foreach (Style s in ViewBag.StyleID)
+        {
+            <input type="checkbox" name="style[]" value="@s.ID" style="position:initial" /> @s.Name
+        }
+    </div>
+
+    <!--Price-->
+    <h4>Price</h4>
+    <div data-role="rangeslider">
+        <label for="price-min">Price:</label>
+        <input type="range" name="pricemin" value="0" min="0" max="15000">
+        <label for="price-max">Price:</label>
+        <input type="range" name="pricemax" value="15000" min="0" max="15000">
+    </div>
+
+    <!--Neckline-->
+    <h4>Neckline</h4>
+    <div style="display:inline">
+        @foreach (Neckline n in ViewBag.NecklineID)
+        {
+            <input type="checkbox" name="neckline[]" value="@n.ID" style="position:initial" /> @n.Name
+        }
+    </div>
+
+    <!--Silhouette-->
+    <h4>Silhouette</h4>
+    <div style="display:inline">
+        @foreach (Silhouette s in ViewBag.SilhouetteID)
+        {
+            <input type="checkbox" name="silhouette[]" value="@s.ID" style="position:initial" /> @s.Name
+        }
+    </div>
+
+    <!--Color-->
+    <h4>Color</h4>
+    <div style="display:inline">
+        @foreach (Color c in ViewBag.ColorID)
+        {
+            <input type="checkbox" name="color[]" value="@c.ID" style="position:initial" /> @c.Name
+        }
+    </div>
+    <div>
+        <input type="submit" value="Search" />
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+</body>
+</html>

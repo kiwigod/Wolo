@@ -60,7 +60,93 @@ namespace HoneymoonShop.Controllers
             return View();
         }
 
-        // GET: Dresses/AddImage
+                // POST: Dresses/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ID,CategoryID,ColorID,Description,ManuID,NecklineID,Price,SilhouetteID,StyleID")] Dress dress)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(dress);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "Name", dress.CategoryID);
+            ViewData["ColorID"] = new SelectList(_context.Color, "ID", "Name", dress.ColorID);
+            ViewData["ManuID"] = new SelectList(_context.Manu, "ID", "Name", dress.ManuID);
+            ViewData["NecklineID"] = new SelectList(_context.Neckline, "ID", "Name", dress.NecklineID);
+            ViewData["SilhouetteID"] = new SelectList(_context.Silhouette, "ID", "Name", dress.SilhouetteID);
+            ViewData["StyleID"] = new SelectList(_context.Style, "ID", "Name", dress.StyleID);
+            return View(dress);
+        }
+
+        // GET: Dresses/Overview
+        public IActionResult Overview()
+        {
+            ViewData["CategoryID"] = _context.Category.ToList();
+            ViewData["ColorID"] = _context.Color.ToList();
+            ViewData["ManuID"] = _context.Manu.ToList();
+            ViewData["NecklineID"] = _context.Neckline.ToList();
+            ViewData["SilhouetteID"] = _context.Silhouette.ToList();
+            ViewData["StyleID"] = _context.Style.ToList();
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult FilterDress()
+        {
+            var manu = HttpContext.Request.Query["manu[]"];
+            var style = HttpContext.Request.Query["style[]"];
+            var pricemin = int.Parse(HttpContext.Request.Query["pricemin"]);
+            var pricemax = int.Parse(HttpContext.Request.Query["pricemax"]);
+            var neckline = HttpContext.Request.Query["neckline[]"];
+            var silhouette = HttpContext.Request.Query["silhouette[]"];
+            var color = HttpContext.Request.Query["color[]"];
+
+            List<Dress> availableDress = _context.Dress.Where(d => d.Price >= pricemin && d.Price <= pricemax).ToList();
+            if(availableDress != null) foreach (Dress d in availableDress)
+            {
+                bool bmanu = false;
+                bool bstyle = false;
+                bool bneck = false;
+                bool bsil = false;
+                bool bcolor = false;
+                foreach (string s in manu)
+                {
+                    if (int.Parse(s) == d.ManuID) bmanu = true;
+                }
+                if (manu.Count == 0) bmanu = true;
+                foreach (string s in style)
+                {
+                    if (int.Parse(s) == d.StyleID) bstyle = true;
+                }
+                if (style.Count == 0) bstyle = true;
+                foreach (string s in neckline)
+                {
+                    if (int.Parse(s) == d.NecklineID) bneck = true;
+                }
+                if (neckline.Count == 0) bneck = true;
+                foreach (string s in silhouette)
+                {
+                    if (int.Parse(s) == d.SilhouetteID) bsil = true;
+                }
+                if (silhouette.Count == 0) bsil = true;
+                foreach (string s in color)
+                {
+                    if (int.Parse(s) == d.ColorID) bcolor = true;
+                }
+                if (color.Count == 0) bcolor = true;
+                if (bmanu == false || bstyle == false || bneck == false || bsil == false || bcolor == false)
+                {
+                    availableDress.Remove(d);
+                }
+            }
+            return View("Overview");
+        }
+
+        // GET: Dresses/AddImage/5
         public IActionResult AddImage(int? id)
         {
             var dress = _context.Dress.Where(d => d.ID == id).First();
@@ -92,12 +178,13 @@ namespace HoneymoonShop.Controllers
         {
             var uploads = Path.Combine(_env.WebRootPath, "images/dress");
             var manu = _context.Manu.Where(m => m.ID == _context.Dress.Where(d => d.ID == id).First().ManuID).First().Name.Replace(" ", string.Empty);
+            string[] accepted = { "jpg", "jpeg", "png", "webp", "bmp" };
+
             foreach (var file in files)
             {
                 if (file.Length > 0)
                 {
                     string[] s = file.FileName.Split('.');
-                    string[] accepted = { "jpg", "jpeg", "png", "webp", "bmp" };
                     foreach (string type in accepted)
                     {
                         if (s[1] == type)
@@ -144,14 +231,14 @@ namespace HoneymoonShop.Controllers
 
         // GET: Dresses/AddFeature/5
         // Add features to a specific dress (maybe replace function to DressFeaturesController?)
-        public async Task<IActionResult> AddFeature(int? id)
+        public IActionResult AddFeature(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var dress = await _context.Dress.SingleOrDefaultAsync(d => d.ID == id);
+            var dress = _context.Dress.Where(d => d.ID == id).First();
             if (dress == null)
             {
                 return NotFound();
@@ -206,28 +293,6 @@ namespace HoneymoonShop.Controllers
                 return RedirectToAction("AddFeature", df.DressID);
             }
             return NotFound();
-        }
-
-        // POST: Dresses/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,CategoryID,ColorID,Description,ManuID,NecklineID,Price,SilhouetteID,StyleID")] Dress dress)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(dress);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "Name", dress.CategoryID);
-            ViewData["ColorID"] = new SelectList(_context.Color, "ID", "Name", dress.ColorID);
-            ViewData["ManuID"] = new SelectList(_context.Manu, "ID", "Name", dress.ManuID);
-            ViewData["NecklineID"] = new SelectList(_context.Neckline, "ID", "Name", dress.NecklineID);
-            ViewData["SilhouetteID"] = new SelectList(_context.Silhouette, "ID", "Name", dress.SilhouetteID);
-            ViewData["StyleID"] = new SelectList(_context.Style, "ID", "Name", dress.StyleID);
-            return View(dress);
         }
 
         // GET: Dresses/Edit/5
