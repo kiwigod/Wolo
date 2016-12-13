@@ -118,68 +118,94 @@ namespace HoneymoonShop.Controllers
         public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color)
         {
             List<Dress> availableDress = _context.Dress.Where(d => d.Price >= pricemin && d.Price <= pricemax).ToList();
-            if (availableDress.Count > 0) foreach (Dress d in availableDress)
+            //if (availableDress.Count == null) availableDress = new List<Dress>();
+            List<Dress> toRemove = new List<Dress>();
+            foreach (Dress d in availableDress)
+            {
+                bool bmanu = false;
+                bool bstyle = false;
+                bool bneck = false;
+                bool bsil = false;
+                bool bcolor = false;
+                if (manu[0].Equals("all") && manu.Length == 1) bmanu = true;
+                else
                 {
-                    bool bmanu = false;
-                    bool bstyle = false;
-                    bool bneck = false;
-                    bool bsil = false;
-                    bool bcolor = false;
-                    if (manu[0].Equals("all") && manu.Length == 1) bmanu = true;
-                    else
+                    for (int i = 1; i < manu.Length; i++)
                     {
-                        manu[0] = "-1";
-                        foreach (string s in manu)
-                        {
-                            if (int.Parse(s) == d.ManuID) bmanu = true;
-                        }
+                        if (int.Parse(manu[i]) == d.ManuID) bmanu = true;
                     }
-
-                    if (style[0].Equals("all") && style.Length == 1) bstyle = true;
-                    else
-                    {
-                        style[0] = "-1";
-                        foreach (string s in style)
-                        {
-                            if (int.Parse(s) == d.StyleID) bstyle = true;
-                        }
-                    }
-
-                    if (neckline[0].Equals("all") && neckline.Length == 1) bneck = true;
-                    else
-                    {
-                        neckline[0] = "-1";
-                        foreach (string s in neckline)
-                        {
-                            if (int.Parse(s) == d.NecklineID) bneck = true;
-                        }
-                    }
-
-                    if (silhouette[0].Equals("all") && silhouette.Length == 1) bsil = true;
-                    else
-                    {
-                        silhouette[0] = "-1";
-                        foreach (string s in silhouette)
-                        {
-                            if (int.Parse(s) == d.SilhouetteID) bsil = true;
-                        }
-                    }
-
-                    if (color[0].Equals("all") && color.Length == 1) bcolor = true;
-                    else
-                    {
-                        color[0] = "-1";
-                        foreach (string s in color)
-                        {
-                            if (int.Parse(s) == d.ColorID) bcolor = true;
-                        }
-                    }
-
-                    if (bmanu == false || bstyle == false || bneck == false || bsil == false || bcolor == false)
-                    {
-                        availableDress.Remove(d);
-                    }
+                    //manu[0] = "-1";
+                    //foreach (string s in manu)
+                    //{
+                    //    if (int.Parse(s) == d.ManuID) bmanu = true;
+                    //}
                 }
+
+                if (style[0].Equals("all") && style.Length == 1) bstyle = true;
+                else
+                {
+                    for (int i = 1; i < style.Length; i++)
+                    {
+                        if (int.Parse(style[i]) == d.StyleID) bstyle = true;
+                    }
+                    //style[0] = "-1";
+                    //foreach (string s in style)
+                    //{
+                    //    if (int.Parse(s) == d.StyleID) bstyle = true;
+                    //}
+                }
+
+                if (neckline[0].Equals("all") && neckline.Length == 1) bneck = true;
+                else
+                {
+                    for (int i = 1; i < neckline.Length; i++)
+                    {
+                        if (int.Parse(neckline[i]) == d.NecklineID) bneck = true;
+                    }
+                    //neckline[0] = "-1";
+                    //foreach (string s in neckline)
+                    //{
+                    //    if (int.Parse(s) == d.NecklineID) bneck = true;
+                    //}
+                }
+
+                if (silhouette[0].Equals("all") && silhouette.Length == 1) bsil = true;
+                else
+                {
+                    for (int i = 1; i < silhouette.Length; i++)
+                    {
+                        if (int.Parse(silhouette[i]) == d.SilhouetteID) bsil = true;
+                    }
+                    //silhouette[0] = "-1";
+                    //foreach (string s in silhouette)
+                    //{
+                    //    if (int.Parse(s) == d.SilhouetteID) bsil = true;
+                    //}
+                }
+
+                if (color[0].Equals("all") && color.Length == 1) bcolor = true;
+                else
+                {
+                    for (int i = 1; i < color.Length; i++)
+                    {
+                        if (int.Parse(color[i]) == d.ColorID) bcolor = true;
+                    }
+                    //color[0] = "-1";
+                    //foreach (string s in color)
+                    //{
+                    //    if (int.Parse(s) == d.ColorID) bcolor = true;
+                    //}
+                }
+
+                if (bmanu == false || bstyle == false || bneck == false || bsil == false || bcolor == false)
+                {
+                    toRemove.Add(d);
+                }
+            }
+            foreach(Dress d in toRemove)
+            {
+                availableDress.Remove(d);
+            }
             ViewData["Dress"] = availableDress;
             ViewData["CategoryID"] = _context.Category.ToList();
             ViewData["ColorID"] = _context.Color.ToList();
