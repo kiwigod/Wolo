@@ -115,8 +115,7 @@ namespace HoneymoonShop.Controllers
         //}
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
-        public IActionResult Overview(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color)
+        public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color)
         {
             List<Dress> availableDress = _context.Dress.Where(d => d.Price >= pricemin && d.Price <= pricemax).ToList();
             if (availableDress.Count > 0) foreach (Dress d in availableDress)
@@ -188,7 +187,7 @@ namespace HoneymoonShop.Controllers
             ViewData["NecklineID"] = _context.Neckline.ToList();
             ViewData["SilhouetteID"] = _context.Silhouette.ToList();
             ViewData["StyleID"] = _context.Style.ToList();
-            return View();
+            return View("Overview");
         }
 
         // GET: Dresses/AddImage/5
