@@ -60,7 +60,7 @@ namespace HoneymoonShop.Controllers
             return View();
         }
 
-                // POST: Dresses/Create
+        // POST: Dresses/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -91,59 +91,104 @@ namespace HoneymoonShop.Controllers
             ViewData["NecklineID"] = _context.Neckline.ToList();
             ViewData["SilhouetteID"] = _context.Silhouette.ToList();
             ViewData["StyleID"] = _context.Style.ToList();
+            ViewData["Dress"] = new List<Dress>();
             return View();
         }
 
-        [HttpGet]
-        public IActionResult FilterDress()
-        {
-            var manu = HttpContext.Request.Query["manu[]"];
-            var style = HttpContext.Request.Query["style[]"];
-            var pricemin = int.Parse(HttpContext.Request.Query["pricemin"]);
-            var pricemax = int.Parse(HttpContext.Request.Query["pricemax"]);
-            var neckline = HttpContext.Request.Query["neckline[]"];
-            var silhouette = HttpContext.Request.Query["silhouette[]"];
-            var color = HttpContext.Request.Query["color[]"];
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult ProcessFilter()
+        //{
+        //    var manu = HttpContext.Request.Form["manu"];
+        //    if (manu.Count == 0) manu = new string[] { "all" };
+        //    var style = HttpContext.Request.Form["style"];
+        //    if (style.Count == 0) style = new string[] { "all" };
+        //    var pricemin = int.Parse(HttpContext.Request.Form["pricemin"]);
+        //    var pricemax = int.Parse(HttpContext.Request.Form["pricemax"]);
+        //    var neckline = HttpContext.Request.Form["neckline"];
+        //    if (neckline.Count == 0) neckline = new string[] { "all" };
+        //    var silhouette = HttpContext.Request.Form["silhouette"];
+        //    if (silhouette.Count == 0) silhouette = new string[] { "all" };
+        //    var color = HttpContext.Request.Form["color"];
+        //    if (color.Count == 0) color = new string[] { "all" };
+        //    return RedirectToAction("Overview", new { manu = manu.ToArray(), style = style.ToArray(), pricemin = pricemin, pricemax = pricemax, neckline = neckline.ToArray(), silhouette = silhouette.ToArray(), color = color.ToArray() });
+        //}
 
+        [HttpGet]
+        [ValidateAntiForgeryToken]
+        public IActionResult Overview(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color)
+        {
             List<Dress> availableDress = _context.Dress.Where(d => d.Price >= pricemin && d.Price <= pricemax).ToList();
-            if(availableDress != null) foreach (Dress d in availableDress)
-            {
-                bool bmanu = false;
-                bool bstyle = false;
-                bool bneck = false;
-                bool bsil = false;
-                bool bcolor = false;
-                foreach (string s in manu)
+            if (availableDress.Count > 0) foreach (Dress d in availableDress)
                 {
-                    if (int.Parse(s) == d.ManuID) bmanu = true;
+                    bool bmanu = false;
+                    bool bstyle = false;
+                    bool bneck = false;
+                    bool bsil = false;
+                    bool bcolor = false;
+                    if (manu[0].Equals("all") && manu.Length == 1) bmanu = true;
+                    else
+                    {
+                        manu[0] = "-1";
+                        foreach (string s in manu)
+                        {
+                            if (int.Parse(s) == d.ManuID) bmanu = true;
+                        }
+                    }
+
+                    if (style[0].Equals("all") && style.Length == 1) bstyle = true;
+                    else
+                    {
+                        style[0] = "-1";
+                        foreach (string s in style)
+                        {
+                            if (int.Parse(s) == d.StyleID) bstyle = true;
+                        }
+                    }
+
+                    if (neckline[0].Equals("all") && neckline.Length == 1) bneck = true;
+                    else
+                    {
+                        neckline[0] = "-1";
+                        foreach (string s in neckline)
+                        {
+                            if (int.Parse(s) == d.NecklineID) bneck = true;
+                        }
+                    }
+
+                    if (silhouette[0].Equals("all") && silhouette.Length == 1) bsil = true;
+                    else
+                    {
+                        silhouette[0] = "-1";
+                        foreach (string s in silhouette)
+                        {
+                            if (int.Parse(s) == d.SilhouetteID) bsil = true;
+                        }
+                    }
+
+                    if (color[0].Equals("all") && color.Length == 1) bcolor = true;
+                    else
+                    {
+                        color[0] = "-1";
+                        foreach (string s in color)
+                        {
+                            if (int.Parse(s) == d.ColorID) bcolor = true;
+                        }
+                    }
+
+                    if (bmanu == false || bstyle == false || bneck == false || bsil == false || bcolor == false)
+                    {
+                        availableDress.Remove(d);
+                    }
                 }
-                if (manu.Count == 0) bmanu = true;
-                foreach (string s in style)
-                {
-                    if (int.Parse(s) == d.StyleID) bstyle = true;
-                }
-                if (style.Count == 0) bstyle = true;
-                foreach (string s in neckline)
-                {
-                    if (int.Parse(s) == d.NecklineID) bneck = true;
-                }
-                if (neckline.Count == 0) bneck = true;
-                foreach (string s in silhouette)
-                {
-                    if (int.Parse(s) == d.SilhouetteID) bsil = true;
-                }
-                if (silhouette.Count == 0) bsil = true;
-                foreach (string s in color)
-                {
-                    if (int.Parse(s) == d.ColorID) bcolor = true;
-                }
-                if (color.Count == 0) bcolor = true;
-                if (bmanu == false || bstyle == false || bneck == false || bsil == false || bcolor == false)
-                {
-                    availableDress.Remove(d);
-                }
-            }
-            return View("Overview");
+            ViewData["Dress"] = availableDress;
+            ViewData["CategoryID"] = _context.Category.ToList();
+            ViewData["ColorID"] = _context.Color.ToList();
+            ViewData["ManuID"] = _context.Manu.ToList();
+            ViewData["NecklineID"] = _context.Neckline.ToList();
+            ViewData["SilhouetteID"] = _context.Silhouette.ToList();
+            ViewData["StyleID"] = _context.Style.ToList();
+            return View();
         }
 
         // GET: Dresses/AddImage/5
