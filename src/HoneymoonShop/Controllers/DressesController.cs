@@ -89,7 +89,30 @@ namespace HoneymoonShop.Controllers
             ViewData["NecklineID"] = _context.Neckline.ToList();
             ViewData["SilhouetteID"] = _context.Silhouette.ToList();
             ViewData["StyleID"] = _context.Style.ToList();
-            ViewData["Dress"] = new List<Dress>();
+            List<Dress> availableDress = _context.Dress.ToList();
+            var img = new Dictionary<int, string>();
+            var dmanu = new Dictionary<int, string>();
+            string path = Path.Combine(_env.WebRootPath, "images/dress");
+            DirectoryInfo di = new DirectoryInfo(path);
+            List<string> files = new List<string>();
+            foreach (Dress d in availableDress)
+            {
+                string dressmanu = _context.Manu.Where(m => m.ID == d.ManuID).First().Name.Replace(" ", string.Empty);
+                foreach (string s in Directory.GetFiles(path))
+                {
+                    string startw = d.ID.ToString() + dressmanu + "1";
+                    string filename = s.Replace(path + "\\", string.Empty);
+                    if (filename.StartsWith(startw))
+                    {
+                        img.Add(d.ID, filename);
+                    }
+                }
+                dmanu.Add(d.ID, _context.Manu.Where(m => m.ID == d.ManuID).First().Name);
+            }
+
+            ViewData["Manu"] = dmanu;
+            ViewData["Images"] = img;
+            ViewData["Dress"] = availableDress;
             return View();
         }
 
@@ -133,11 +156,6 @@ namespace HoneymoonShop.Controllers
                     {
                         if (int.Parse(manu[i]) == d.ManuID) bmanu = true;
                     }
-                    //manu[0] = "-1";
-                    //foreach (string s in manu)
-                    //{
-                    //    if (int.Parse(s) == d.ManuID) bmanu = true;
-                    //}
                 }
 
                 if (style[0].Equals("all") && style.Length == 1) bstyle = true;
@@ -147,11 +165,6 @@ namespace HoneymoonShop.Controllers
                     {
                         if (int.Parse(style[i]) == d.StyleID) bstyle = true;
                     }
-                    //style[0] = "-1";
-                    //foreach (string s in style)
-                    //{
-                    //    if (int.Parse(s) == d.StyleID) bstyle = true;
-                    //}
                 }
 
                 if (neckline[0].Equals("all") && neckline.Length == 1) bneck = true;
@@ -161,11 +174,6 @@ namespace HoneymoonShop.Controllers
                     {
                         if (int.Parse(neckline[i]) == d.NecklineID) bneck = true;
                     }
-                    //neckline[0] = "-1";
-                    //foreach (string s in neckline)
-                    //{
-                    //    if (int.Parse(s) == d.NecklineID) bneck = true;
-                    //}
                 }
 
                 if (silhouette[0].Equals("all") && silhouette.Length == 1) bsil = true;
@@ -175,11 +183,6 @@ namespace HoneymoonShop.Controllers
                     {
                         if (int.Parse(silhouette[i]) == d.SilhouetteID) bsil = true;
                     }
-                    //silhouette[0] = "-1";
-                    //foreach (string s in silhouette)
-                    //{
-                    //    if (int.Parse(s) == d.SilhouetteID) bsil = true;
-                    //}
                 }
 
                 if (color[0].Equals("all") && color.Length == 1) bcolor = true;
@@ -195,13 +198,7 @@ namespace HoneymoonShop.Controllers
                     for (int i = 1; i < color.Length; i++)
                     {
                         if (colors.Contains(int.Parse(color[i]))) bcolor = true;
-                        //if (int.Parse(color[i]) == d.ColorID) bcolor = true;
                     }
-                    //color[0] = "-1";
-                    //foreach (string s in color)
-                    //{
-                    //    if (int.Parse(s) == d.ColorID) bcolor = true;
-                    //}
                 }
 
                 if (bmanu == false || bstyle == false || bneck == false || bsil == false || bcolor == false)
@@ -213,6 +210,29 @@ namespace HoneymoonShop.Controllers
             {
                 availableDress.Remove(d);
             }
+
+            var img = new Dictionary<int, string>();
+            var dmanu = new Dictionary<int, string>();
+            string path = Path.Combine(_env.WebRootPath, "images/dress");
+            DirectoryInfo di = new DirectoryInfo(path);
+            List<string> files = new List<string>();
+            foreach (Dress d in availableDress)
+            {
+                string dressmanu = _context.Manu.Where(m => m.ID == d.ManuID).First().Name.Replace(" ", string.Empty);
+                foreach (string s in Directory.GetFiles(path))
+                {
+                    string startw = d.ID.ToString() + dressmanu + "1";
+                    string filename = s.Replace(path + "\\", string.Empty);
+                    if (filename.StartsWith(startw))
+                    {
+                        img.Add(d.ID, filename);
+                    }
+                }
+                dmanu.Add(d.ID, _context.Manu.Where(m => m.ID == d.ManuID).First().Name);
+            }
+
+            ViewData["Manu"] = dmanu;
+            ViewData["Images"] = img;
             ViewData["Dress"] = availableDress;
             ViewData["CategoryID"] = _context.Category.ToList();
             ViewData["ColorID"] = _context.Color.ToList();

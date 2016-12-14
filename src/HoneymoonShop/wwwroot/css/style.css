@@ -281,4 +281,77 @@ input[type=checkbox]:checked + label{
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 
-    /**JQuery^*/
+.grow{
+    transition: all .5s ease-in-out;
+}
+
+.grow:hover{
+    transform: scale(1.1);
+}
+
+.grow>div>label{
+    width:1em; height:1em; background-color: pink; border-radius: 50%; border: 1px solid grey; margin-right: 1em;
+}
+
+.overview{
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 767px){
+    .overview-item {
+        justify-content: space-around;
+        flex-basis: 100%;
+        width: auto;
+        padding: 0.7em;
+        background-color: white
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .overview-item{
+        justify-content: space-around;
+        flex-basis: 50%; 
+        height: 20em;
+        width: 20em;
+        padding: 0.7em;
+        background-color: white;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .overview-item {
+        justify-content: space-around;
+        flex-basis: 33.33%; 
+        height: 20em;
+        width: 20em;
+        padding: 0.7em;
+        background-color: white;
+    }
+}
+
+.overview-item>img{
+    width: 100%
+}
+a[class*="overview-item"]{
+    padding: 0px;
+    color: inherit;
+    text-decoration: none;
+}
+div[class*="overview-item"]>div{
+    height: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility .5s, opacity .5s ease-in-out;
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    left: 0px;
+    padding-left: 0.7em;
+}
+.overview-item:hover >div{
+    height: inherit;
+    visibility: visible;
+    opacity: 1;
+}

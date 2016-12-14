@@ -1,20 +1,8 @@
 @{
-    ViewData["Title"] = "Home Page";
-    ViewData["Background"] = "";
-    ViewData["HeaderHeight"] = "";
+    ViewData["Title"] = "Dress Overview";
+    ViewData["Background"] = "white";
+    ViewData["HeaderHeight"] = "40em";
 }
-
-@*<!DOCTYPE html>
-
-<html>
-<head>
-    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-    <meta name="viewport" content="width=device-width" />
-    <title>Overview</title>
-</head>
-<body>*@
 
 @section Imports{
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -29,91 +17,117 @@
       values: [ 0, 15000 ],
       slide: function( event, ui ) {
           $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+          $("#pricemin").val(ui.values[0]);
+          $("#pricemax").val(ui.values[1]);
       }
     });
     $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
       " - $" + $("#slider-range").slider("values", 1));
-    $("#pricemin").val($("#slider-range").slider("values", 0));
-    $("#pricemax").val($("#slider-range").slider("values", 1));
   } );
 </script>
 }
 
-@section HeaderOverlay{
+@section HeaderOverlay{}
 
-}
-
-<div class="container">
+<div class="container" style="background:white">
     <div class="row">
         <div class="col-md-2">
             <form method="get" asp-action="OverviewFiltered">
                 <!--Manu-->
-                <h4>Brand</h4>
-                <div style="display:inline">
+                <div style="background:#f6f6f6"><a href="#manu" data-toggle="collapse"><h4><b>Brand</b></h4></a></div>
+                <div id="manu" class="collapse in" style="background:#fcfcfc">
                     <input type="hidden" name="manu" value="all" />
                     @foreach (Manu m in ViewBag.ManuID)
                     {
-                        <input type="checkbox" name="manu" value="@m.ID" style="position:initial" /> @m.Name
+                        <input id="checkbox @m.ID" type="checkbox" name="manu" value="@m.ID" style="display:none" />
+                        <label for="checkbox @m.ID" style="margin-bottom: -.3em;display:inline-block"></label>
+                        <p style="display:inline-block">@m.Name</p>
                         <br />
                     }
                 </div>
 
                 <!--Style-->
-                <h4>Style</h4>
-                <div style="display:inline">
+                <div style="background:#f6f6f6"><a href="#style" data-toggle="collapse"><h4><b>Style</b></h4></a></div>
+                <div id="style" class="collapse in" style="background:#fcfcfc">
                     <input type="hidden" name="style" value="all" />
                     @foreach (Style s in ViewBag.StyleID)
                     {
-                        <input type="checkbox" name="style" value="@s.ID" style="position:initial" /> @s.Name
+                        <input id="checkbox @s.ID" type="checkbox" name="manu" value="@s.ID" style="display:none" />
+                        <label for="checkbox @s.ID" style="margin-bottom: -.3em;display:inline-block"></label>
+                        <p style="display:inline-block">@s.Name</p>
                         <br />
                     }
                 </div>
 
                 <!--Price-->
-                <input type="hidden" name="pricemin" id="pricemin" />
-                <input type="hidden" name="pricemax" id="pricemax" />
-                <h4>Price</h4>
-                <div>
+                <input type="hidden" name="pricemin" id="pricemin" value="0"/>
+                <input type="hidden" name="pricemax" id="pricemax" value="15000"/>
+                <div style="background:#f6f6f6"><a href="#price" data-toggle="collapse"><h4><b>Price</b></h4></a></div>
+                <div id="price" class="collapse in" style="background:#fcfcfc">
                     <input type="text" id="amount" readonly style="border:0; font-weight:bold; background:none">
+                    <div id="slider-range"></div>
                 </div>
-                <div id="slider-range"></div>
 
                 <!--Neckline-->
-                <h4>Neckline</h4>
-                <div style="display:inline">
+                <div style="background:#f6f6f6"><a href="#neck" data-toggle="collapse"><h4><b>Neckline</b></h4></a></div>
+                <div id="neck" class="collapse" style="background:#fcfcfc">
                     <input type="hidden" name="neckline" value="all" />
                     @foreach (Neckline n in ViewBag.NecklineID)
                     {
-                        <input type="checkbox" name="neckline" value="@n.ID" style="position:initial" /> @n.Name
+                        <input id="checkbox @n.ID" type="checkbox" name="manu" value="@n.ID" style="display:none" />
+                        <label for="checkbox @n.ID" style="margin-bottom: -.3em;display:inline-block"></label>
+                        <p style="display:inline-block">@n.Name</p>
                         <br />
                     }
                 </div>
 
                 <!--Silhouette-->
-                <h4>Silhouette</h4>
-                <div style="display:inline">
+                <div style="background:#f6f6f6"><a href="#sil" data-toggle="collapse"><h4><b>Silhouette</b></h4></a></div>
+                <div id="sil" class="collapse" style="background:#fcfcfc">
                     <input type="hidden" name="silhouette" value="all" />
                     @foreach (Silhouette s in ViewBag.SilhouetteID)
                     {
-                        <input type="checkbox" name="silhouette" value="@s.ID" style="position:initial" /> @s.Name
+                        <input id="checkbox @s.ID" type="checkbox" name="manu" value="@s.ID" style="display:none" />
+                        <label for="checkbox @s.ID" style="margin-bottom: -.3em;display:inline-block"></label>
+                        <p style="display:inline-block">@s.Name</p>
                         <br />
                     }
                 </div>
 
                 <!--Color-->
-                <h4>Color</h4>
-                <div style="display:inline">
+                <div style="background:#f6f6f6"><a href="#color" data-toggle="collapse"><h4><b>Color</b></h4></a></div>
+                <div id="color" class="collapse" style="background:#fcfcfc">
                     <input type="hidden" name="color" value="all" />
                     @foreach (Color c in ViewBag.ColorID)
                     {
-                        <input type="checkbox" name="color" value="@c.ID" style="position:initial" /> @c.Name
+                        <input id="checkbox @c.ID" type="checkbox" name="manu" value="@c.ID" style="display:none" />
+                        <label for="checkbox @c.ID" style="margin-bottom: -.3em;display:inline-block"></label>
+                        <p style="display:inline-block">@c.Name</p>
                         <br />
                     }
                 </div>
                 <div>
-                    <input type="submit" value="Search" />
+                    <input style="width:100%" type="submit" value="Search" />
                 </div>
             </form>
+        </div>
+        <div class="col-md-10">
+            <div class="overview">
+                @foreach (Dress d in ViewBag.Dress)
+                {
+                    <div>
+                    <a href="#" class="overview-item">
+                        <div class="grow overview-item" style="height:auto"><img src="~/images/dress/@ViewBag.Images[d.ID]"/>
+                            <h4>@ViewBag.Manu[d.ID]</h4>
+                            <div>
+                                <p>Artikel nr. @d.ID</p>
+                                <label></label>
+                            </div>
+                        </div>
+                    </a>
+                        </div>
+                }
+            </div>
         </div>
     </div>
 </div>
