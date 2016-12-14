@@ -1,8 +1,10 @@
 @{
-    Layout = null;
+    ViewData["Title"] = "Home Page";
+    ViewData["Background"] = "";
+    ViewData["HeaderHeight"] = "";
 }
 
-<!DOCTYPE html>
+@*<!DOCTYPE html>
 
 <html>
 <head>
@@ -12,84 +14,112 @@
     <meta name="viewport" content="width=device-width" />
     <title>Overview</title>
 </head>
-<body>
+<body>*@
 
-<form method="get" asp-action="OverviewFiltered">
-    <!--Manu-->
-    <h4>Brand</h4>
-    <div style="display:inline">
-        <input type="hidden" name="manu" value="all" />
-        @foreach (Manu m in ViewBag.ManuID)
-        {
-            <input type="checkbox" name="manu" value="@m.ID" style="position:initial" /> @m.Name
-        }
-    </div>
+@section Imports{
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+  $( function() {
+    $( "#slider-range" ).slider({
+      range: true,
+      min: 0,
+      max: 15000,
+      values: [ 0, 15000 ],
+      slide: function( event, ui ) {
+          $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+      }
+    });
+    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+      " - $" + $("#slider-range").slider("values", 1));
+    $("#pricemin").val($("#slider-range").slider("values", 0));
+    $("#pricemax").val($("#slider-range").slider("values", 1));
+  } );
+</script>
+}
 
-    <!--Style-->
-    <h4>Style</h4>
-    <div style="display:inline">
-        <input type="hidden" name="style" value="all" />
-        @foreach (Style s in ViewBag.StyleID)
-        {
-            <input type="checkbox" name="style" value="@s.ID" style="position:initial" /> @s.Name
-        }
-    </div>
+@section HeaderOverlay{
 
-    <!--Price-->
-    <h4>Price</h4>
-    <div data-role="rangeslider">
-        <label for="price-min">Price:</label>
-        <input type="range" name="pricemin" value="0" min="0" max="15000">
-        <label for="price-max">Price:</label>
-        <input type="range" name="pricemax" value="15000" min="0" max="15000">
-    </div>
+}
 
-    <!--Neckline-->
-    <h4>Neckline</h4>
-    <div style="display:inline">
-        <input type="hidden" name="neckline" value="all" />
-        @foreach (Neckline n in ViewBag.NecklineID)
-        {
-            <input type="checkbox" name="neckline" value="@n.ID" style="position:initial" /> @n.Name
-        }
-    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <form method="get" asp-action="OverviewFiltered">
+                <!--Manu-->
+                <h4>Brand</h4>
+                <div style="display:inline">
+                    <input type="hidden" name="manu" value="all" />
+                    @foreach (Manu m in ViewBag.ManuID)
+                    {
+                        <input type="checkbox" name="manu" value="@m.ID" style="position:initial" /> @m.Name
+                        <br />
+                    }
+                </div>
 
-    <!--Silhouette-->
-    <h4>Silhouette</h4>
-    <div style="display:inline">
-        <input type="hidden" name="silhouette" value="all" />
-        @foreach (Silhouette s in ViewBag.SilhouetteID)
-        {
-            <input type="checkbox" name="silhouette" value="@s.ID" style="position:initial" /> @s.Name
-        }
-    </div>
+                <!--Style-->
+                <h4>Style</h4>
+                <div style="display:inline">
+                    <input type="hidden" name="style" value="all" />
+                    @foreach (Style s in ViewBag.StyleID)
+                    {
+                        <input type="checkbox" name="style" value="@s.ID" style="position:initial" /> @s.Name
+                        <br />
+                    }
+                </div>
 
-    <!--Color-->
-    <h4>Color</h4>
-    <div style="display:inline">
-        <input type="hidden" name="color" value="all" />
-        @foreach (Color c in ViewBag.ColorID)
-        {
-            <input type="checkbox" name="color" value="@c.ID" style="position:initial" /> @c.Name
-        }
-    </div>
-    <div>
-        <input type="submit" value="Search" />
-    </div>
-</form>
+                <!--Price-->
+                <input type="hidden" name="pricemin" id="pricemin" />
+                <input type="hidden" name="pricemax" id="pricemax" />
+                <h4>Price</h4>
+                <div>
+                    <input type="text" id="amount" readonly style="border:0; font-weight:bold; background:none">
+                </div>
+                <div id="slider-range"></div>
 
-    <div>
-        <ul>
-            @foreach(Dress d in ViewBag.Dress)
-            {
-                <li><b>Artikelnr: @d.ID</b></li>
-                <li></li>
-            }
-        </ul>
+                <!--Neckline-->
+                <h4>Neckline</h4>
+                <div style="display:inline">
+                    <input type="hidden" name="neckline" value="all" />
+                    @foreach (Neckline n in ViewBag.NecklineID)
+                    {
+                        <input type="checkbox" name="neckline" value="@n.ID" style="position:initial" /> @n.Name
+                        <br />
+                    }
+                </div>
+
+                <!--Silhouette-->
+                <h4>Silhouette</h4>
+                <div style="display:inline">
+                    <input type="hidden" name="silhouette" value="all" />
+                    @foreach (Silhouette s in ViewBag.SilhouetteID)
+                    {
+                        <input type="checkbox" name="silhouette" value="@s.ID" style="position:initial" /> @s.Name
+                        <br />
+                    }
+                </div>
+
+                <!--Color-->
+                <h4>Color</h4>
+                <div style="display:inline">
+                    <input type="hidden" name="color" value="all" />
+                    @foreach (Color c in ViewBag.ColorID)
+                    {
+                        <input type="checkbox" name="color" value="@c.ID" style="position:initial" /> @c.Name
+                        <br />
+                    }
+                </div>
+                <div>
+                    <input type="submit" value="Search" />
+                </div>
+            </form>
+        </div>
     </div>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-</body>
-</html>
+@*</body>
+</html>*@

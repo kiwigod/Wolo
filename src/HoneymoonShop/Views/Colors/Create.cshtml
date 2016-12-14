@@ -19,6 +19,13 @@
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
+            <label asp-for="ColorCode" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ColorCode" class="form-control" />
+                <span asp-validation-for="ColorCode" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
             <label asp-for="Name" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="Name" class="form-control" />

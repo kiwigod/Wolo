@@ -18,8 +18,7 @@ namespace HoneymoonShop.Models
         public Neckline Neckline { get; set; }
         public int SilhouetteID { get; set; }
         public Silhouette Silhouette { get; set; }
-        public int ColorID { get; set; }
-        public Color Color { get; set; }
+        public List<DressColor> DressColors { get; set; } 
         public int ManuID { get; set; }
         public Manu Manu { get; set; }
         public List<DressFeature> DressFeatures { get; set; }

@@ -37,6 +37,19 @@ namespace HoneymoonShop.Data
                 .HasOne(df => df.Feature)
                 .WithMany(f => f.DressFeatures)
                 .HasForeignKey(df => df.FeatureID);
+
+            builder.Entity<DressColor>()
+                .HasKey(c => new { c.DressID, c.ColorID });
+
+            builder.Entity<DressColor>()
+                .HasOne(dc => dc.Dress)
+                .WithMany(d => d.DressColors)
+                .HasForeignKey(dc => dc.DressID);
+
+            builder.Entity<DressColor>()
+                .HasOne(dc => dc.Color)
+                .WithMany(c => c.DressColors)
+                .HasForeignKey(dc => dc.ColorID);
         }
 
         public DbSet<DressFeature> DressFeature { get; set; }
@@ -52,5 +65,7 @@ namespace HoneymoonShop.Data
         public DbSet<Style> Style { get; set; }
 
         public DbSet<Category> Category { get; set; }
+
+        public DbSet<DressColor> DressColor { get; set; }
     }
 }

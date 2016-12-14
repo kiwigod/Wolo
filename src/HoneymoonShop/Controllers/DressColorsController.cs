@@ -10,22 +10,23 @@ using HoneymoonShop.Models;
 
 namespace HoneymoonShop.Controllers
 {
-    public class ColorsController : Controller
+    public class DressColorsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ColorsController(ApplicationDbContext context)
+        public DressColorsController(ApplicationDbContext context)
         {
             _context = context;    
         }
 
-        // GET: Colors
+        // GET: DressColors
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Color.ToListAsync());
+            var applicationDbContext = _context.DressColor.Include(d => d.Color).Include(d => d.Dress);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Colors/Details/5
+        // GET: DressColors/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,38 +34,42 @@ namespace HoneymoonShop.Controllers
                 return NotFound();
             }
 
-            var color = await _context.Color.SingleOrDefaultAsync(m => m.ID == id);
-            if (color == null)
+            var dressColor = await _context.DressColor.SingleOrDefaultAsync(m => m.DressID == id);
+            if (dressColor == null)
             {
                 return NotFound();
             }
 
-            return View(color);
+            return View(dressColor);
         }
 
-        // GET: Colors/Create
+        // GET: DressColors/Create
         public IActionResult Create()
         {
+            ViewData["ColorID"] = new SelectList(_context.Color, "ID", "ID");
+            ViewData["DressID"] = new SelectList(_context.Dress, "ID", "ID");
             return View();
         }
 
-        // POST: Colors/Create
+        // POST: DressColors/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ColorCode,Name")] Color color)
+        public async Task<IActionResult> Create([Bind("DressID,ColorID")] DressColor dressColor)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(color);
+                _context.Add(dressColor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(color);
+            ViewData["ColorID"] = new SelectList(_context.Color, "ID", "ID", dressColor.ColorID);
+            ViewData["DressID"] = new SelectList(_context.Dress, "ID", "ID", dressColor.DressID);
+            return View(dressColor);
         }
 
-        // GET: Colors/Edit/5
+        // GET: DressColors/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +77,24 @@ namespace HoneymoonShop.Controllers
                 return NotFound();
             }
 
-            var color = await _context.Color.SingleOrDefaultAsync(m => m.ID == id);
-            if (color == null)
+            var dressColor = await _context.DressColor.SingleOrDefaultAsync(m => m.DressID == id);
+            if (dressColor == null)
             {
                 return NotFound();
             }
-            return View(color);
+            ViewData["ColorID"] = new SelectList(_context.Color, "ID", "ID", dressColor.ColorID);
+            ViewData["DressID"] = new SelectList(_context.Dress, "ID", "ID", dressColor.DressID);
+            return View(dressColor);
         }
 
-        // POST: Colors/Edit/5
+        // POST: DressColors/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,ColorCode,Name")] Color color)
+        public async Task<IActionResult> Edit(int id, [Bind("DressID,ColorID")] DressColor dressColor)
         {
-            if (id != color.ID)
+            if (id != dressColor.DressID)
             {
                 return NotFound();
             }
@@ -96,12 +103,12 @@ namespace HoneymoonShop.Controllers
             {
                 try
                 {
-                    _context.Update(color);
+                    _context.Update(dressColor);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ColorExists(color.ID))
+                    if (!DressColorExists(dressColor.DressID))
                     {
                         return NotFound();
                     }
@@ -112,10 +119,12 @@ namespace HoneymoonShop.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            return View(color);
+            ViewData["ColorID"] = new SelectList(_context.Color, "ID", "ID", dressColor.ColorID);
+            ViewData["DressID"] = new SelectList(_context.Dress, "ID", "ID", dressColor.DressID);
+            return View(dressColor);
         }
 
-        // GET: Colors/Delete/5
+        // GET: DressColors/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,29 +132,29 @@ namespace HoneymoonShop.Controllers
                 return NotFound();
             }
 
-            var color = await _context.Color.SingleOrDefaultAsync(m => m.ID == id);
-            if (color == null)
+            var dressColor = await _context.DressColor.SingleOrDefaultAsync(m => m.DressID == id);
+            if (dressColor == null)
             {
                 return NotFound();
             }
 
-            return View(color);
+            return View(dressColor);
         }
 
-        // POST: Colors/Delete/5
+        // POST: DressColors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var color = await _context.Color.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Color.Remove(color);
+            var dressColor = await _context.DressColor.SingleOrDefaultAsync(m => m.DressID == id);
+            _context.DressColor.Remove(dressColor);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
-        private bool ColorExists(int id)
+        private bool DressColorExists(int id)
         {
-            return _context.Color.Any(e => e.ID == id);
+            return _context.DressColor.Any(e => e.DressID == id);
         }
     }
 }

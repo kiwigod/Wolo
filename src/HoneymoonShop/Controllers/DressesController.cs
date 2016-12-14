@@ -27,7 +27,7 @@ namespace HoneymoonShop.Controllers
         // GET: Dresses
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Dress.Include(d => d.Category).Include(d => d.Color).Include(d => d.Manu).Include(d => d.Neckline).Include(d => d.Silhouette).Include(d => d.Style);
+            var applicationDbContext = _context.Dress.Include(d => d.Category).Include(d => d.Manu).Include(d => d.Neckline).Include(d => d.Silhouette).Include(d => d.Style);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -51,12 +51,11 @@ namespace HoneymoonShop.Controllers
         // GET: Dresses/Create
         public IActionResult Create()
         {
-            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "Name");
-            ViewData["ColorID"] = new SelectList(_context.Color, "ID", "Name");
-            ViewData["ManuID"] = new SelectList(_context.Manu, "ID", "Name");
-            ViewData["NecklineID"] = new SelectList(_context.Neckline, "ID", "Name");
-            ViewData["SilhouetteID"] = new SelectList(_context.Silhouette, "ID", "Name");
-            ViewData["StyleID"] = new SelectList(_context.Style, "ID", "Name");
+            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "ID");
+            ViewData["ManuID"] = new SelectList(_context.Manu, "ID", "ID");
+            ViewData["NecklineID"] = new SelectList(_context.Neckline, "ID", "ID");
+            ViewData["SilhouetteID"] = new SelectList(_context.Silhouette, "ID", "ID");
+            ViewData["StyleID"] = new SelectList(_context.Style, "ID", "ID");
             return View();
         }
 
@@ -65,7 +64,7 @@ namespace HoneymoonShop.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,CategoryID,ColorID,Description,ManuID,NecklineID,Price,SilhouetteID,StyleID")] Dress dress)
+        public async Task<IActionResult> Create([Bind("ID,CategoryID,Description,ManuID,NecklineID,Price,SilhouetteID,StyleID")] Dress dress)
         {
             if (ModelState.IsValid)
             {
@@ -73,12 +72,11 @@ namespace HoneymoonShop.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "Name", dress.CategoryID);
-            ViewData["ColorID"] = new SelectList(_context.Color, "ID", "Name", dress.ColorID);
-            ViewData["ManuID"] = new SelectList(_context.Manu, "ID", "Name", dress.ManuID);
-            ViewData["NecklineID"] = new SelectList(_context.Neckline, "ID", "Name", dress.NecklineID);
-            ViewData["SilhouetteID"] = new SelectList(_context.Silhouette, "ID", "Name", dress.SilhouetteID);
-            ViewData["StyleID"] = new SelectList(_context.Style, "ID", "Name", dress.StyleID);
+            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "ID", dress.CategoryID);
+            ViewData["ManuID"] = new SelectList(_context.Manu, "ID", "ID", dress.ManuID);
+            ViewData["NecklineID"] = new SelectList(_context.Neckline, "ID", "ID", dress.NecklineID);
+            ViewData["SilhouetteID"] = new SelectList(_context.Silhouette, "ID", "ID", dress.SilhouetteID);
+            ViewData["StyleID"] = new SelectList(_context.Style, "ID", "ID", dress.StyleID);
             return View(dress);
         }
 
@@ -118,6 +116,7 @@ namespace HoneymoonShop.Controllers
         public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color)
         {
             List<Dress> availableDress = _context.Dress.Where(d => d.Price >= pricemin && d.Price <= pricemax).ToList();
+            List<DressColor> filterColor = new List<DressColor>();
             //if (availableDress.Count == null) availableDress = new List<Dress>();
             List<Dress> toRemove = new List<Dress>();
             foreach (Dress d in availableDress)
@@ -186,9 +185,17 @@ namespace HoneymoonShop.Controllers
                 if (color[0].Equals("all") && color.Length == 1) bcolor = true;
                 else
                 {
+                    List<DressColor> temp = _context.DressColor.Where(dc => dc.DressID == d.ID).ToList();
+                    List<int> colors = new List<int>();
+                    foreach (DressColor dc in temp)
+                    {
+                        colors.Add(dc.ColorID);
+                    }
+
                     for (int i = 1; i < color.Length; i++)
                     {
-                        if (int.Parse(color[i]) == d.ColorID) bcolor = true;
+                        if (colors.Contains(int.Parse(color[i]))) bcolor = true;
+                        //if (int.Parse(color[i]) == d.ColorID) bcolor = true;
                     }
                     //color[0] = "-1";
                     //foreach (string s in color)
@@ -202,7 +209,7 @@ namespace HoneymoonShop.Controllers
                     toRemove.Add(d);
                 }
             }
-            foreach(Dress d in toRemove)
+            foreach (Dress d in toRemove)
             {
                 availableDress.Remove(d);
             }
@@ -299,6 +306,68 @@ namespace HoneymoonShop.Controllers
             return RedirectToAction("AddImage", id);
         }
 
+        public IActionResult AddColor(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var dress = _context.Dress.Where(d => d.ID == id).First();
+            if (dress == null)
+            {
+                return NotFound();
+            }
+
+            List<Color> currentColors = new List<Color>();
+            List<Color> availableColors = new List<Color>();
+            foreach (DressColor dc in _context.DressColor)
+            {
+                if (dc.DressID == id)
+                {
+                    currentColors.Add(_context.Color.Where(c => c.ID == dc.ColorID).First());
+                }
+            }
+            foreach (Color c in _context.Color)
+            {
+                if (currentColors.Find(cc => cc.ID == c.ID) == null)
+                {
+                    availableColors.Add(c);
+                }
+            }
+
+            List<string> currentCName = new List<string>();
+            foreach (Color c in currentColors)
+            {
+                currentCName.Add(c.Name);
+            }
+
+            ViewData["CurrentColors"] = currentCName;
+            ViewData["AvailableColors"] = new SelectList(availableColors, "ID", "Name");
+            List<Dress> temp = new List<Dress>();
+            temp.Add(dress);
+            ViewData["Dress"] = new SelectList(temp, "ID", "ID");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddColor(int? id, [Bind("DressID,ColorID")] DressColor dc)
+        {
+            if (id != dc.DressID)
+            {
+                return NotFound();
+            }
+
+            if(ModelState.IsValid)
+            {
+                _context.Add(dc);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("AddColor", dc.DressID);
+            }
+            return NotFound();
+        }
+
         // GET: Dresses/AddFeature/5
         // Add features to a specific dress (maybe replace function to DressFeaturesController?)
         public IActionResult AddFeature(int? id)
@@ -378,12 +447,11 @@ namespace HoneymoonShop.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "Name", dress.CategoryID);
-            ViewData["ColorID"] = new SelectList(_context.Color, "ID", "Name", dress.ColorID);
-            ViewData["ManuID"] = new SelectList(_context.Manu, "ID", "Name", dress.ManuID);
-            ViewData["NecklineID"] = new SelectList(_context.Neckline, "ID", "Name", dress.NecklineID);
-            ViewData["SilhouetteID"] = new SelectList(_context.Silhouette, "ID", "Name", dress.SilhouetteID);
-            ViewData["StyleID"] = new SelectList(_context.Style, "ID", "Name", dress.StyleID);
+            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "ID", dress.CategoryID);
+            ViewData["ManuID"] = new SelectList(_context.Manu, "ID", "ID", dress.ManuID);
+            ViewData["NecklineID"] = new SelectList(_context.Neckline, "ID", "ID", dress.NecklineID);
+            ViewData["SilhouetteID"] = new SelectList(_context.Silhouette, "ID", "ID", dress.SilhouetteID);
+            ViewData["StyleID"] = new SelectList(_context.Style, "ID", "ID", dress.StyleID);
             return View(dress);
         }
 
@@ -392,7 +460,7 @@ namespace HoneymoonShop.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,CategoryID,ColorID,Description,ManuID,NecklineID,Price,SilhouetteID,StyleID")] Dress dress)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,CategoryID,Description,ManuID,NecklineID,Price,SilhouetteID,StyleID")] Dress dress)
         {
             if (id != dress.ID)
             {
@@ -419,12 +487,11 @@ namespace HoneymoonShop.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "Name", dress.CategoryID);
-            ViewData["ColorID"] = new SelectList(_context.Color, "ID", "Name", dress.ColorID);
-            ViewData["ManuID"] = new SelectList(_context.Manu, "ID", "Name", dress.ManuID);
-            ViewData["NecklineID"] = new SelectList(_context.Neckline, "ID", "Name", dress.NecklineID);
-            ViewData["SilhouetteID"] = new SelectList(_context.Silhouette, "ID", "Name", dress.SilhouetteID);
-            ViewData["StyleID"] = new SelectList(_context.Style, "ID", "Name", dress.StyleID);
+            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "ID", dress.CategoryID);
+            ViewData["ManuID"] = new SelectList(_context.Manu, "ID", "ID", dress.ManuID);
+            ViewData["NecklineID"] = new SelectList(_context.Neckline, "ID", "ID", dress.NecklineID);
+            ViewData["SilhouetteID"] = new SelectList(_context.Silhouette, "ID", "ID", dress.SilhouetteID);
+            ViewData["StyleID"] = new SelectList(_context.Style, "ID", "ID", dress.StyleID);
             return View(dress);
         }
 

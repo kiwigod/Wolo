@@ -8,9 +8,10 @@ using HoneymoonShop.Data;
 namespace HoneymoonShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161213132309_ColorCode")]
+    partial class ColorCode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -98,6 +99,8 @@ namespace HoneymoonShop.Migrations
 
                     b.Property<int>("CategoryID");
 
+                    b.Property<int>("ColorID");
+
                     b.Property<string>("Description");
 
                     b.Property<int>("ManuID");
@@ -114,6 +117,8 @@ namespace HoneymoonShop.Migrations
 
                     b.HasIndex("CategoryID");
 
+                    b.HasIndex("ColorID");
+
                     b.HasIndex("ManuID");
 
                     b.HasIndex("NecklineID");
@@ -123,21 +128,6 @@ namespace HoneymoonShop.Migrations
                     b.HasIndex("StyleID");
 
                     b.ToTable("Dress");
-                });
-
-            modelBuilder.Entity("HoneymoonShop.Models.DressColor", b =>
-                {
-                    b.Property<int>("DressID");
-
-                    b.Property<int>("ColorID");
-
-                    b.HasKey("DressID", "ColorID");
-
-                    b.HasIndex("ColorID");
-
-                    b.HasIndex("DressID");
-
-                    b.ToTable("DressColor");
                 });
 
             modelBuilder.Entity("HoneymoonShop.Models.DressFeature", b =>
@@ -329,6 +319,11 @@ namespace HoneymoonShop.Migrations
                         .HasForeignKey("CategoryID")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("HoneymoonShop.Models.Color", "Color")
+                        .WithMany("Dresses")
+                        .HasForeignKey("ColorID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("HoneymoonShop.Models.Manu", "Manu")
                         .WithMany("Dresses")
                         .HasForeignKey("ManuID")
@@ -347,19 +342,6 @@ namespace HoneymoonShop.Migrations
                     b.HasOne("HoneymoonShop.Models.Style", "Style")
                         .WithMany("Dresses")
                         .HasForeignKey("StyleID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("HoneymoonShop.Models.DressColor", b =>
-                {
-                    b.HasOne("HoneymoonShop.Models.Color", "Color")
-                        .WithMany("DressColors")
-                        .HasForeignKey("ColorID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("HoneymoonShop.Models.Dress", "Dress")
-                        .WithMany("DressColors")
-                        .HasForeignKey("DressID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
