@@ -123,10 +123,10 @@
                     foreach (Dress d in ViewBag.Dress)
                     {
                         <div>
-                            <a href="#" class="overview-item">
+                            <a asp-action="Details/@d.ID" class="overview-item">
                                 <div class="grow overview-item" style="height:auto">
                                     <img src="~/images/dress/@ViewBag.Images[d.ID]" />
-                                    <h4>@ViewBag.Manu[d.ID]</h4>
+                                    <h4>@d.Manu.Name</h4>
                                     <div>
                                         <p>Artikel nr. @d.ID</p>
                                         <label></label>

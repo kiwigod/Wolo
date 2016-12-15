@@ -8,57 +8,62 @@
 
 @section HeaderOverlay {}
 
-<div class="container">
+<div class="container" style="background:white">
     <div class="row">
         <div class="col-md-3">
             @foreach (string file in ViewBag.Images)
             {
-                <img src="~/images/dress/@file" />
+                <img class="img-responsive" src="~/images/dress/@file" />
             }
-            <img />
-            <img />
-            <img />
         </div>
         <div class="col-md-6">
-
+            <img class="img-responsive" src="~/images/dress/@ViewBag.Images[0]"/>
         </div>
         <div class="col-md-3">
+            <h2>@Html.DisplayFor(model => model.Manu.Name)</h2>
+            <p>artikel nr. @Html.DisplayFor(model => model.ID)</p>
+            <p>@Html.DisplayFor(model => model.Description)</p>
+            <p>Merk: @Html.DisplayFor(model => model.Manu.Name)</p>
+            <p>Kenmerken: 
+            @foreach (string feature in ViewBag.Features)
+            {
+                @feature <span> </span>
 
+            }
+            </p>
+            <p>Prijsindicatie: @Html.DisplayFor(model => model.Price)</p>
+            <p>Beschikbare kleuren:
+            @foreach (string color in ViewBag.Colors)
+            {
+                @color <span> </span>
+
+            }
+            </p>
+            <p>Kom deze jurk passen!</p>
+            <a class="btn btn-default" href="#" role="button">PASAFSPRAAK MAKEN</a>
         </div>
     </div>
+
+    @*<div class="row">
+        <div class="col-md-12">OF ZIJN DEZE JURKEN MEER IETS VOOR JOU?</div>
+    </div>
+    <div class="row">
+        <div class="overview">
+            @foreach (Dress d in ViewBag.RecDress)
+            {
+            <div>
+                <a href="#" class="overview-item">
+                    <div class="grow overview-item" style="height:auto">
+                        <img src="~/images/dress/@ViewBag.RecImages.TryGetValue(d.ID)" />
+                        <h4>@d.Manu.Name</h4>
+                        <div>
+                            <p>Artikel nr. @d.ID</p>
+                            <label></label>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            }
+        </div>
+    </div>*@
 </div>
-
-
-@*<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-
-<div>
-    <h4>Dress</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
-</body>
-</html>*@

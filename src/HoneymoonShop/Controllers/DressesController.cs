@@ -39,24 +39,78 @@ namespace HoneymoonShop.Controllers
                 return NotFound();
             }
 
-            var dress = await _context.Dress.SingleOrDefaultAsync(m => m.ID == id);
+            var dress = await _context.Dress
+                .Include(d => d.Manu)
+                .Include(d => d.DressColors)
+                .Include(d => d.DressFeatures)
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (dress == null)
             {
                 return NotFound();
             }
 
-            string path = Path.Combine(_env.WebRootPath, "images/dress");
+            string path = Path.Combine(_env.WebRootPath, $"images/dress/{id}");
             DirectoryInfo di = new DirectoryInfo(path);
-            List<string> files = new List<string>();
+            List<string> images = new List<string>();
             foreach (string s in Directory.GetFiles(path))
             {
                 string startw = dress.ID.ToString();
                 string filename = s.Replace(path + "\\", string.Empty);
                 if (filename.StartsWith(startw))
                 {
-                    files.Add(filename);
+                    images.Add($"{id}/" + filename);
                 }
             }
+
+            List<string> colors = new List<string>();
+            foreach (DressColor dc in dress.DressColors)
+            {
+                colors.Add(_context.Color.Where(c => dc.ColorID == c.ID).First().Name);
+            }
+
+            List<string> features = new List<string>();
+            foreach (DressFeature df in dress.DressFeatures)
+            {
+                features.Add(_context.Feature.Where(f => df.FeatureID == f.ID).First().Name);
+            }
+
+            //Recommendend dresses
+            List<Dress> recDress = new List<Dress>();
+            foreach (Dress d in _context.Dress)
+            {
+                if (d.ManuID == dress.ManuID) recDress.Add(d);
+                if (recDress.Count <= 5) break;
+            }
+            if (recDress.Count <= 5)
+            {
+                foreach (Dress d in _context.Dress)
+                {
+                    if (d.StyleID == dress.StyleID) recDress.Add(d);
+                    if (recDress.Count <= 5) break;
+                }
+            }
+
+            //var recImg = new Dictionary<int, string>();
+            //foreach (Dress d in recDress)
+            //{
+            //    path = Path.Combine(_env.WebRootPath, $"images/dress/{d.ID}");
+            //    di = new DirectoryInfo(path);
+            //    foreach (string file in Directory.GetFiles(path))
+            //    {
+            //        string filename = file.Replace(path + "\\", string.Empty);
+            //        if (filename.StartsWith("1"))
+            //        {
+            //            recImg.Add(d.ID, $"{d.ID}/" + filename);
+            //            break;
+            //        }
+            //    }
+            //}
+
+            ViewData["RecDress"] = recDress;
+            //ViewData["RecImages"] = recImg;
+            ViewData["Features"] = features;
+            ViewData["Colors"] = colors;
+            ViewData["Images"] = images;
 
             return View(dress);
         }
@@ -102,9 +156,9 @@ namespace HoneymoonShop.Controllers
             ViewData["NecklineID"] = _context.Neckline.ToList();
             ViewData["SilhouetteID"] = _context.Silhouette.ToList();
             ViewData["StyleID"] = _context.Style.ToList();
-            List<Dress> availableDress = _context.Dress.ToList();
+
+            List<Dress> availableDress = _context.Dress.Include(d => d.Manu).ToList();
             var img = new Dictionary<int, string>();
-            var dmanu = new Dictionary<int, string>();
             foreach (Dress d in availableDress)
             {
                 string path = Path.Combine(_env.WebRootPath, $"images/dress/{d.ID}");
@@ -114,38 +168,20 @@ namespace HoneymoonShop.Controllers
                     string filename = s.Replace(path + "\\", string.Empty);
                     if (filename.StartsWith("1")) img.Add(d.ID, $"{d.ID}/" + filename);
                 }
-                dmanu.Add(d.ID, _context.Manu.Where(m => m.ID == d.ManuID).First().Name);
             }
 
-            ViewData["Manu"] = dmanu;
             ViewData["Images"] = img;
             ViewData["Dress"] = availableDress;
             return View();
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult ProcessFilter()
-        //{
-        //    var manu = HttpContext.Request.Form["manu"];
-        //    if (manu.Count == 0) manu = new string[] { "all" };
-        //    var style = HttpContext.Request.Form["style"];
-        //    if (style.Count == 0) style = new string[] { "all" };
-        //    var pricemin = int.Parse(HttpContext.Request.Form["pricemin"]);
-        //    var pricemax = int.Parse(HttpContext.Request.Form["pricemax"]);
-        //    var neckline = HttpContext.Request.Form["neckline"];
-        //    if (neckline.Count == 0) neckline = new string[] { "all" };
-        //    var silhouette = HttpContext.Request.Form["silhouette"];
-        //    if (silhouette.Count == 0) silhouette = new string[] { "all" };
-        //    var color = HttpContext.Request.Form["color"];
-        //    if (color.Count == 0) color = new string[] { "all" };
-        //    return RedirectToAction("Overview", new { manu = manu.ToArray(), style = style.ToArray(), pricemin = pricemin, pricemax = pricemax, neckline = neckline.ToArray(), silhouette = silhouette.ToArray(), color = color.ToArray() });
-        //}
-
         [HttpGet]
         public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color)
         {
-            List<Dress> availableDress = _context.Dress.Where(d => d.Price >= pricemin && d.Price <= pricemax).ToList();
+            List<Dress> availableDress = _context.Dress
+                .Include(d => d.Manu)
+                .Where(d => d.Price >= pricemin && d.Price <= pricemax)
+                .ToList();
             List<Dress> toRemove = new List<Dress>();
             foreach (Dress d in availableDress)
             {
@@ -217,7 +253,6 @@ namespace HoneymoonShop.Controllers
             }
 
             var img = new Dictionary<int, string>();
-            var dmanu = new Dictionary<int, string>();
             foreach (Dress d in availableDress)
             {
                 string path = Path.Combine(_env.WebRootPath, $"images/dress/{d.ID}");
@@ -225,12 +260,10 @@ namespace HoneymoonShop.Controllers
                 foreach (string s in Directory.GetFiles(path))
                 {
                     string filename = s.Replace(path + "\\", string.Empty);
-                    if(filename.Equals("1")) img.Add(d.ID, $"{d.ID}/" + filename);
+                    if(filename.StartsWith("1")) img.Add(d.ID, $"{d.ID}/" + filename);
                 }
-                dmanu.Add(d.ID, _context.Manu.Where(m => m.ID == d.ManuID).First().Name);
             }
 
-            ViewData["Manu"] = dmanu;
             ViewData["Images"] = img;
             ViewData["Dress"] = availableDress;
             ViewData["CategoryID"] = _context.Category.ToList();
@@ -246,8 +279,6 @@ namespace HoneymoonShop.Controllers
         public IActionResult AddImage(int? id)
         {
             var dress = _context.Dress.Where(d => d.ID == id).First();
-            var manu = _context.Manu.Where(m => m.ID == dress.ManuID).First().Name.Replace(" ", string.Empty);
-
             try
             {
                 string path = Path.Combine(_env.WebRootPath, $"images/dress/{id}");
@@ -276,7 +307,6 @@ namespace HoneymoonShop.Controllers
         {
             var uploads = Path.Combine(_env.WebRootPath, $"images/dress/{id}");
             Directory.CreateDirectory(uploads);
-            //var manu = _context.Manu.Where(m => m.ID == _context.Dress.Where(d => d.ID == id).First().ManuID).First().Name.Replace(" ", string.Empty);
             string[] accepted = { "jpg", "jpeg", "png", "webp", "bmp" };
 
             foreach (var file in files)
@@ -309,15 +339,7 @@ namespace HoneymoonShop.Controllers
                                     }
                                     catch
                                     {
-                                        try
-                                        {
-                                            var FileStream = new FileStream(Path.Combine(uploads, "4." + s[1]), FileMode.Create);
-                                            await file.CopyToAsync(FileStream);
-                                        }
-                                        catch
-                                        {
-                                            return NotFound();
-                                        }
+                                        return NotFound();
                                     }
                                 }
                             }
