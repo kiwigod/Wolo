@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    @*<div class="row">
+    <div class="row">
         <div class="col-md-12">OF ZIJN DEZE JURKEN MEER IETS VOOR JOU?</div>
     </div>
     <div class="row">
@@ -54,7 +54,7 @@
             <div>
                 <a href="#" class="overview-item">
                     <div class="grow overview-item" style="height:auto">
-                        <img src="~/images/dress/@ViewBag.RecImages.TryGetValue(d.ID)" />
+                        <img src="~/images/dress/@ViewBag.RecImages[d.ID]" />
                         <h4>@d.Manu.Name</h4>
                         <div>
                             <p>Artikel nr. @d.ID</p>
@@ -65,5 +65,5 @@
             </div>
             }
         </div>
-    </div>*@
+    </div>
 </div>

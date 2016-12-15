@@ -54,9 +54,8 @@ namespace HoneymoonShop.Controllers
             List<string> images = new List<string>();
             foreach (string s in Directory.GetFiles(path))
             {
-                string startw = dress.ID.ToString();
                 string filename = s.Replace(path + "\\", string.Empty);
-                if (filename.StartsWith(startw))
+                if (filename.StartsWith("1"))
                 {
                     images.Add($"{id}/" + filename);
                 }
@@ -76,38 +75,39 @@ namespace HoneymoonShop.Controllers
 
             //Recommendend dresses
             List<Dress> recDress = new List<Dress>();
-            foreach (Dress d in _context.Dress)
+            foreach (Dress d in _context.Dress.Include(d => d.Manu))
             {
-                if (d.ManuID == dress.ManuID) recDress.Add(d);
-                if (recDress.Count <= 5) break;
+                if (d.Equals(dress)) { }
+                else if (d.ManuID == dress.ManuID) recDress.Add(d);
+                if (recDress.Count >= 5) break;
             }
             if (recDress.Count <= 5)
             {
-                foreach (Dress d in _context.Dress)
+                foreach (Dress d in _context.Dress.Include(d => d.Manu))
                 {
-                    if (d.StyleID == dress.StyleID) recDress.Add(d);
-                    if (recDress.Count <= 5) break;
+                    if (d.Equals(dress)) { }
+                    else if (d.StyleID == dress.StyleID) recDress.Add(d);
+                    if (recDress.Count >= 5) break;
                 }
             }
 
-            //var recImg = new Dictionary<int, string>();
-            //foreach (Dress d in recDress)
-            //{
-            //    path = Path.Combine(_env.WebRootPath, $"images/dress/{d.ID}");
-            //    di = new DirectoryInfo(path);
-            //    foreach (string file in Directory.GetFiles(path))
-            //    {
-            //        string filename = file.Replace(path + "\\", string.Empty);
-            //        if (filename.StartsWith("1"))
-            //        {
-            //            recImg.Add(d.ID, $"{d.ID}/" + filename);
-            //            break;
-            //        }
-            //    }
-            //}
+            var recImg = new Dictionary<int, string>();
+            foreach (Dress d in recDress)
+            {
+                path = Path.Combine(_env.WebRootPath, $"images/dress/{d.ID}");
+                di = new DirectoryInfo(path);
+                foreach (string file in Directory.GetFiles(path))
+                {
+                    string filename = file.Replace(path + "\\", string.Empty);
+                    if (filename.StartsWith("1"))
+                    {
+                        recImg.Add(d.ID, $"{d.ID}/" + filename);
+                    }
+                }
+            }
 
             ViewData["RecDress"] = recDress;
-            //ViewData["RecImages"] = recImg;
+            ViewData["RecImages"] = recImg;
             ViewData["Features"] = features;
             ViewData["Colors"] = colors;
             ViewData["Images"] = images;
