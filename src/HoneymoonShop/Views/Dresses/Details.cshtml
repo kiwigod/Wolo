@@ -1,10 +1,35 @@
 @model HoneymoonShop.Models.Dress
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Details - " + Html.DisplayFor(model => model.ID);
+    ViewData["Background"] = "";
+    ViewData["HeaderHeight"] = "";
 }
 
-<!DOCTYPE html>
+@section HeaderOverlay {}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            @foreach (string file in ViewBag.Images)
+            {
+                <img src="~/images/dress/@file" />
+            }
+            <img />
+            <img />
+            <img />
+        </div>
+        <div class="col-md-6">
+
+        </div>
+        <div class="col-md-3">
+
+        </div>
+    </div>
+</div>
+
+
+@*<!DOCTYPE html>
 
 <html>
 <head>
@@ -36,4 +61,4 @@
     <a asp-action="Index">Back to List</a>
 </div>
 </body>
-</html>
+</html>*@

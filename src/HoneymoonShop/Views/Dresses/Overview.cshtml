@@ -5,26 +5,26 @@
 }
 
 @section Imports{
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-  $( function() {
-    $( "#slider-range" ).slider({
-      range: true,
-      min: 0,
-      max: 15000,
-      values: [ 0, 15000 ],
-      slide: function( event, ui ) {
-          $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-          $("#pricemin").val(ui.values[0]);
-          $("#pricemax").val(ui.values[1]);
-      }
-    });
-    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-      " - $" + $("#slider-range").slider("values", 1));
-  } );
-</script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 15000,
+                values: [0, 15000],
+                slide: function (event, ui) {
+                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                    $("#pricemin").val(ui.values[0]);
+                    $("#pricemax").val(ui.values[1]);
+                }
+            });
+            $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+              " - $" + $("#slider-range").slider("values", 1));
+        });
+    </script>
 }
 
 @section HeaderOverlay{}
@@ -39,10 +39,10 @@
                     <input type="hidden" name="manu" value="all" />
                     @foreach (Manu m in ViewBag.ManuID)
                     {
-                        <input id="checkbox @m.ID" type="checkbox" name="manu" value="@m.ID" style="display:none" />
-                        <label for="checkbox @m.ID" style="margin-bottom: -.3em;display:inline-block"></label>
-                        <p style="display:inline-block">@m.Name</p>
-                        <br />
+                    <input id="checkbox @m.ID" type="checkbox" name="manu" value="@m.ID" style="display:none" />
+                    <label for="checkbox @m.ID" style="margin-bottom: -.3em;display:inline-block"></label>
+                    <p style="display:inline-block">@m.Name</p>
+                    <br />
                     }
                 </div>
 
@@ -52,16 +52,16 @@
                     <input type="hidden" name="style" value="all" />
                     @foreach (Style s in ViewBag.StyleID)
                     {
-                        <input id="checkbox @s.ID" type="checkbox" name="manu" value="@s.ID" style="display:none" />
-                        <label for="checkbox @s.ID" style="margin-bottom: -.3em;display:inline-block"></label>
-                        <p style="display:inline-block">@s.Name</p>
-                        <br />
+                    <input id="checkbox @s.ID" type="checkbox" name="manu" value="@s.ID" style="display:none" />
+                    <label for="checkbox @s.ID" style="margin-bottom: -.3em;display:inline-block"></label>
+                    <p style="display:inline-block">@s.Name</p>
+                    <br />
                     }
                 </div>
 
                 <!--Price-->
-                <input type="hidden" name="pricemin" id="pricemin" value="0"/>
-                <input type="hidden" name="pricemax" id="pricemax" value="15000"/>
+                <input type="hidden" name="pricemin" id="pricemin" value="0" />
+                <input type="hidden" name="pricemax" id="pricemax" value="15000" />
                 <div style="background:#f6f6f6"><a href="#price" data-toggle="collapse"><h4><b>Price</b></h4></a></div>
                 <div id="price" class="collapse in" style="background:#fcfcfc">
                     <input type="text" id="amount" readonly style="border:0; font-weight:bold; background:none">
@@ -74,10 +74,10 @@
                     <input type="hidden" name="neckline" value="all" />
                     @foreach (Neckline n in ViewBag.NecklineID)
                     {
-                        <input id="checkbox @n.ID" type="checkbox" name="manu" value="@n.ID" style="display:none" />
-                        <label for="checkbox @n.ID" style="margin-bottom: -.3em;display:inline-block"></label>
-                        <p style="display:inline-block">@n.Name</p>
-                        <br />
+                    <input id="checkbox @n.ID" type="checkbox" name="manu" value="@n.ID" style="display:none" />
+                    <label for="checkbox @n.ID" style="margin-bottom: -.3em;display:inline-block"></label>
+                    <p style="display:inline-block">@n.Name</p>
+                    <br />
                     }
                 </div>
 
@@ -87,10 +87,10 @@
                     <input type="hidden" name="silhouette" value="all" />
                     @foreach (Silhouette s in ViewBag.SilhouetteID)
                     {
-                        <input id="checkbox @s.ID" type="checkbox" name="manu" value="@s.ID" style="display:none" />
-                        <label for="checkbox @s.ID" style="margin-bottom: -.3em;display:inline-block"></label>
-                        <p style="display:inline-block">@s.Name</p>
-                        <br />
+                    <input id="checkbox @s.ID" type="checkbox" name="manu" value="@s.ID" style="display:none" />
+                    <label for="checkbox @s.ID" style="margin-bottom: -.3em;display:inline-block"></label>
+                    <p style="display:inline-block">@s.Name</p>
+                    <br />
                     }
                 </div>
 
@@ -100,10 +100,10 @@
                     <input type="hidden" name="color" value="all" />
                     @foreach (Color c in ViewBag.ColorID)
                     {
-                        <input id="checkbox @c.ID" type="checkbox" name="manu" value="@c.ID" style="display:none" />
-                        <label for="checkbox @c.ID" style="margin-bottom: -.3em;display:inline-block"></label>
-                        <p style="display:inline-block">@c.Name</p>
-                        <br />
+                    <input id="checkbox @c.ID" type="checkbox" name="manu" value="@c.ID" style="display:none" />
+                    <label for="checkbox @c.ID" style="margin-bottom: -.3em;display:inline-block"></label>
+                    <p style="display:inline-block">@c.Name</p>
+                    <br />
                     }
                 </div>
                 <div>
@@ -113,19 +113,28 @@
         </div>
         <div class="col-md-10">
             <div class="overview">
-                @foreach (Dress d in ViewBag.Dress)
+                @if (ViewBag.Dress.Count == 0)
                 {
-                    <div>
-                    <a href="#" class="overview-item">
-                        <div class="grow overview-item" style="height:auto"><img src="~/images/dress/@ViewBag.Images[d.ID]"/>
-                            <h4>@ViewBag.Manu[d.ID]</h4>
-                            <div>
-                                <p>Artikel nr. @d.ID</p>
-                                <label></label>
-                            </div>
+                    <p>There were no results for the selected filters</p>
+
+                }
+                else
+                {
+                    foreach (Dress d in ViewBag.Dress)
+                    {
+                        <div>
+                            <a href="#" class="overview-item">
+                                <div class="grow overview-item" style="height:auto">
+                                    <img src="~/images/dress/@ViewBag.Images[d.ID]" />
+                                    <h4>@ViewBag.Manu[d.ID]</h4>
+                                    <div>
+                                        <p>Artikel nr. @d.ID</p>
+                                        <label></label>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                        </div>
+                    }
                 }
             </div>
         </div>
@@ -136,4 +145,4 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 @*</body>
-</html>*@
+    </html>*@

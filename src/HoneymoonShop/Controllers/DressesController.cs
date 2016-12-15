@@ -45,6 +45,19 @@ namespace HoneymoonShop.Controllers
                 return NotFound();
             }
 
+            string path = Path.Combine(_env.WebRootPath, "images/dress");
+            DirectoryInfo di = new DirectoryInfo(path);
+            List<string> files = new List<string>();
+            foreach (string s in Directory.GetFiles(path))
+            {
+                string startw = dress.ID.ToString();
+                string filename = s.Replace(path + "\\", string.Empty);
+                if (filename.StartsWith(startw))
+                {
+                    files.Add(filename);
+                }
+            }
+
             return View(dress);
         }
 
@@ -92,20 +105,14 @@ namespace HoneymoonShop.Controllers
             List<Dress> availableDress = _context.Dress.ToList();
             var img = new Dictionary<int, string>();
             var dmanu = new Dictionary<int, string>();
-            string path = Path.Combine(_env.WebRootPath, "images/dress");
-            DirectoryInfo di = new DirectoryInfo(path);
-            List<string> files = new List<string>();
             foreach (Dress d in availableDress)
             {
-                string dressmanu = _context.Manu.Where(m => m.ID == d.ManuID).First().Name.Replace(" ", string.Empty);
+                string path = Path.Combine(_env.WebRootPath, $"images/dress/{d.ID}");
+                DirectoryInfo di = new DirectoryInfo(path);
                 foreach (string s in Directory.GetFiles(path))
                 {
-                    string startw = d.ID.ToString() + dressmanu + "1";
                     string filename = s.Replace(path + "\\", string.Empty);
-                    if (filename.StartsWith(startw))
-                    {
-                        img.Add(d.ID, filename);
-                    }
+                    if (filename.StartsWith("1")) img.Add(d.ID, $"{d.ID}/" + filename);
                 }
                 dmanu.Add(d.ID, _context.Manu.Where(m => m.ID == d.ManuID).First().Name);
             }
@@ -139,8 +146,6 @@ namespace HoneymoonShop.Controllers
         public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color)
         {
             List<Dress> availableDress = _context.Dress.Where(d => d.Price >= pricemin && d.Price <= pricemax).ToList();
-            List<DressColor> filterColor = new List<DressColor>();
-            //if (availableDress.Count == null) availableDress = new List<Dress>();
             List<Dress> toRemove = new List<Dress>();
             foreach (Dress d in availableDress)
             {
@@ -213,20 +218,14 @@ namespace HoneymoonShop.Controllers
 
             var img = new Dictionary<int, string>();
             var dmanu = new Dictionary<int, string>();
-            string path = Path.Combine(_env.WebRootPath, "images/dress");
-            DirectoryInfo di = new DirectoryInfo(path);
-            List<string> files = new List<string>();
             foreach (Dress d in availableDress)
             {
-                string dressmanu = _context.Manu.Where(m => m.ID == d.ManuID).First().Name.Replace(" ", string.Empty);
+                string path = Path.Combine(_env.WebRootPath, $"images/dress/{d.ID}");
+                DirectoryInfo di = new DirectoryInfo(path);
                 foreach (string s in Directory.GetFiles(path))
                 {
-                    string startw = d.ID.ToString() + dressmanu + "1";
                     string filename = s.Replace(path + "\\", string.Empty);
-                    if (filename.StartsWith(startw))
-                    {
-                        img.Add(d.ID, filename);
-                    }
+                    if(filename.Equals("1")) img.Add(d.ID, $"{d.ID}/" + filename);
                 }
                 dmanu.Add(d.ID, _context.Manu.Where(m => m.ID == d.ManuID).First().Name);
             }
@@ -249,19 +248,21 @@ namespace HoneymoonShop.Controllers
             var dress = _context.Dress.Where(d => d.ID == id).First();
             var manu = _context.Manu.Where(m => m.ID == dress.ManuID).First().Name.Replace(" ", string.Empty);
 
-            string path = Path.Combine(_env.WebRootPath, "images/dress");
-            DirectoryInfo di = new DirectoryInfo(path);
-            List<string> files = new List<string>();
-            foreach (string s in Directory.GetFiles(path))
+            try
             {
-                string startw = dress.ID.ToString() + manu;
-                string filename = s.Replace(path + "\\", string.Empty);
-                if (filename.StartsWith(startw))
+                string path = Path.Combine(_env.WebRootPath, $"images/dress/{id}");
+                DirectoryInfo di = new DirectoryInfo(path);
+                List<string> files = new List<string>();
+                foreach (string s in Directory.GetFiles(path))
                 {
-                    files.Add(filename);
+                    string filename = s.Replace(path + "\\", string.Empty);
+                    files.Add($"{id}/" + filename);
                 }
+                ViewData["Images"] = files;
+            } catch
+            {
+                ViewData["Images"] = new List<string>();
             }
-            ViewData["Images"] = files;
 
             return View();
         }
@@ -273,8 +274,9 @@ namespace HoneymoonShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddImage(int? id, ICollection<IFormFile> files)
         {
-            var uploads = Path.Combine(_env.WebRootPath, "images/dress");
-            var manu = _context.Manu.Where(m => m.ID == _context.Dress.Where(d => d.ID == id).First().ManuID).First().Name.Replace(" ", string.Empty);
+            var uploads = Path.Combine(_env.WebRootPath, $"images/dress/{id}");
+            Directory.CreateDirectory(uploads);
+            //var manu = _context.Manu.Where(m => m.ID == _context.Dress.Where(d => d.ID == id).First().ManuID).First().Name.Replace(" ", string.Empty);
             string[] accepted = { "jpg", "jpeg", "png", "webp", "bmp" };
 
             foreach (var file in files)
@@ -288,28 +290,28 @@ namespace HoneymoonShop.Controllers
                         {
                             try
                             {
-                                var FileStream = new FileStream(Path.Combine(uploads, id + manu + "1." + s[1]), FileMode.Create);
+                                var FileStream = new FileStream(Path.Combine(uploads, "1." + s[1]), FileMode.Create);
                                 await file.CopyToAsync(FileStream);
                             }
                             catch
                             {
                                 try
                                 {
-                                    var FileStream = new FileStream(Path.Combine(uploads, id + manu + "2." + s[1]), FileMode.Create);
+                                    var FileStream = new FileStream(Path.Combine(uploads, "2." + s[1]), FileMode.Create);
                                     await file.CopyToAsync(FileStream);
                                 }
                                 catch
                                 {
                                     try
                                     {
-                                        var FileStream = new FileStream(Path.Combine(uploads, id + manu + "3." + s[1]), FileMode.Create);
+                                        var FileStream = new FileStream(Path.Combine(uploads, "3." + s[1]), FileMode.Create);
                                         await file.CopyToAsync(FileStream);
                                     }
                                     catch
                                     {
                                         try
                                         {
-                                            var FileStream = new FileStream(Path.Combine(uploads, id + manu + "4." + s[1]), FileMode.Create);
+                                            var FileStream = new FileStream(Path.Combine(uploads, "4." + s[1]), FileMode.Create);
                                             await file.CopyToAsync(FileStream);
                                         }
                                         catch
