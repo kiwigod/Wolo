@@ -1,0 +1,29 @@
+@model HoneymoonShop.Models.Dress
+
+@{
+    Layout = null;
+}
+
+@if (ViewBag.Dress.Count == 0)
+{
+    <p>There were no results for the selected filters</p>
+
+}
+else
+{
+    foreach (Dress d in ViewBag.Dress)
+    {
+        <div>
+            <a asp-action="Details/@d.ID" class="overview-item">
+                <div class="grow overview-item" style="height:auto">
+                    <img src="~/images/dress/@ViewBag.Images[d.ID]" />
+                    <h4>@d.Manu.Name</h4>
+                    <div>
+                        <p>Artikel nr. @d.ID</p>
+                        <label></label>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+}

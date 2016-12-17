@@ -55,10 +55,7 @@ namespace HoneymoonShop.Controllers
             foreach (string s in Directory.GetFiles(path))
             {
                 string filename = s.Replace(path + "\\", string.Empty);
-                if (filename.StartsWith("1"))
-                {
-                    images.Add($"{id}/" + filename);
-                }
+                images.Add($"{id}/" + filename);
             }
 
             List<string> colors = new List<string>();
@@ -272,7 +269,8 @@ namespace HoneymoonShop.Controllers
             ViewData["NecklineID"] = _context.Neckline.ToList();
             ViewData["SilhouetteID"] = _context.Silhouette.ToList();
             ViewData["StyleID"] = _context.Style.ToList();
-            return View("Overview");
+            return PartialView("OverviewPartial");
+            //return View("Overview");
         }
 
         // GET: Dresses/AddImage/5

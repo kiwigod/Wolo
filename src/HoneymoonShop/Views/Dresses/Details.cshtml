@@ -6,41 +6,49 @@
     ViewData["HeaderHeight"] = "";
 }
 
+@section Imports {
+    <script src="~/js/script.js"></script>
+}
+
 @section HeaderOverlay {}
 
 <div class="container" style="background:white">
+    <div class="row" style="padding-bottom:4em; padding-top:3em">
+        <div class="col-md-12">
+            <a asp-action="Overview">Terug naar overzicht</a>
+        </div>
+    </div>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 col-xs-12" id="thumbnail" style="padding-left:5em">
             @foreach (string file in ViewBag.Images)
             {
-                <img class="img-responsive" src="~/images/dress/@file" />
+                <img class="img-responsive" style="height:15em; width:15em; margin-bottom:3em" src="~/images/dress/@file" />
             }
         </div>
-        <div class="col-md-6">
-            <img class="img-responsive" src="~/images/dress/@ViewBag.Images[0]"/>
+        <div class="col-md-6" id="main-image">
+            <img class="img-responsive" src="~/images/dress/@ViewBag.Images[0]" style="max-height:51em" />
         </div>
         <div class="col-md-3">
-            <h2>@Html.DisplayFor(model => model.Manu.Name)</h2>
-            <p>artikel nr. @Html.DisplayFor(model => model.ID)</p>
-            <p>@Html.DisplayFor(model => model.Description)</p>
-            <p>Merk: @Html.DisplayFor(model => model.Manu.Name)</p>
-            <p>Kenmerken: 
-            @foreach (string feature in ViewBag.Features)
-            {
-                @feature <span> </span>
-
-            }
+            <h2 style="margin-bottom:0">@Html.DisplayFor(model => model.Manu.Name)</h2>
+            <p style="padding-bottom:3em" class="text-muted">artikel nr. @Html.DisplayFor(model => model.ID)</p>
+            <p style="padding-bottom:3em">@Html.DisplayFor(model => model.Description)</p>
+            <p>Merk: <span style="color:#f690a5">@Html.DisplayFor(model => model.Manu.Name)</span></p>
+            <p>Kenmerken: <span style="color:#f690a5">
+                @foreach (string feature in ViewBag.Features)
+                {
+                    @feature <span> </span>
+                }
+                </span>
             </p>
-            <p>Prijsindicatie: @Html.DisplayFor(model => model.Price)</p>
-            <p>Beschikbare kleuren:
-            @foreach (string color in ViewBag.Colors)
-            {
-                @color <span> </span>
-
-            }
+            <p>Prijsindicatie: &euro;@Html.DisplayFor(model => model.Price)</p>
+            <p style="padding-bottom:3em">Beschikbare kleuren:
+                @foreach (string color in ViewBag.Colors)
+                {
+                    @color <span> </span>
+                }
             </p>
             <p>Kom deze jurk passen!</p>
-            <a class="btn btn-default" href="#" role="button">PASAFSPRAAK MAKEN</a>
+            <a class="btn btn-default primary-button index-button" href="#" style="color:white; font-size:1.02em;"><b>PASAFSPRAAK MAKEN</b></a>
         </div>
     </div>
 
@@ -51,18 +59,18 @@
         <div class="overview">
             @foreach (Dress d in ViewBag.RecDress)
             {
-            <div>
-                <a href="#" class="overview-item">
-                    <div class="grow overview-item" style="height:auto">
-                        <img src="~/images/dress/@ViewBag.RecImages[d.ID]" />
-                        <h4>@d.Manu.Name</h4>
-                        <div>
-                            <p>Artikel nr. @d.ID</p>
-                            <label></label>
+                <div>
+                    <a asp-action="Details/@d.ID" class="overview-item">
+                        <div class="grow overview-item" style="height:auto">
+                            <img src="~/images/dress/@ViewBag.RecImages[d.ID]" />
+                            <h4>@d.Manu.Name</h4>
+                            <div>
+                                <p>Artikel nr. @d.ID</p>
+                                <label></label>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            </div>
+                    </a>
+                </div>
             }
         </div>
     </div>

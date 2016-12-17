@@ -1,0 +1,98 @@
+@model HoneymoonShop.Models.Review
+
+@{
+    
+}
+
+@section HeaderOverlay {}
+
+<div class="container">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="display: flex; flex-wrap:wrap">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3" style="text-align: center">
+                <label style="border-radius: 50%; width: 4em; height: 4em; border:1px solid black; background-image: url(http://amz02.plzcdn.com/da196e78f2628edf53ebfb9c6f44634a_medium.jpg); background-position: center; background-size:cover"></label>
+                <p style="color: grey">Reviewed by</p>
+                <p style="color: dodgerblue">Big Dick Overlord</p>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9" style="border-bottom: 1px solid grey; padding-bottom: 2em; margin-bottom: 3em">
+                <p style="display:inline; padding-right: 2em">Rating: <b>5/5</b></p>
+
+                <fieldset class="rating" style="pointer-events:none; vertical-align:bottom;">
+                    <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
+                </fieldset>
+
+
+                <h5><b>Dank Product</b></h5>
+
+
+
+                <p>I could really feel the twang.</p>
+
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3" style="text-align: center">
+                <label style="border-radius: 50%; width: 4em; height: 4em; border:1px solid black; background-image: url(http://thumbs.ebaystatic.com/images/g/MfkAAOSwj2dXjxre/s-l225.jpg); background-position: center; background-size:cover"></label>
+                <p style="color: grey">Reviewed by</p>
+                <p style="color: dodgerblue">Rem Best Waifu</p>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9" style="border-bottom: 1px solid grey; padding-bottom: 2em; margin-bottom: 1em">
+                <p style="display:inline; padding-right: 2em">Rating: <b>5/5</b></p>
+
+                <fieldset class="rating" style="pointer-events:none; vertical-align:bottom;">
+                    <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
+                </fieldset>
+
+                <h5><b>IMPORTANT QUESTION</b></h5>
+
+                <p>Does honeymoonshop also tailor wedding dresses for waifu pillows???</p>
+
+            </div>
+        </div>
+
+
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Write a review!</button>
+
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="gridSystemModalLabel">Your review</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label style="padding-right: 1em;">Your name:</label>
+                        <input type="text"><br><br>
+                        <label style="padding-right: 1em;">Your email:</label>
+                        <input type="text"><br><br>
+                        <label>Your rating:</label><br>
+                        <fieldset class="rating">
+                            <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+                            <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+                            <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+                            <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+                            <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
+                        </fieldset><br>
+                        <h3>Write your review</h3>
+                        <textarea rows="10" style="width:100%"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

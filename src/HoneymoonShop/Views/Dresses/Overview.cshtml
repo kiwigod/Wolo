@@ -24,6 +24,84 @@
             $("#amount").val("$" + $("#slider-range").slider("values", 0) +
               " - $" + $("#slider-range").slider("values", 1));
         });
+
+        $(document).ready(function () {
+            var manuq = "";
+            var styleq = "";
+            var neckq = "";
+            var silq = "";
+            var colorq = "";
+
+            $("#manu input").click(function () {
+                var children = $("#manu input");
+                manuq = "";
+                for (var i = 0; i < children.length; i++) {
+                    if (children.get(i).checked) {
+                        manuq += "&manu=" + children.get(i).value;
+                    }
+                }
+                var route = "OverviewFiltered?manu=all&style=all&pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + "&neckline=all&silhouette=all&color=all" + manuq + styleq + neckq + silq + colorq;
+                $("#overview").load(route);
+                doPush(route);
+            });
+            $("#style input").click(function () {
+                var children = $("#style input");
+                styleq = "";
+                for (var i = 0; i < children.length; i++) {
+                    if (children.get(i).checked) {
+                        styleq += "&style=" + children.get(i).value;
+                    }
+                }
+                var route = "OverviewFiltered?manu=all&style=all&pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + "&neckline=all&silhouette=all&color=all" + manuq + styleq + neckq + silq + colorq;
+                $("#overview").load(route);
+                doPush(route);
+            });
+            $("#price input").change(function () {
+                $("#submit").trigger("click");
+            });
+            $("#neck input").click(function () {
+                var children = $("#neck input");
+                neckq = "";
+                for (var i = 0; i < children.length; i++) {
+                    if (children.get(i).checked) {
+                        neckq += "&neckline=" + children.get(i).value;
+                    }
+                }
+                var route = "OverviewFiltered?manu=all&style=all&pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + "&neckline=all&silhouette=all&color=all" + manuq + styleq + neckq + silq + colorq;
+                $("#overview").load(route);
+                doPush(route);
+            });
+            $("#sil input").click(function () {
+                var children = $("#sil input");
+                silq = "";
+                for (var i = 0; i < children.length; i++) {
+                    if (children.get(i).checked) {
+                        silq += "&silhouette=" + children.get(i).value;
+                    }
+                }
+                var route = "OverviewFiltered?manu=all&style=all&pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + "&neckline=all&silhouette=all&color=all" + manuq + styleq + neckq + silq + colorq;
+                $("#overview").load(route);
+                doPush(route);
+            });
+            $("#color input").click(function () {
+                var children = $("#color input");
+                colorq = "";
+                for (var i = 0; i < children.length; i++) {
+                    if (children.get(i).checked) {
+                        colorq += "&color=" + children.get(i).value;
+                    }
+                }
+                var route = "OverviewFiltered?manu=all&style=all&pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + "&neckline=all&silhouette=all&color=all" + manuq + styleq + neckq + silq + colorq;
+                $("#overview").load(route);
+                doPush(route);
+            });
+            function doPush(route) {
+                var state = {},
+                    tilte = "Dress Overview",
+                    path = route;
+                history.pushState(state, tilte, path);
+            }
+        });
     </script>
 }
 
@@ -32,15 +110,16 @@
 <div class="container" style="background:white">
     <div class="row">
         <div class="col-md-2">
-            <form method="get" asp-action="OverviewFiltered">
+            <form>
                 <!--Manu-->
                 <div style="background:#f6f6f6"><a href="#manu" data-toggle="collapse"><h4><b>Brand</b></h4></a></div>
                 <div id="manu" class="collapse in" style="background:#fcfcfc">
                     <input type="hidden" name="manu" value="all" />
                     @foreach (Manu m in ViewBag.ManuID)
                     {
-                    <input id="checkbox @m.ID" type="checkbox" name="manu" value="@m.ID" style="display:none" />
-                    <label for="checkbox @m.ID" style="margin-bottom: -.3em;display:inline-block"></label>
+                        var id = "cManu" + m.ID;
+                    <input id="@id" type="checkbox" name="manu" value="@m.ID" style="display:none" />
+                    <label for="@id" style="margin-bottom: -.3em;display:inline-block"></label>
                     <p style="display:inline-block">@m.Name</p>
                     <br />
                     }
@@ -52,8 +131,9 @@
                     <input type="hidden" name="style" value="all" />
                     @foreach (Style s in ViewBag.StyleID)
                     {
-                    <input id="checkbox @s.ID" type="checkbox" name="manu" value="@s.ID" style="display:none" />
-                    <label for="checkbox @s.ID" style="margin-bottom: -.3em;display:inline-block"></label>
+                        var id = "cStyle" + s.ID;
+                    <input id="@id" type="checkbox" name="style" value="@s.ID" style="display:none" />
+                    <label for="@id" style="margin-bottom: -.3em;display:inline-block"></label>
                     <p style="display:inline-block">@s.Name</p>
                     <br />
                     }
@@ -74,8 +154,9 @@
                     <input type="hidden" name="neckline" value="all" />
                     @foreach (Neckline n in ViewBag.NecklineID)
                     {
-                    <input id="checkbox @n.ID" type="checkbox" name="manu" value="@n.ID" style="display:none" />
-                    <label for="checkbox @n.ID" style="margin-bottom: -.3em;display:inline-block"></label>
+                        var id = "cNeck" + n.ID;
+                    <input id="@id" type="checkbox" name="neckline" value="@n.ID" style="display:none" />
+                    <label for="@id" style="margin-bottom: -.3em;display:inline-block"></label>
                     <p style="display:inline-block">@n.Name</p>
                     <br />
                     }
@@ -87,8 +168,9 @@
                     <input type="hidden" name="silhouette" value="all" />
                     @foreach (Silhouette s in ViewBag.SilhouetteID)
                     {
-                    <input id="checkbox @s.ID" type="checkbox" name="manu" value="@s.ID" style="display:none" />
-                    <label for="checkbox @s.ID" style="margin-bottom: -.3em;display:inline-block"></label>
+                        var id = "cSil" + s.ID;
+                    <input id="@id" type="checkbox" name="silhouette" value="@s.ID" style="display:none" />
+                    <label for="@id" style="margin-bottom: -.3em;display:inline-block"></label>
                     <p style="display:inline-block">@s.Name</p>
                     <br />
                     }
@@ -100,20 +182,22 @@
                     <input type="hidden" name="color" value="all" />
                     @foreach (Color c in ViewBag.ColorID)
                     {
-                    <input id="checkbox @c.ID" type="checkbox" name="manu" value="@c.ID" style="display:none" />
-                    <label for="checkbox @c.ID" style="margin-bottom: -.3em;display:inline-block"></label>
+                        var id = "cColor" + c.ID;
+                    <input id="@id" type="checkbox" name="color" value="@c.ID" style="display:none" />
+                    <label for="@id" style="margin-bottom: -.3em;display:inline-block"></label>
                     <p style="display:inline-block">@c.Name</p>
                     <br />
                     }
                 </div>
                 <div>
-                    <input style="width:100%" type="submit" value="Search" />
+                    <button id="submit" style="width:100%; display:none" type="button" value="Search" />
                 </div>
             </form>
         </div>
         <div class="col-md-10">
-            <div class="overview">
-                @if (ViewBag.Dress.Count == 0)
+            <div id="overview" class="overview" style="width:inherit; height:auto">
+                @*@Html.Partial("OverviewPartial");*@
+                @*@if (ViewBag.Dress.Count == 0)
                 {
                     <p>There were no results for the selected filters</p>
 
@@ -135,7 +219,7 @@
                             </a>
                         </div>
                     }
-                }
+                }*@
             </div>
         </div>
     </div>

@@ -67,5 +67,7 @@ namespace HoneymoonShop.Data
         public DbSet<Category> Category { get; set; }
 
         public DbSet<DressColor> DressColor { get; set; }
+
+        public DbSet<Review> Review { get; set; }
     }
 }

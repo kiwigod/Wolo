@@ -29,10 +29,10 @@
             </div>
         </div>
         <div class="dropdown show-sm">
-            <button id="dropdownMenu" class="btn btn-default dropdown-toggle primary-button index-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" type="button" style="background:none"> <b>HONEYMOON SHOP</b> <span class="caret"></span> </button>
+            <a asp-controller="Home" asp-action="Index" id="dropdownMenu" class="btn btn-default dropdown-toggle primary-button index-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background:none"> <b>HONEYMOON SHOP</b> <span class="caret"></span> </a>
             <ul class="dropdown-menu tablet-fsize" style="background:none" aria-labelledby="dropdown">
                 <li><a style="color: #f0577a" href="#"><b>HOME</b></a></li>
-                <li><a href="#"><b>BRUID</b></a></li>
+                <li><a asp-controller="Dresses" asp-action="Overview"><b>BRUID</b></a></li>
                 <li><a href="#"><b>BRUIDEGOM</b></a></li>
                 <li><a href="#"><b>DE WINKEL</b></a></li>
                 <li><a href="#"><b>BLOG</b></a></li>
@@ -44,12 +44,12 @@
             <nav class="navbar navbar-default navbar-transparent">
                 <div class="container-fluid hide-sm">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapseNav"> <span class="sr-only">Toggle Navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a class="navbar-brand" href="#"><b>HONEYMOON SHOP</b></a>
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapseNav"> <span class="sr-only">Toggle Navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a class="navbar-brand" asp-controller="Home" asp-action="Index"><b>HONEYMOON SHOP</b></a>
                     </div>
                     <div class="collapse navbar-collapse" id="collapseNav">
                         <ul class="nav navbar-nav navbar-right thinner-xs scale-nav">
                             <li><a style="color: #f0577a" href="#"><b>HOME</b></a></li>
-                            <li><a href="#"><b>BRUID</b></a></li>
+                            <li><a asp-controller="Dresses" asp-action="Overview"><b>BRUID</b></a></li>
                             <li><a href="#"><b>BRUIDEGOM</b></a></li>
                             <li><a href="#"><b>DE WINKEL</b></a></li>
                             <li><a href="#"><b>BLOG</b></a></li>
