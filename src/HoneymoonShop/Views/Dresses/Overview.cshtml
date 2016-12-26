@@ -29,13 +29,14 @@
             $("#overview").load(window.location + "&request=1");
         });
 
+        var sortq = "&sort=hl";
+        var manuq = "&manu=all";
+        var styleq = "&style=all";
+        var neckq = "&neckline=all";
+        var silq = "&silhouette=all";
+        var colorq = "&color=all";
+
         $(document).ready(function () {
-            var manuq = "&manu=all";
-            var styleq = "&style=all";
-            var neckq = "&neckline=all";
-            var silq = "&silhouette=all";
-            var colorq = "&color=all";
-            
             $("#manu input").click(function () {
                 var children = $("#manu input");
                 manuq = "";
@@ -44,7 +45,7 @@
                         manuq += "&manu=" + children.get(i).value;
                     }
                 } if (manuq == "") manuq = "&manu=all";
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq;
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq;
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
@@ -56,12 +57,12 @@
                         styleq += "&style=" + children.get(i).value;
                     }
                 } if (styleq == "") styleq = "&style=all";
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq;
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq;
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
             $("#price input").on("input change", function () {
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq;
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq;
                 doPush(route);
             });
             $("#neck input").click(function () {
@@ -72,7 +73,7 @@
                         neckq += "&neckline=" + children.get(i).value;
                     }
                 } if (neckq == "") neckq = "&neckline=all";
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq;
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq;
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
@@ -84,7 +85,7 @@
                         silq += "&silhouette=" + children.get(i).value;
                     }
                 } if (silq == "") silq = "&silhouette=all";
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq;
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq;
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
@@ -96,17 +97,25 @@
                         colorq += "&color=" + children.get(i).value;
                     }
                 } if (colorq == "") colorq = "&color=all";
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq;
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq;
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
-            function doPush(route) {
-                var state = {},
-                    tilte = "Dress Overview",
-                    path = route;
-                history.pushState(state, tilte, path);
-            }
         });
+        function sorting() {
+            var e = document.getElementById("sort");
+            sortq = "&sort=" + e.options[e.selectedIndex].value;
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq;
+            $("#overview").load(route + "&request=1");
+            doPush(route);
+        }
+
+        function doPush(route) {
+            var state = {},
+                tilte = "Dress Overview",
+                path = route;
+            history.pushState(state, tilte, path);
+        }
     </script>
 }
 
@@ -200,7 +209,7 @@
             </form>
         </div>
         <div class="col-md-10">
-            <select id="sort" style="text-align:right">
+            <select id="sort" style="text-align:right" onchange="sorting()">
                 <option value="hl">Prijs Hoog/ Laag</option>
                 <option value="lh">Prijs Laag/ Hoog</option>
                 <option value="a">Alfabetisch</option>

@@ -173,7 +173,7 @@ namespace HoneymoonShop.Controllers
         }
 
         [HttpGet]
-        public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color, int request)
+        public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color, int request, string sort)
         {
             List<Dress> availableDress = _context.Dress
                 .Include(d => d.Manu)
@@ -194,8 +194,23 @@ namespace HoneymoonShop.Controllers
                 foreach (string s in Directory.GetFiles(path))
                 {
                     string filename = s.Replace(path + "\\", string.Empty);
-                    if(filename.StartsWith("1")) img.Add(d.ID, $"{d.ID}/" + filename);
+                    if (filename.StartsWith("1")) img.Add(d.ID, $"{d.ID}/" + filename);
                 }
+            }
+
+            switch(sort)
+            {
+                case "hl":
+                    availableDress.Sort((x, y) => y.Price.CompareTo(x.Price));
+                    break;
+
+                case "lh":
+                    availableDress.Sort((x, y) => x.Price.CompareTo(y.Price));
+                    break;
+
+                case "alf":
+                    availableDress.Sort((x, y) => y.Manu.Name.CompareTo(x.Manu.Name));
+                    break;
             }
 
             ViewData["Images"] = img;
