@@ -173,81 +173,18 @@ namespace HoneymoonShop.Controllers
         }
 
         [HttpGet]
-        public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color)
+        public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color, int request)
         {
             List<Dress> availableDress = _context.Dress
                 .Include(d => d.Manu)
+                .Include(d => d.DressColors)
                 .Where(d => d.Price >= pricemin && d.Price <= pricemax)
+                .Where(d => manu.Contains(d.ManuID.ToString()) || manu.Contains("all"))
+                .Where(d => style.Contains(d.StyleID.ToString()) || style.Contains("all"))
+                .Where(d => neckline.Contains(d.NecklineID.ToString()) || neckline.Contains("all"))
+                .Where(d => silhouette.Contains(d.SilhouetteID.ToString()) || silhouette.Contains("all"))
+                .Where(d => d.DressColors.Where(dc => dc.DressID == d.ID).Any(dc => color.Contains(dc.ColorID.ToString())) || color.Contains("all"))
                 .ToList();
-            List<Dress> toRemove = new List<Dress>();
-            foreach (Dress d in availableDress)
-            {
-                bool bmanu = false;
-                bool bstyle = false;
-                bool bneck = false;
-                bool bsil = false;
-                bool bcolor = false;
-                if (manu[0].Equals("all") && manu.Length == 1) bmanu = true;
-                else
-                {
-                    for (int i = 1; i < manu.Length; i++)
-                    {
-                        if (int.Parse(manu[i]) == d.ManuID) bmanu = true;
-                    }
-                }
-
-                if (style[0].Equals("all") && style.Length == 1) bstyle = true;
-                else
-                {
-                    for (int i = 1; i < style.Length; i++)
-                    {
-                        if (int.Parse(style[i]) == d.StyleID) bstyle = true;
-                    }
-                }
-
-                if (neckline[0].Equals("all") && neckline.Length == 1) bneck = true;
-                else
-                {
-                    for (int i = 1; i < neckline.Length; i++)
-                    {
-                        if (int.Parse(neckline[i]) == d.NecklineID) bneck = true;
-                    }
-                }
-
-                if (silhouette[0].Equals("all") && silhouette.Length == 1) bsil = true;
-                else
-                {
-                    for (int i = 1; i < silhouette.Length; i++)
-                    {
-                        if (int.Parse(silhouette[i]) == d.SilhouetteID) bsil = true;
-                    }
-                }
-
-                if (color[0].Equals("all") && color.Length == 1) bcolor = true;
-                else
-                {
-                    List<DressColor> temp = _context.DressColor.Where(dc => dc.DressID == d.ID).ToList();
-                    List<int> colors = new List<int>();
-                    foreach (DressColor dc in temp)
-                    {
-                        colors.Add(dc.ColorID);
-                    }
-
-                    for (int i = 1; i < color.Length; i++)
-                    {
-                        if (colors.Contains(int.Parse(color[i]))) bcolor = true;
-                    }
-                }
-
-                if (bmanu == false || bstyle == false || bneck == false || bsil == false || bcolor == false)
-                {
-                    toRemove.Add(d);
-                }
-            }
-            foreach (Dress d in toRemove)
-            {
-                availableDress.Remove(d);
-            }
 
             var img = new Dictionary<int, string>();
             foreach (Dress d in availableDress)
@@ -263,14 +200,17 @@ namespace HoneymoonShop.Controllers
 
             ViewData["Images"] = img;
             ViewData["Dress"] = availableDress;
-            ViewData["CategoryID"] = _context.Category.ToList();
-            ViewData["ColorID"] = _context.Color.ToList();
-            ViewData["ManuID"] = _context.Manu.ToList();
-            ViewData["NecklineID"] = _context.Neckline.ToList();
-            ViewData["SilhouetteID"] = _context.Silhouette.ToList();
-            ViewData["StyleID"] = _context.Style.ToList();
-            return PartialView("OverviewPartial");
-            //return View("Overview");
+            if (request == 1) return PartialView("OverviewPartial");
+            else
+            {
+                ViewData["CategoryID"] = _context.Category.ToList();
+                ViewData["ColorID"] = _context.Color.ToList();
+                ViewData["ManuID"] = _context.Manu.ToList();
+                ViewData["NecklineID"] = _context.Neckline.ToList();
+                ViewData["SilhouetteID"] = _context.Silhouette.ToList();
+                ViewData["StyleID"] = _context.Style.ToList();
+                return View("Overview");
+            }
         }
 
         // GET: Dresses/AddImage/5

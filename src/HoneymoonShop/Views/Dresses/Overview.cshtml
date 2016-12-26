@@ -25,13 +25,17 @@
               " - $" + $("#slider-range").slider("values", 1));
         });
 
-        $(document).ready(function () {
-            var manuq = "";
-            var styleq = "";
-            var neckq = "";
-            var silq = "";
-            var colorq = "";
+        $("#container").ready(function () {
+            $("#overview").load(window.location + "&request=1");
+        });
 
+        $(document).ready(function () {
+            var manuq = "&manu=all";
+            var styleq = "&style=all";
+            var neckq = "&neckline=all";
+            var silq = "&silhouette=all";
+            var colorq = "&color=all";
+            
             $("#manu input").click(function () {
                 var children = $("#manu input");
                 manuq = "";
@@ -39,9 +43,9 @@
                     if (children.get(i).checked) {
                         manuq += "&manu=" + children.get(i).value;
                     }
-                }
-                var route = "OverviewFiltered?manu=all&style=all&pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + "&neckline=all&silhouette=all&color=all" + manuq + styleq + neckq + silq + colorq;
-                $("#overview").load(route);
+                } if (manuq == "") manuq = "&manu=all";
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq;
+                $("#overview").load(route + "&request=1");
                 doPush(route);
             });
             $("#style input").click(function () {
@@ -51,13 +55,14 @@
                     if (children.get(i).checked) {
                         styleq += "&style=" + children.get(i).value;
                     }
-                }
-                var route = "OverviewFiltered?manu=all&style=all&pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + "&neckline=all&silhouette=all&color=all" + manuq + styleq + neckq + silq + colorq;
-                $("#overview").load(route);
+                } if (styleq == "") styleq = "&style=all";
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq;
+                $("#overview").load(route + "&request=1");
                 doPush(route);
             });
-            $("#price input").change(function () {
-                $("#submit").trigger("click");
+            $("#price input").on("input change", function () {
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq;
+                doPush(route);
             });
             $("#neck input").click(function () {
                 var children = $("#neck input");
@@ -66,9 +71,9 @@
                     if (children.get(i).checked) {
                         neckq += "&neckline=" + children.get(i).value;
                     }
-                }
-                var route = "OverviewFiltered?manu=all&style=all&pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + "&neckline=all&silhouette=all&color=all" + manuq + styleq + neckq + silq + colorq;
-                $("#overview").load(route);
+                } if (neckq == "") neckq = "&neckline=all";
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq;
+                $("#overview").load(route + "&request=1");
                 doPush(route);
             });
             $("#sil input").click(function () {
@@ -78,9 +83,9 @@
                     if (children.get(i).checked) {
                         silq += "&silhouette=" + children.get(i).value;
                     }
-                }
-                var route = "OverviewFiltered?manu=all&style=all&pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + "&neckline=all&silhouette=all&color=all" + manuq + styleq + neckq + silq + colorq;
-                $("#overview").load(route);
+                } if (silq == "") silq = "&silhouette=all";
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq;
+                $("#overview").load(route + "&request=1");
                 doPush(route);
             });
             $("#color input").click(function () {
@@ -90,9 +95,9 @@
                     if (children.get(i).checked) {
                         colorq += "&color=" + children.get(i).value;
                     }
-                }
-                var route = "OverviewFiltered?manu=all&style=all&pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + "&neckline=all&silhouette=all&color=all" + manuq + styleq + neckq + silq + colorq;
-                $("#overview").load(route);
+                } if (colorq == "") colorq = "&color=all";
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq;
+                $("#overview").load(route + "&request=1");
                 doPush(route);
             });
             function doPush(route) {
@@ -107,7 +112,7 @@
 
 @section HeaderOverlay{}
 
-<div class="container" style="background:white">
+<div id="container" class="container" style="background:white">
     <div class="row">
         <div class="col-md-2">
             <form>
@@ -195,31 +200,12 @@
             </form>
         </div>
         <div class="col-md-10">
+            <select id="sort" style="text-align:right">
+                <option value="hl">Prijs Hoog/ Laag</option>
+                <option value="lh">Prijs Laag/ Hoog</option>
+                <option value="a">Alfabetisch</option>
+            </select>
             <div id="overview" class="overview" style="width:inherit; height:auto">
-                @*@Html.Partial("OverviewPartial");*@
-                @*@if (ViewBag.Dress.Count == 0)
-                {
-                    <p>There were no results for the selected filters</p>
-
-                }
-                else
-                {
-                    foreach (Dress d in ViewBag.Dress)
-                    {
-                        <div>
-                            <a asp-action="Details/@d.ID" class="overview-item">
-                                <div class="grow overview-item" style="height:auto">
-                                    <img src="~/images/dress/@ViewBag.Images[d.ID]" />
-                                    <h4>@d.Manu.Name</h4>
-                                    <div>
-                                        <p>Artikel nr. @d.ID</p>
-                                        <label></label>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    }
-                }*@
             </div>
         </div>
     </div>
