@@ -1,0 +1,61 @@
+﻿@model IEnumerable<HoneymoonShop.Models.Dress>
+
+@{
+
+}
+
+@section HeaderOverlay {}
+
+<div class="container" style="background:white">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Artikel Nr.</th>
+                        <th>Merk</th>
+                        <th>Prijs</th>
+                        <th>Categorie</th>
+                        <th>Stijl</th>
+                        <th>Neklijn</th>
+                        <th>Silhouette</th>
+                        <th>Kleuren</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (Dress d in Model)
+                {
+                    var id = "edit" + @d.ID;
+                    <tr>
+                        <th scope="row"><button class="btn btn-default" data-toggle="modal" data-target="#@id">@d.ID</button></th>
+                        <td>@d.Manu.Name</td>
+                        <td>@d.Price</td>
+                        <td>@d.Category.Name</td>
+                        <td>@d.Style.Name</td>
+                        <td>@d.Neckline.Name</td>
+                        <td>@d.Silhouette.Name</td>
+                        <td>COLOR</td>
+                    </tr>
+                    @Html.Partial("ModalPartial", d);
+                    @*<div class="modal fade" id="@id" tabindex="-1" role="dialog" aria-labelledby="editLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4>Wijzigen Artikel: @d.ID</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>WEEEEEEEEEEE</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
