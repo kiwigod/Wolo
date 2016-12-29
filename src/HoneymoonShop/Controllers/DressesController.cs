@@ -431,6 +431,61 @@ namespace HoneymoonShop.Controllers
             return NotFound();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public string Edit2(int id, int cat, string desc, int manu, int neck, int price,int sil,int style, int[] color, int[] feature, int[] image)
+        {
+            string s = String.Empty;
+            Dress d = new Dress() { ID = id, CategoryID = cat, Description = desc, ManuID = manu, NecklineID = neck, Price = price, SilhouetteID = sil, StyleID = style };
+            _context.Update(d);
+
+            List<DressColor> currentCol = _context.DressColor.Where(dc => dc.DressID == id).ToList();
+            List<DressFeature> currentFeat = _context.DressFeature.Where(df => df.DressID == id).ToList();
+            foreach (var dc in currentCol)
+            {
+                _context.Remove(dc);
+                s += $"removing{dc.ColorID}";
+            }
+            foreach (var df in currentFeat)
+            {
+                _context.Remove(df);
+                s += $"removing{df.FeatureID}";
+            }
+            _context.SaveChanges();
+
+            foreach (int c in color)
+            {
+                _context.Add(new DressColor() { DressID = id, ColorID = c });
+                s += $"adding{c} (color)";
+            }
+            foreach (int f in feature)
+            {
+                _context.Add(new DressFeature() { DressID = id, FeatureID = f });
+                s += $"adding{f} (feature)";
+            }
+            _context.SaveChanges();
+
+            string path = Path.Combine(_env.WebRootPath, $"images/dress/{id}");
+            int counter = 1;
+            foreach (string photo in Directory.GetFiles(path))
+            {
+                string[] filename = photo.Replace(path + "\\", string.Empty).Split('.');
+                FileInfo fi = new FileInfo(photo);
+                fi.MoveTo(path + "/image" + counter + "." + filename[1]);
+                counter++;
+            }
+
+            counter = 1;
+            foreach (int i in image)
+            {
+                string[] file = Directory.GetFiles(path).Where(img => img.Contains("image" + counter)).First().Split('.');
+                new FileInfo(file[0] + "." + file[1]).MoveTo(path + "/" + i + "." + file[1]);
+                counter++;
+            }
+
+            return s;
+        }
+
         // GET: Dresses/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

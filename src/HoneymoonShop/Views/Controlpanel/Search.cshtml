@@ -1,0 +1,207 @@
+﻿@model HoneymoonShop.Models.Dress
+@{
+    List<DressColor> dresscolor = ViewBag.dresscolor;
+    List<DressFeature> dressfeature = ViewBag.dressfeature;
+    var counter = 1;
+}
+
+@section HeaderOverlay {}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Artikel Nr.</th>
+                        <th>Merk</th>
+                        <th>Prijs</th>
+                        <th>Categorie</th>
+                        <th>Stijl</th>
+                        <th>Neklijn</th>
+                        <th>Silhouette</th>
+                        <th>Kleuren</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row"><button class="btn btn-default" data-toggle="modal" data-target="#modal">@Model.ID</button></th>
+                        <td>@Model.Manu.Name</td>
+                        <td>@Model.Price</td>
+                        <td>@Model.Category.Name</td>
+                        <td>@Model.Style.Name</td>
+                        <td>@Model.Neckline.Name</td>
+                        <td>@Model.Silhouette.Name</td>
+                        <td>COLOR</td>
+                    </tr>
+                    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="editLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <form asp-controller="Dresses" asp-action="Edit2">
+                                    <div class="modal-header">
+                                        <h4>Wijzigen Artikel: @Model.ID</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <input type="hidden" name="id" value="@Model.ID" />
+                                            <div>
+                                                <label for="price">Prijs</label>
+                                                <input id="price" type="number" name="price" value="@Model.Price" />
+                                            </div>
+                                            <div>
+                                                <label for="desc">Beschrijving</label>
+                                                <input id="desc" type="text" name="desc" value="@Model.Description" />
+                                            </div>
+                                            <div>
+                                                <label for="cat">Categorie</label>
+                                                <select id="cat" name="cat">
+                                                    @foreach (var c in ViewBag.cat)
+                                                    {
+                                                        if (c.ID == Model.CategoryID)
+                                                        {
+                                                            <option value="@c.ID" selected>@c.Name</option> }
+                                                        else
+                                                        {
+                                                            <option value="@c.ID">@c.Name</option>}
+
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label for="style">Stijl</label>
+                                                <select id="style" name="style">
+                                                    @foreach (var c in ViewBag.style)
+                                                    {
+                                                        if (c.ID == Model.StyleID)
+                                                        {
+                                                            <option value="@c.ID" selected>@c.Name</option> }
+                                                        else
+                                                        {
+                                                            <option value="@c.ID">@c.Name</option>}
+
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label for="neck">Neklijn</label>
+                                                <select id="neck" name="neck">
+                                                    @foreach (var c in ViewBag.neck)
+                                                    {
+                                                        if (c.ID == Model.NecklineID)
+                                                        {
+                                                            <option value="@c.ID" selected>@c.Name</option> }
+                                                        else
+                                                        {
+                                                            <option value="@c.ID">@c.Name</option>}
+
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label for="sil">Silhouette</label>
+                                                <select id="sil" name="sil">
+                                                    @foreach (var c in ViewBag.sil)
+                                                    {
+                                                        if (c.ID == Model.SilhouetteID)
+                                                        {
+                                                            <option value="@c.ID" selected>@c.Name</option> }
+                                                        else
+                                                        {
+                                                            <option value="@c.ID">@c.Name</option>}
+
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label for="manu">Merk</label>
+                                                <select id="manu" name="manu">
+                                                    @foreach (var c in ViewBag.manu)
+                                                    {
+                                                        if (c.ID == Model.ManuID)
+                                                        {
+                                                            <option value="@c.ID" selected>@c.Name</option> }
+                                                        else
+                                                        {
+                                                            <option value="@c.ID">@c.Name</option>}
+
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label>Kleuren</label><br />
+                                                @foreach (var c in ViewBag.color)
+                                                {
+                                                    if (dresscolor.Exists(dc => dc.DressID == Model.ID && dc.ColorID == c.ID))
+                                                    {
+                                                        <input type="checkbox" name="color" value="@c.ID" checked />@c.Name<br />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" name="color" value="@c.ID" />@c.Name<br />
+                                                    }
+                                                }
+                                            </div>
+                                            <div>
+                                                <label>Kenmerken</label><br />
+                                                @foreach (var f in ViewBag.feature)
+                                                {
+                                                    if (dressfeature.Exists(df => df.DressID == Model.ID && df.FeatureID == f.ID))
+                                                    {
+                                                        <input type="checkbox" name="feature" value="@f.ID" checked />@f.Name<br />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" name="feature" value="@f.ID" />@f.Name<br />
+                                                    }
+
+                                                }
+                                            </div>
+                                            <div>
+                                                <label>Foto's</label><br />
+                                                <div style="display:flex; flex-direction:row; width:inherit">
+                                                    @foreach (var i in ViewBag.image)
+                                                    {
+                                                        var path = "/images/dress/" + i;
+                                                        <div style="flex-grow:1; flex-basis:2em">
+                                                            <img src="@path" class="img-responsive" />
+                                                            <select name="image">
+                                                                @switch (counter)
+                                                                {
+                                                                    case 1:
+                                                                        <option value="1" selected>Primaire foto</option>
+                                                                        <option value="2">Tweede foto</option>
+                                                                        <option value="3">Derde foto</option>
+                                                                        break;
+
+                                                                    case 2:
+                                                                        <option value="1">Primaire foto</option>
+                                                                        <option value="2" selected>Tweede foto</option>
+                                                                        <option value="3">Derde foto</option>
+                                                                        break;
+
+                                                                    case 3:
+                                                                        <option value="1">Primaire foto</option>
+                                                                        <option value="2">Tweede foto</option>
+                                                                        <option value="3" selected>Derde foto</option>
+                                                                        break;
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        counter++;
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Opslaan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
