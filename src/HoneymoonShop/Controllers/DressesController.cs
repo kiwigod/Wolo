@@ -433,7 +433,7 @@ namespace HoneymoonShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public string Edit2(int id, int cat, string desc, int manu, int neck, int price,int sil,int style, int[] color, int[] feature, int[] image)
+        public IActionResult Edit(int id, int cat, string desc, int manu, int neck, int price,int sil,int style, int[] color, int[] feature, int[] image)
         {
             string s = String.Empty;
             Dress d = new Dress() { ID = id, CategoryID = cat, Description = desc, ManuID = manu, NecklineID = neck, Price = price, SilhouetteID = sil, StyleID = style };
@@ -483,68 +483,7 @@ namespace HoneymoonShop.Controllers
                 counter++;
             }
 
-            return s;
-        }
-
-        // GET: Dresses/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var dress = await _context.Dress.SingleOrDefaultAsync(m => m.ID == id);
-            if (dress == null)
-            {
-                return NotFound();
-            }
-            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "ID", dress.CategoryID);
-            ViewData["ManuID"] = new SelectList(_context.Manu, "ID", "ID", dress.ManuID);
-            ViewData["NecklineID"] = new SelectList(_context.Neckline, "ID", "ID", dress.NecklineID);
-            ViewData["SilhouetteID"] = new SelectList(_context.Silhouette, "ID", "ID", dress.SilhouetteID);
-            ViewData["StyleID"] = new SelectList(_context.Style, "ID", "ID", dress.StyleID);
-            return View(dress);
-        }
-
-        // POST: Dresses/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,CategoryID,Description,ManuID,NecklineID,Price,SilhouetteID,StyleID")] Dress dress)
-        {
-            if (id != dress.ID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(dress);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DressExists(dress.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("Index");
-            }
-            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "ID", dress.CategoryID);
-            ViewData["ManuID"] = new SelectList(_context.Manu, "ID", "ID", dress.ManuID);
-            ViewData["NecklineID"] = new SelectList(_context.Neckline, "ID", "ID", dress.NecklineID);
-            ViewData["SilhouetteID"] = new SelectList(_context.Silhouette, "ID", "ID", dress.SilhouetteID);
-            ViewData["StyleID"] = new SelectList(_context.Style, "ID", "ID", dress.StyleID);
-            return View(dress);
+            return RedirectToAction("Index", "Controlpanel");
         }
 
         // GET: Dresses/Delete/5

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<HoneymoonShop.Models.Color>
+@{
+}
+
+@section HeaderOverlay {}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Naam</th>
+                        <th>Kleurcode</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in Model)
+                    {
+
+                        var id = "#modal" + c.ID;
+                        var id2 = "modal" + c.ID;
+                        var delid = "del" + c.ID;
+                        var delid2 = "#del" + c.ID;
+
+                        <tr>
+                            <td scope="row"><button class="btn btn-default" data-toggle="modal" data-target="@id">@c.Name</button></td>
+                            <td>@c.ColorCode</td>
+                        </tr>
+                        <div class="modal fade" id="@id2" tabindex="-1" role="dialog" aria-labelledby="editLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <form asp-controller="Colors" asp-action="Edit" method="post">
+                                        <div class="modal-header">
+                                            <h4>Aanpassen @c.Name</h4>
+                                        </div>
+                                        <div class="modal-content">
+                                            <input id="@delid" type="hidden" name="del" value="0" />
+                                            <input type="hidden" name="id" value="@c.ID" />
+                                            <label for="col">Context</label>
+                                            <input id="col" type="text" name="color" value="@c.Name" />
+                                            <label for="colc">Kleurcode</label>
+                                            <input id="colc" type="text" name="colcode" value="@c.ColorCode" />
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-danger" onclick="$('@delid2').val('1');">Verwijderen</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Opslaan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

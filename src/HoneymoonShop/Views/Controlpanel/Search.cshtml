@@ -19,7 +19,6 @@
                         <th>Stijl</th>
                         <th>Neklijn</th>
                         <th>Silhouette</th>
-                        <th>Kleuren</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,12 +30,11 @@
                         <td>@Model.Style.Name</td>
                         <td>@Model.Neckline.Name</td>
                         <td>@Model.Silhouette.Name</td>
-                        <td>COLOR</td>
                     </tr>
                     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="editLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <form asp-controller="Dresses" asp-action="Edit2">
+                                <form asp-controller="Dresses" asp-action="Edit">
                                     <div class="modal-header">
                                         <h4>Wijzigen Artikel: @Model.ID</h4>
                                     </div>

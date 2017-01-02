@@ -5,6 +5,24 @@
 
 <div class="container" style="background:white">
     <div class="row">
+        <div class="col-md-6">
+            <ul>
+                <li><b>Kleuren</b></li>
+                <li><a data-toggle="modal" data-target="#addColor">Voeg een kleur toe</a></li>
+                <li><a data-toggle="modal" data-target="#editColor">Verwijder een kleur</a></li>
+                <li><a data-toggle="modal" data-target="#editColor">Pas een kleur aan</a></li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <ul>
+                <li><b>Kenmerken</b></li>
+                <li><a asp-controller="Features" asp-action="Add">Voeg een kenmerk toe</a></li>
+                <li><a asp-controller="Features" asp-action="Delete">Verwijder een kenmerk</a></li>
+                <li><a asp-controller="Features" asp-action="Edit">Pas een kenmerk aan</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-3 col-sm-12">
             <form asp-action="Search" method="get">
                 <input type="number" name="art" />
@@ -12,4 +30,57 @@
             </form>
         </div>
     </div>
+    
+    <div class="modal fade" id="addColor" tabindex="-1" role="dialog" aria-labelledby="editLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form asp-controller="Colors" asp-action="Create" method="post">
+                    <div class="modal-header">
+                        <h4>Nieuwe kleur aanmaken</h4>
+                    </div>
+                    <div class="modal-content">
+                        <div>
+                            <label for="name">Naam van kleur</label>
+                            <input id="name" type="text" name="color" />
+                            <br />
+                        </div>
+                        <div>
+                            <label for="cod">Kleurcode</label>
+                            <input id="cod" type="text" name="cod" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Aanmaken</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="editColor" tabindex="-1" role="dialog" aria-labelledby="editLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form asp-controller="Colors" asp-action="Search" method="get">
+                    <div class="modal-header">
+                        <h4>Aanpassen kleur</h4>
+                    </div>
+                    <div class="modal-content">
+                        <div>
+                            <label for="color">Naam van kleur</label>
+                            <input id="color" type="text" name="color" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Aanpassen</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

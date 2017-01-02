@@ -25,122 +25,65 @@ namespace HoneymoonShop.Controllers
             return View(await _context.Color.ToListAsync());
         }
 
-        // GET: Colors/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var color = await _context.Color.SingleOrDefaultAsync(m => m.ID == id);
-            if (color == null)
-            {
-                return NotFound();
-            }
-
-            return View(color);
-        }
-
-        // GET: Colors/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         // POST: Colors/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ColorCode,Name")] Color color)
+        public IActionResult Create(string color, string cod)
         {
-            if (ModelState.IsValid)
+            Color c = new Color() { Name = color, ColorCode = cod };
+            try
             {
-                _context.Add(color);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                _context.Add(c);
+                _context.SaveChanges();
             }
-            return View(color);
-        }
-
-        // GET: Colors/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
+            catch
             {
                 return NotFound();
             }
-
-            var color = await _context.Color.SingleOrDefaultAsync(m => m.ID == id);
-            if (color == null)
-            {
-                return NotFound();
-            }
-            return View(color);
+            return RedirectToAction("Index", "Controlpanel");
         }
 
-        // POST: Colors/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpGet]
+        public IActionResult Search(string color)
+        {
+            List<Color> c = _context.Color.Where(col => col.Name.Contains(color)).ToList();
+            if (c == null) return RedirectToAction("Controlpanel", "Index");
+            return View(c);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,ColorCode,Name")] Color color)
+        public IActionResult Edit(int id, string color, string colorcod, int del)
         {
-            if (id != color.ID)
+            Color c = new Color() { ID = id, ColorCode = colorcod, Name = color };
+            switch (del)
             {
-                return NotFound();
-            }
+                case 0:
+                    break;
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(color);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ColorExists(color.ID))
+                case 1:
+                    try
+                    {
+                        _context.Remove(c);
+                        _context.SaveChanges();
+                    }
+                    catch
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Controlpanel");
             }
-            return View(color);
-        }
-
-        // GET: Colors/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
+            try
+            {
+                _context.Update(c);
+                _context.SaveChanges();
+            } catch
             {
                 return NotFound();
             }
-
-            var color = await _context.Color.SingleOrDefaultAsync(m => m.ID == id);
-            if (color == null)
-            {
-                return NotFound();
-            }
-
-            return View(color);
-        }
-
-        // POST: Colors/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var color = await _context.Color.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Color.Remove(color);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Controlpanel");
         }
 
         private bool ColorExists(int id)
