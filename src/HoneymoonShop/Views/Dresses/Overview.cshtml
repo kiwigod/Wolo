@@ -5,6 +5,7 @@
 }
 
 @section Imports{
+    <link rel="stylesheet" href="~/css/overview.css" />
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -121,14 +122,13 @@
 
 @section HeaderOverlay{}
 
-<div id="container" class="container" style="background:white">
+<div class="container" style="background:white">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-lg-2 col-md-2 col-md-offset-1 col-lg-offset-1">
             <form>
                 <!--Manu-->
                 <div style="background:#f6f6f6"><a href="#manu" data-toggle="collapse"><h4><b>Brand</b></h4></a></div>
                 <div id="manu" class="collapse in" style="background:#fcfcfc">
-                    <input type="hidden" name="manu" value="all" />
                     @foreach (Manu m in ViewBag.ManuID)
                     {
                         var id = "cManu" + m.ID;
@@ -142,7 +142,6 @@
                 <!--Style-->
                 <div style="background:#f6f6f6"><a href="#style" data-toggle="collapse"><h4><b>Style</b></h4></a></div>
                 <div id="style" class="collapse in" style="background:#fcfcfc">
-                    <input type="hidden" name="style" value="all" />
                     @foreach (Style s in ViewBag.StyleID)
                     {
                         var id = "cStyle" + s.ID;
@@ -165,7 +164,6 @@
                 <!--Neckline-->
                 <div style="background:#f6f6f6"><a href="#neck" data-toggle="collapse"><h4><b>Neckline</b></h4></a></div>
                 <div id="neck" class="collapse" style="background:#fcfcfc">
-                    <input type="hidden" name="neckline" value="all" />
                     @foreach (Neckline n in ViewBag.NecklineID)
                     {
                         var id = "cNeck" + n.ID;
@@ -179,7 +177,6 @@
                 <!--Silhouette-->
                 <div style="background:#f6f6f6"><a href="#sil" data-toggle="collapse"><h4><b>Silhouette</b></h4></a></div>
                 <div id="sil" class="collapse" style="background:#fcfcfc">
-                    <input type="hidden" name="silhouette" value="all" />
                     @foreach (Silhouette s in ViewBag.SilhouetteID)
                     {
                         var id = "cSil" + s.ID;
@@ -193,7 +190,6 @@
                 <!--Color-->
                 <div style="background:#f6f6f6"><a href="#color" data-toggle="collapse"><h4><b>Color</b></h4></a></div>
                 <div id="color" class="collapse" style="background:#fcfcfc">
-                    <input type="hidden" name="color" value="all" />
                     @foreach (Color c in ViewBag.ColorID)
                     {
                         var id = "cColor" + c.ID;
@@ -205,13 +201,13 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-8 col-lg-8">
             <select id="sort" style="text-align:right" onchange="sorting()">
                 <option value="hl">Prijs Hoog/ Laag</option>
                 <option value="lh">Prijs Laag/ Hoog</option>
                 <option value="a">Alfabetisch</option>
             </select>
-            <div id="overview" class="overview" style="width:inherit; height:auto">
+            <div id="overview" class="overview" style="width:100%; height:auto;">
             </div>
         </div>
     </div>
@@ -220,5 +216,3 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-@*</body>
-    </html>*@
