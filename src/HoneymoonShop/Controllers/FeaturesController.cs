@@ -19,128 +19,63 @@ namespace HoneymoonShop.Controllers
             _context = context;    
         }
 
-        // GET: Features
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Feature.ToListAsync());
-        }
-
-        // GET: Features/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var feature = await _context.Feature.SingleOrDefaultAsync(m => m.ID == id);
-            if (feature == null)
-            {
-                return NotFound();
-            }
-
-            return View(feature);
-        }
-
-        // GET: Features/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Features/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name")] Feature feature)
+        public IActionResult Create(string name)
         {
-            if (ModelState.IsValid)
+            Feature f = new Feature() { Name = name };
+            try
             {
-                _context.Add(feature);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                _context.Add(f);
+                _context.SaveChanges();
             }
-            return View(feature);
-        }
-
-        // GET: Features/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
+            catch
             {
                 return NotFound();
             }
-
-            var feature = await _context.Feature.SingleOrDefaultAsync(m => m.ID == id);
-            if (feature == null)
-            {
-                return NotFound();
-            }
-            return View(feature);
+            return RedirectToAction("Index", "Controlpanel");
         }
 
-        // POST: Features/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] Feature feature)
+        public IActionResult Edit(int id, string name, int del)
         {
-            if (id != feature.ID)
+            Feature f = new Feature() { ID = id, Name = name };
+            switch (del)
             {
-                return NotFound();
-            }
+                case 0:
+                    break;
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(feature);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!FeatureExists(feature.ID))
+                case 1:
+                    try
+                    {
+                        _context.Remove(f);
+                        _context.SaveChanges();
+                    }
+                    catch
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Controlpanel");
             }
-            return View(feature);
-        }
-
-        // GET: Features/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
+            try
+            {
+                _context.Update(f);
+                _context.SaveChanges();
+            }
+            catch
             {
                 return NotFound();
             }
-
-            var feature = await _context.Feature.SingleOrDefaultAsync(m => m.ID == id);
-            if (feature == null)
-            {
-                return NotFound();
-            }
-
-            return View(feature);
+            return RedirectToAction("Index", "Controlpanel");
         }
 
-        // POST: Features/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [HttpGet]
+        public IActionResult Search(string feature)
         {
-            var feature = await _context.Feature.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Feature.Remove(feature);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            List<Feature> f = _context.Feature.Where(feat => feat.Name.Contains(feature)).ToList();
+            if (f == null) return RedirectToAction("Controlpanel", "Index");
+            return View(f);
         }
 
         private bool FeatureExists(int id)

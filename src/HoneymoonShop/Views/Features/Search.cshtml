@@ -1,0 +1,57 @@
+﻿@model IEnumerable<HoneymoonShop.Models.Feature>
+@{
+}
+
+@section HeaderOverlay {}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Naam</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var f in Model)
+                    {
+                        var id = "#modal" + f.ID;
+                        var id2 = "modal" + f.ID;
+                        var delid = "del" + f.ID;
+                        var delid2 = "#del" + f.ID;
+                        <tr>
+                            <td scope="row"><button class="btn btn-default" data-toggle="modal" data-target="@id">@f.Name</button></td>
+                        </tr>
+                        <div class="modal fade" id="@id2" tabindex="-1" role="dialog" aria-labelledby="editLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <form asp-controller="Features" asp-action="Edit" method="post">
+                                        <div class="modal-header">
+                                            <h4>Aanpassen @f.Name</h4>
+                                        </div>
+                                        <div class="modal-content">
+                                            <input id="@delid" type="hidden" name="del" value="0" />
+                                            <input type="hidden" name="id" value="@f.ID" />
+                                            <label for="col">Context</label>
+                                            <input id="col" type="text" name="name" value="@f.Name" />
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-danger" onclick="$('@delid2').val('1');">Verwijderen</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Opslaan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

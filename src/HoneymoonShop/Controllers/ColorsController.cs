@@ -19,15 +19,7 @@ namespace HoneymoonShop.Controllers
             _context = context;    
         }
 
-        // GET: Colors
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Color.ToListAsync());
-        }
-
         // POST: Colors/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(string color, string cod)
