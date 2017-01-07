@@ -1,7 +1,7 @@
 @{
     ViewData["Title"] = "Dress Overview";
     ViewData["Background"] = "white";
-    ViewData["HeaderHeight"] = "auto";
+    ViewData["HeaderHeight"] = "6em";
 }
 
 @section Imports{
@@ -137,11 +137,8 @@
     </script>
 }
 
-@section Ruler{
-    <hr />
-}
-
 <div class="container" style="background:white">
+    <hr />
     <div class="row">
         <div class="col-md-12">
             <ol class="breadcrumb">
@@ -253,7 +250,7 @@
             </div>
             <div id="overview" class="overview" style="width:100%; height:auto;">
             </div>
-            <div style="display:flex; flex-direction:row; flex-wrap:wrap">
+            <div style="display:flex; flex-direction:row; flex-wrap:wrap; margin-top:5em">
                 <div style="flex:auto">
                     <label for="amnt" style="display:inline">Aantal tonen: </label>
                     <select id="amnt" onchange="amnt()" style="height:2.5em; width:6em">

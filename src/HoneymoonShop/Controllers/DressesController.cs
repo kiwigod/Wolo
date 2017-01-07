@@ -28,10 +28,33 @@ namespace HoneymoonShop.Controllers
         }
 
         // GET: Dresses
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var applicationDbContext = _context.Dress.Include(d => d.Category).Include(d => d.Manu).Include(d => d.Neckline).Include(d => d.Silhouette).Include(d => d.Style);
-            return View(await applicationDbContext.ToListAsync());
+            List<Dress> newDress = _context.Dress
+                .ToList();
+            newDress.Sort((x, y) => y.ID.CompareTo(x.ID));
+            newDress = newDress.Take(6).ToList();
+
+            var img = new Dictionary<int, string>();
+            foreach (Dress d in newDress)
+            {
+                string path = Path.Combine(_env.WebRootPath, $"images/dress/{d.ID}");
+                DirectoryInfo di = new DirectoryInfo(path);
+                foreach (string s in Directory.GetFiles(path))
+                {
+                    string filename = s.Replace(path + "\\", string.Empty);
+                    if (filename.StartsWith("1")) img.Add(d.ID, $"{d.ID}/" + filename);
+                }
+            }
+
+            ViewData["Images"] = img;
+            ViewData["CategoryID"] = _context.Category.ToList();
+            ViewData["ColorID"] = _context.Color.ToList();
+            ViewData["ManuID"] = _context.Manu.ToList();
+            ViewData["NecklineID"] = _context.Neckline.ToList();
+            ViewData["SilhouetteID"] = _context.Silhouette.ToList();
+            ViewData["StyleID"] = _context.Style.ToList();
+            return View(newDress);
         }
 
         // GET: Dresses/Details/5
