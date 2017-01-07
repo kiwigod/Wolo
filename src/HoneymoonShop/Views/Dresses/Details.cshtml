@@ -2,8 +2,8 @@
 
 @{
     ViewData["Title"] = "Details - " + Html.DisplayFor(model => model.ID);
-    ViewData["Background"] = "";
-    ViewData["HeaderHeight"] = "";
+    ViewData["Background"] = "white";
+    ViewData["HeaderHeight"] = "6em";
 }
 
 @section Imports {
@@ -14,21 +14,21 @@
 
 <div class="container" style="background:white">
     <div class="row" style="padding-bottom:4em; padding-top:3em">
-        <div class="col-md-12">
-            <a asp-action="Overview">Terug naar overzicht</a>
+        <div class="col-md-3 col-md-offset-1">
+            <a asp-action="Overview"><span>&#8592;</span>Terug naar overzicht</a>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3 col-xs-12" id="thumbnail" style="padding-left:5em">
+        <div class="col-md-3 col-xs-12 col-md-offset-1" id="thumbnail">
             @foreach (string file in ViewBag.Images)
             {
-                <img class="img-responsive" style="height:15em; width:15em; margin-bottom:3em" src="~/images/dress/@file" />
+                <img class="img-responsive" style="height:20em; width:20em; margin-bottom:3em" src="~/images/dress/@file" />
             }
         </div>
-        <div class="col-md-6" id="main-image">
-            <img class="img-responsive" src="~/images/dress/@ViewBag.Images[0]" style="max-height:51em" />
+        <div class="col-md-5" id="main-image">
+            <img class="img-responsive" src="~/images/dress/@ViewBag.Images[0]" style="max-height:65em" />
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <h2 style="margin-bottom:0">@Html.DisplayFor(model => model.Manu.Name)</h2>
             <p style="padding-bottom:3em" class="text-muted">artikel nr. @Html.DisplayFor(model => model.ID)</p>
             <p style="padding-bottom:3em">@Html.DisplayFor(model => model.Description)</p>
@@ -53,9 +53,64 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">OF ZIJN DEZE JURKEN MEER IETS VOOR JOU?</div>
+        <div class="col-md-12">
+            <div style="width: 100%; height: 15px; border-bottom: 2px solid black; text-align: center; margin-top:4em">
+                <span style="font-size: 20px; background-color: white; padding: 0 20px">
+                    <b>BIJPASSENDE SIERADEN</b>
+                </span>
+            </div>
+        </div>
     </div>
+    <div class="row" style="margin-top:2em">
+        <div class="overview">
+            <div>
+                <a href="#" class="overview-item">
+                    <div class="overview-item" style="height:auto">
+                        <img src="http://placehold.it/125x150" />
+                        <h4>Abrazi</h4>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="#" class="overview-item">
+                    <div class="overview-item" style="height:auto">
+                        <img src="http://placehold.it/125x150" />
+                        <h4>Abrazi</h4>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="#" class="overview-item">
+                    <div class="overview-item" style="height:auto">
+                        <img src="http://placehold.it/125x150" />
+                        <h4>Abrazi</h4>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="#" class="overview-item">
+                    <div class="overview-item" style="height:auto">
+                        <img src="http://placehold.it/125x150" />
+                        <h4>Abrazi</h4>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-12" style="text-align:center">
+            <button class="btn index-button" style="color:white; background:#f47590; text-align:center">BEZOEK DE WEBSHOP</button>
+        </div>
+    </div>
+
     <div class="row">
+        <div class="col-md-12">
+            <div style="width: 100%; height: 15px; border-bottom: 2px solid black; text-align: center; margin-top:4em">
+                <span style="font-size: 20px; background-color: white; padding: 0 20px">
+                    <b>OF ZIJN DEZE JURKEN MEER IETS VOOR JOU?</b>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:2em">
         <div class="overview">
             @foreach (Dress d in ViewBag.RecDress)
             {
