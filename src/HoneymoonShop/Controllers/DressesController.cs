@@ -10,6 +10,7 @@ using HoneymoonShop.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Routing;
 
 namespace HoneymoonShop.Controllers
 {
@@ -17,11 +18,13 @@ namespace HoneymoonShop.Controllers
     {
         private readonly ApplicationDbContext _context;
         private IHostingEnvironment _env;
+        private List<Dress> dresses;
 
         public DressesController(ApplicationDbContext context, IHostingEnvironment env)
         {
             _context = context;
             _env = env;
+            dresses = new List<Dress>();
         }
 
         // GET: Dresses
@@ -147,47 +150,48 @@ namespace HoneymoonShop.Controllers
         // GET: Dresses/Overview
         public IActionResult Overview()
         {
-            ViewData["CategoryID"] = _context.Category.ToList();
-            ViewData["ColorID"] = _context.Color.ToList();
-            ViewData["ManuID"] = _context.Manu.ToList();
-            ViewData["NecklineID"] = _context.Neckline.ToList();
-            ViewData["SilhouetteID"] = _context.Silhouette.ToList();
-            ViewData["StyleID"] = _context.Style.ToList();
-
-            List<Dress> availableDress = _context.Dress.Include(d => d.Manu).ToList();
-            var img = new Dictionary<int, string>();
-            foreach (Dress d in availableDress)
-            {
-                string path = Path.Combine(_env.WebRootPath, $"images/dress/{d.ID}");
-                DirectoryInfo di = new DirectoryInfo(path);
-                foreach (string s in Directory.GetFiles(path))
-                {
-                    string filename = s.Replace(path + "\\", string.Empty);
-                    if (filename.StartsWith("1")) img.Add(d.ID, $"{d.ID}/" + filename);
-                }
-            }
-
-            ViewData["Images"] = img;
-            ViewData["Dress"] = availableDress;
-            return View();
+            return RedirectToAction("OverviewFiltered", "Dresses", new {
+                manu = new string[1] { "all" },
+                style = new string[1] { "all" },
+                pricemin = 0,
+                pricemax = _context.Dress.Max(d => d.Price),
+                neckline = new string[1] { "all" },
+                silhouette = new string[1] { "all" },
+                color = new string[1] { "all" },
+                sort = "alf",
+                amnt = 24,
+                page = 1
+            });
         }
 
         [HttpGet]
-        public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color, int request, string sort)
+        public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color, int request, string sort, int amnt, int page)
         {
-            List<Dress> availableDress = _context.Dress
-                .Include(d => d.Manu)
-                .Include(d => d.DressColors)
-                .Where(d => d.Price >= pricemin && d.Price <= pricemax)
-                .Where(d => manu.Contains(d.ManuID.ToString()) || manu.Contains("all"))
-                .Where(d => style.Contains(d.StyleID.ToString()) || style.Contains("all"))
-                .Where(d => neckline.Contains(d.NecklineID.ToString()) || neckline.Contains("all"))
-                .Where(d => silhouette.Contains(d.SilhouetteID.ToString()) || silhouette.Contains("all"))
-                .Where(d => d.DressColors.Where(dc => dc.DressID == d.ID).Any(dc => color.Contains(dc.ColorID.ToString())) || color.Contains("all"))
-                .ToList();
+            if (dresses.Count < 1)
+            {
+                dresses = _context.Dress
+                    .Include(d => d.Manu)
+                    .Include(d => d.DressColors)
+                    .Where(d => d.Price >= pricemin && d.Price <= pricemax)
+                    .Where(d => manu.Contains(d.ManuID.ToString()) || manu.Contains("all"))
+                    .Where(d => style.Contains(d.StyleID.ToString()) || style.Contains("all"))
+                    .Where(d => neckline.Contains(d.NecklineID.ToString()) || neckline.Contains("all"))
+                    .Where(d => silhouette.Contains(d.SilhouetteID.ToString()) || silhouette.Contains("all"))
+                    .Where(d => d.DressColors.Where(dc => dc.DressID == d.ID).Any(dc => color.Contains(dc.ColorID.ToString())) || color.Contains("all"))
+                    .ToList();
+            }
+
+            List<Dress> displayedDress = dresses;
+            if (page != 1)
+            {
+                displayedDress = dresses.Skip(page - 1 * amnt).Take(amnt).ToList();
+            } else
+            {
+                displayedDress = dresses.Take(amnt).ToList();
+            }
 
             var img = new Dictionary<int, string>();
-            foreach (Dress d in availableDress)
+            foreach (Dress d in displayedDress)
             {
                 string path = Path.Combine(_env.WebRootPath, $"images/dress/{d.ID}");
                 DirectoryInfo di = new DirectoryInfo(path);
@@ -201,20 +205,22 @@ namespace HoneymoonShop.Controllers
             switch(sort)
             {
                 case "hl":
-                    availableDress.Sort((x, y) => y.Price.CompareTo(x.Price));
+                    displayedDress.Sort((x, y) => y.Price.CompareTo(x.Price));
                     break;
 
                 case "lh":
-                    availableDress.Sort((x, y) => x.Price.CompareTo(y.Price));
+                    displayedDress.Sort((x, y) => x.Price.CompareTo(y.Price));
                     break;
 
                 case "alf":
-                    availableDress.Sort((x, y) => y.Manu.Name.CompareTo(x.Manu.Name));
+                    displayedDress.Sort((x, y) => y.Manu.Name.CompareTo(x.Manu.Name));
                     break;
             }
 
+            ViewData["CurrentPage"] = page;
+            ViewData["Pages"] = (int)Math.Ceiling((double)dresses.Count / 10);
             ViewData["Images"] = img;
-            ViewData["Dress"] = availableDress;
+            ViewData["Dress"] = displayedDress;
             if (request == 1) return PartialView("OverviewPartial");
             else
             {

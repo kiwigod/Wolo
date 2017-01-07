@@ -1,5 +1,5 @@
 ﻿/// <autosync enabled="true" />
-/// <reference path="js/bootstrap.js" />
+/// <reference path="js/bootstrap.min.js" />
 /// <reference path="js/jquery-3.1.1.min.js" />
 /// <reference path="js/jquery-ui.min.js" />
 /// <reference path="js/script.js" />

@@ -107,7 +107,7 @@ button>b {
     }
 }
 
-@media only screen and(min-width:992px) {
+@media only screen and (min-width:992px) {
     .dissapear-md {
         display: none;
     }

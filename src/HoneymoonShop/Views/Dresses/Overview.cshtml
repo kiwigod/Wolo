@@ -1,7 +1,7 @@
 @{
     ViewData["Title"] = "Dress Overview";
     ViewData["Background"] = "white";
-    ViewData["HeaderHeight"] = "40em";
+    ViewData["HeaderHeight"] = "auto";
 }
 
 @section Imports{
@@ -30,6 +30,7 @@
             $("#overview").load(window.location + "&request=1");
         });
 
+        var amntq = "&amnt=24";
         var sortq = "&sort=hl";
         var manuq = "&manu=all";
         var styleq = "&style=all";
@@ -46,7 +47,7 @@
                         manuq += "&manu=" + children.get(i).value;
                     }
                 } if (manuq == "") manuq = "&manu=all";
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq;
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
@@ -58,12 +59,12 @@
                         styleq += "&style=" + children.get(i).value;
                     }
                 } if (styleq == "") styleq = "&style=all";
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq;
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
             $("#price input").on("input change", function () {
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq;
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
                 doPush(route);
             });
             $("#neck input").click(function () {
@@ -74,7 +75,7 @@
                         neckq += "&neckline=" + children.get(i).value;
                     }
                 } if (neckq == "") neckq = "&neckline=all";
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq;
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
@@ -86,7 +87,7 @@
                         silq += "&silhouette=" + children.get(i).value;
                     }
                 } if (silq == "") silq = "&silhouette=all";
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq;
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
@@ -98,7 +99,7 @@
                         colorq += "&color=" + children.get(i).value;
                     }
                 } if (colorq == "") colorq = "&color=all";
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq;
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
@@ -106,28 +107,67 @@
         function sorting() {
             var e = document.getElementById("sort");
             sortq = "&sort=" + e.options[e.selectedIndex].value;
-            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq;
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
             $("#overview").load(route + "&request=1");
             doPush(route);
         }
 
+        function amnt() {
+            var e = document.getElementById("amnt");
+            amntq = "&amnt=" + e.options[e.selectedIndex].value;
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
+            $("#overview").load(route + "&request=1");
+            doPush(route);
+
+        }
+
+        function goto(page) {
+            if (page < 1) page = 1;
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=" + page;
+            doPush(route);
+            window.location.replace(route);
+        }
+
         function doPush(route) {
             var state = {},
-                tilte = "Dress Overview",
+                title = "Dress Overview",
                 path = route;
-            history.pushState(state, tilte, path);
+            history.pushState(state, title, path);
         }
     </script>
 }
 
-@section HeaderOverlay{}
+@section Ruler{
+    <hr />
+}
 
 <div class="container" style="background:white">
     <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a asp-action="Index" asp-controller="Home" style="color:#f47590">Home</a></li>
+                <li><a asp-action="Index" asp-controller="Dresses" style="color:#f47590">Bruid</a></li>
+                <li class="active">Dressfinder</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row" style="padding-top:3em">
         <div class="col-lg-2 col-md-2 col-md-offset-1 col-lg-offset-1">
             <form>
+                <!--Cat-->
+                <h4><b>CATEGORIEEN:</b></h4>
+                <div style="margin-bottom:2em">
+                    @foreach (Category c in ViewBag.CategoryID)
+                    {
+                        <div style="background:#fce8e7; margin-bottom:0.3em"><a href=""><b>@c.Name</b></a></div>
+                    }
+                    <div style="background:#fce8e7; margin-bottom:0.3em"><a href=""><b>Nieuwe Collectie</b></a></div>
+                    <div style="background:#fce8e7; margin-bottom:0.3em"><a href=""><b>Alle jurken bekijken</b></a></div>
+                </div>
+
+                <h5><b>Filter op:</b></h5>
                 <!--Manu-->
-                <div style="background:#f6f6f6"><a href="#manu" data-toggle="collapse"><h4><b>Brand</b></h4></a></div>
+                <div style="background:#f6f6f6"><a href="#manu" data-toggle="collapse"><h4>Merk</h4></a></div>
                 <div id="manu" class="collapse in" style="background:#fcfcfc">
                     @foreach (Manu m in ViewBag.ManuID)
                     {
@@ -140,7 +180,7 @@
                 </div>
 
                 <!--Style-->
-                <div style="background:#f6f6f6"><a href="#style" data-toggle="collapse"><h4><b>Style</b></h4></a></div>
+                <div style="background:#f6f6f6"><a href="#style" data-toggle="collapse"><h4>Stijl</h4></a></div>
                 <div id="style" class="collapse in" style="background:#fcfcfc">
                     @foreach (Style s in ViewBag.StyleID)
                     {
@@ -155,14 +195,15 @@
                 <!--Price-->
                 <input type="hidden" name="pricemin" id="pricemin" value="0" />
                 <input type="hidden" name="pricemax" id="pricemax" value="15000" />
-                <div style="background:#f6f6f6"><a href="#price" data-toggle="collapse"><h4><b>Price</b></h4></a></div>
+                <div style="background:#f6f6f6"><a href="#price" data-toggle="collapse"><h4>Prijs</h4></a></div>
                 <div id="price" class="collapse in" style="background:#fcfcfc">
                     <input type="text" id="amount" readonly style="border:0; font-weight:bold; background:none">
                     <div id="slider-range"></div>
                 </div>
 
+                <h5 style="margin-top:2em"><b>Filters verfijnen:</b></h5>
                 <!--Neckline-->
-                <div style="background:#f6f6f6"><a href="#neck" data-toggle="collapse"><h4><b>Neckline</b></h4></a></div>
+                <div style="background:#f6f6f6"><a href="#neck" data-toggle="collapse"><h4>Neklijn</h4></a></div>
                 <div id="neck" class="collapse" style="background:#fcfcfc">
                     @foreach (Neckline n in ViewBag.NecklineID)
                     {
@@ -175,7 +216,7 @@
                 </div>
 
                 <!--Silhouette-->
-                <div style="background:#f6f6f6"><a href="#sil" data-toggle="collapse"><h4><b>Silhouette</b></h4></a></div>
+                <div style="background:#f6f6f6"><a href="#sil" data-toggle="collapse"><h4>Silhouette</h4></a></div>
                 <div id="sil" class="collapse" style="background:#fcfcfc">
                     @foreach (Silhouette s in ViewBag.SilhouetteID)
                     {
@@ -188,7 +229,7 @@
                 </div>
 
                 <!--Color-->
-                <div style="background:#f6f6f6"><a href="#color" data-toggle="collapse"><h4><b>Color</b></h4></a></div>
+                <div style="background:#f6f6f6"><a href="#color" data-toggle="collapse"><h4>Kleur</h4></a></div>
                 <div id="color" class="collapse" style="background:#fcfcfc">
                     @foreach (Color c in ViewBag.ColorID)
                     {
@@ -202,12 +243,54 @@
             </form>
         </div>
         <div class="col-md-8 col-lg-8">
-            <select id="sort" style="text-align:right" onchange="sorting()">
-                <option value="hl">Prijs Hoog/ Laag</option>
-                <option value="lh">Prijs Laag/ Hoog</option>
-                <option value="a">Alfabetisch</option>
-            </select>
+            <div style="padding-bottom:3em">
+                <label for="sort" style="display:inline;margin-left:60%">Sorteren op: </label>
+                <select id="sort" onchange="sorting()" style="height:2.5em; width:15em">
+                    <option value="hl">Prijs Hoog/ Laag</option>
+                    <option value="lh">Prijs Laag/ Hoog</option>
+                    <option value="a">Alfabetisch</option>
+                </select>
+            </div>
             <div id="overview" class="overview" style="width:100%; height:auto;">
+            </div>
+            <div style="display:flex; flex-direction:row; flex-wrap:wrap">
+                <div style="flex:auto">
+                    <label for="amnt" style="display:inline">Aantal tonen: </label>
+                    <select id="amnt" onchange="amnt()" style="height:2.5em; width:6em">
+                        <option value="24">24</option>
+                        <option value="27">27</option>
+                        <option value="30">30</option>
+                        <option value="33">33</option>
+                    </select>
+
+                </div>
+                <div style="flex:auto; text-align:right">
+                    @{
+                        int next = ViewBag.CurrentPage + 1;
+                        int prev = ViewBag.CurrentPage - 1;
+                    }
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li>
+                                <a onclick="goto(@prev)" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            @for(int i=1; i<=ViewBag.Pages; i++)
+                            {
+                                <li>
+                                    <a onclick="goto(@i)">@i</a>
+                                </li>
+
+                            }
+                            <li>
+                                <a onclick="goto(@next)" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>
