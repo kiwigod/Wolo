@@ -415,3 +415,151 @@ div[class*="overview-item"]>div{
     top:2px;
     left:2px;
 }
+
+.prev{
+    float: left;
+}
+ 
+.next{
+    float: right;
+}
+ 
+.dateinput{
+    display: none;
+}
+ 
+.dateinput + label{
+    cursor: pointer;
+    border: solid 2px rgba(0,0,0,0);
+    padding: .2em;
+    width: 2em;
+}
+ 
+.dateinput:checked + label{
+    border: solid 2px white;
+    padding: .2em;
+    border-radius: 100%;
+    width: 2em;
+}
+
+.prev{
+    float: left;
+}
+ 
+.next{
+    float: right;
+}
+ 
+.dateinput{
+    display: none;
+}
+ 
+.dateinput + label{
+    cursor: pointer;
+    border: solid 2px rgba(0,0,0,0);
+    padding: .2em;
+    width: 2em;
+}
+ 
+.dateinput:checked + label{
+    border: solid 2px white;
+    padding: .2em;
+    border-radius: 100%;
+    width: 2em;
+}
+ 
+.nondate{
+    color: #C74966;
+}
+ 
+.radio-white-label{
+    background-color: #F59CB2;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    border: solid 2px #F59CB2;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-right: 1em;
+}
+ 
+.radio-white:checked + label{
+    background-color: white;
+}
+ 
+.radio-white-label:hover{
+    background-color: #FCE5EB;
+}
+ 
+#userinfo-form > input[type=text]{
+    width: 100%;
+    height: 3em;
+    border: solid 2px lightgrey;
+}
+#userinfo-form > input[type=date]{
+    width: 100%;
+    height: 3em;
+    border: solid 2px lightgrey;
+}
+ 
+.glyphicon{
+    color: white;
+    transform: rotate(-15deg);
+     
+}
+ 
+#userinfo-form > input[type=checkbox]{
+    -webkit-appearance: checkbox;
+    height: 2em;
+    width: 2em;
+    border: solid 2px lightgrey;
+    background-color: lightgray;
+}
+ 
+#userinfo-validation-info-table tr>td:nth-child(2) {
+    font-weight: normal;
+}
+ 
+.staplabel{
+    background-color: rgb(240,89,124);
+    border-radius: 50%;
+    width: 1.5em;
+    height: 1.5em;
+    text-align: center;
+    padding-top: .1em;
+    color:white;
+    font-size:x-large;
+    position: relative;
+    left: calc(50% - 0.75em);
+}
+ 
+.staplabel-disabled{
+    background-color: lightgray;
+}
+.staplabel-proceeded{
+    background-color: #FCE8E7;
+}
+ 
+.staptext{
+    text-align: center;
+    color: #F06585;
+    font-weight: bold;
+}
+ 
+.staptext-disabled{
+    color: lightgray;
+}
+ 
+.staptext-proceeded{
+    color: #FCE8E7;
+}
+.stappath{
+    text-align: center;
+    font-weight: bold;
+    font-size: large;
+    color: lightgrey;
+}
+ 
+.stappath-proceeded{
+    color: #FCE8E7;
+}

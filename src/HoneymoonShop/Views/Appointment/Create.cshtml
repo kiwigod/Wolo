@@ -1,0 +1,211 @@
+﻿@{
+}
+
+@section Imports {
+<script src="~/js/calendar.js" type="text/javascript"></script>
+<style>
+    th{
+        text-align:center;
+    }
+</style>
+}
+<div class="container">
+    <div style="display: flex; flex-shrink: 0; flex-wrap: wrap; box-shadow: 0px 0px 30px darkgrey;">
+        <div id="stappenplan" style="flex-basis: 55%; padding:3em; background:white; display: flex">
+            <div id="stappen" style="height:100%; padding-right:3em; user-select: none;">
+                <label id="stap1-label" class="staplabel">1</label><p id="stap1-text" class="staptext">Datum en tijd<br> selecteren</p>
+                <p id="stap1-path" class="stappath">I<br>I<br>I<br>I<br>I<br>I<br></p>
+                <label id="stap2-label" class="staplabel staplabel-disabled">2</label><p id="stap2-text" class="staptext staptext-disabled">Gegevens<br> invullen</p>
+                <p id="stap2-path" class="stappath">I<br></p>
+                <label id="stap3-label" class="staplabel staplabel-disabled">3</label><p id="stap3-text" class="staptext staptext-disabled">Gegevens<br> controleren</p>
+            </div>
+            <div id="stap-datum-selectie">
+                <h4><b>Stap 1, Datum en tijd selecteren</b></h4>
+                <p>
+                    Selecteer eerst een datum en vervolgens
+                    een tijdstip dat je wilt komen passen!
+                </p>
+                <br />
+                <p>Openengstijden:<br /></p>
+                <table style="font-weight: bold;">
+                    <tr>
+                        <td>MA</td>
+                        <td>12:00-17:30</td>
+                    </tr>
+                    <tr>
+                        <td>DI-VR&nbsp;</td>
+                        <td>09:30-17-30</td>
+                    </tr>
+                    <tr>
+                        <td>ZA</td>
+                        <td>09:30-18:00</td>
+                    </tr>
+                    <tr>
+                        <td>ZO</td>
+                        <td>11:00-17:00</td>
+                    </tr>
+                </table>
+                <br />
+
+                <p>
+                    *Op alle werkdagen kunnen er ook schoenen worden
+                    gepast. Helaas is dit niet mogelijk in het weekend.
+                </p><br>
+                <button id="btn-stap2" class="btn-primary" style="padding: 1em; text-transform: uppercase; background-color: #F0597C; border:none;" hidden><b>Naar stap 2</b></button>
+            </div>
+            <div id="userinfo" hidden>
+                <form id="userinfo-form">
+                    <h4><b>Stap 2, Gegevens invullen</b></h4><br />
+                    <p><b>Voor- en achternaam*</b></p>
+                    <input type="text" /><br /><br />
+                    <p><b>Trouwdatum*</b></p>
+                    <input type="date" /><br /><br />
+                    <p><b>Telefoonnummer</b></p>
+                    <input type="text" /><br /><br />
+                    <p><b>E-mailadres*</b></p>
+                    <input type="text" /><br /><br />
+                    <p><b>Herhaal E-mailadres*</b></p>
+                    <input type="text" /><br /><br />
+                    <input type="checkbox" />
+                    <p style="display:inline">Ja, ik wil me graag aanmelden voor de inspirerende nieuwsbrief van Honeymoon Shop.</p><br /><br>
+                </form>
+                <button id="btn-stap3" class="btn-primary" style="padding: 1em; text-transform: uppercase; background-color: #F0597C; border:none;"><b>Naar stap 3</b></button>
+            </div>
+            <div id="userinfo-validation" hidden>
+                <h4><b>Stap 3, Gegevens controleren</b></h4><br />
+                <p>Controleer alle gegevens voor je pasafspraak bij Honetmoon shop aan Korte Hoogstraat 4, te Rotterdam.</p><br>
+                <button class="btn-primary" style="padding: 1em; text-transform: uppercase; background-color: #F0597C; border:none;"><b>Afspraak bevestigen</b></button>
+            </div>
+        </div>
+        <div id="rightpanel" style="flex-basis: 45%; padding:3em; background: rgb(240,89,124); color:white; font-weight: bold">
+            <div id="calendar" style="user-select:none;">
+                <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                <h4 style="display:inline"><b> Selecteer een datum:</b></h4><br />
+                <ul style="list-style-type: none; padding-left: 0; background: rgb(242, 115, 144); padding: 0.4em;">
+                    <li class="prev"><button id="previous" class="button-transparent">&#10094;</button></li>
+                    <li class="next"><button id="next" class="button-transparent">&#10095;</button></li>
+                    <li style="text-align:center;">
+                        <p id="calender-currentday" style="margin: 0%; text-transform: uppercase">September 2016</p>
+                    </li>
+                </ul>
+                <form id="calendar-form">
+                    <table id="daysTable" style="width: 100%; text-align:center; text-transform: uppercase;">
+                        <tr>
+                            <th>Ma</th>
+                            <th>Di</th>
+                            <th>Woe</th>
+                            <th>Do</th>
+                            <th>Vri</th>
+                            <th>Za</th>
+                            <th>Zo</th>
+                        </tr>
+                        <tr id="tr1">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr id="tr2">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr id="tr3">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr id="tr4">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr id="tr5">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr id="tr6">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </form>
+                <br />
+                <button id="btntime" class="button-transparent" style="position:relative; left: calc(100% - 11em); color:#F8B1BF;">Selecteer een tijd ---></button>
+            </div>
+            <div id="tijdstip" hidden>
+                <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                <h4 style="display:inline"><b> Selecteer een tijdstip:</b></h4><br />
+                <ul style="list-style-type: none; background: rgb(242, 115, 144); padding: 0.4em;">
+                    <li class="prev"><button class="button-transparent" disabled>&#10094;</button></li>
+                    <li class="next"><button class="button-transparent" disabled>&#10095;</button></li>
+                    <li style="text-align:center;">
+                        <p id="calendertijdstip-currentday" style="margin: 0%; text-transform: uppercase">September 2016</p>
+                    </li>
+                </ul><br />
+                <form id="tijdstip-form">
+                    <input class="radio-white" id="firstAppointment" type="radio" name="tijdstip" value="09:30" hidden /><label class="radio-white-label" for="firstAppointment"></label><label for="firstAppointment">09:30 uur</label><br />
+                    <input class="radio-white" id="secondAppointment" type="radio" name="tijdstip" value="12:30" hidden /><label class="radio-white-label" for="secondAppointment"></label><label for="secondAppointment">12:30 uur</label><br />
+                    <input class="radio-white" id="thirdAppointment" type="radio" name="tijdstip" value="15:00" hidden /><label class="radio-white-label" for="thirdAppointment"></label><label for="thirdAppointment">15:00 uur</label><br />
+                </form>
+                <br /><br /><br /><br /><br /><br /><br />
+                <button id="btndatum" class="button-transparent" style="color:#F8B1BF;">&lt;--- Terug naar datum selecteren</button>
+            </div>
+            <div id="chosendate-panel" hidden>
+                <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                <h4 style="display:inline"><b style="text-transform: uppercase;"> Gekozen tijd en datum:</b></h4><br />
+                <h4 style="background: rgb(242, 115, 144); padding: 0.4em; text-align:center"><b id="chosendate">DO 15 SEPTEMBER 2016 OM 09.30 U</b></h4><br />
+                <p>Vul je persoonlijke gegevens in om de pasafspraak compleet te maken.</p>
+                <br /><br /><br /><br /><br /><br /><br />
+                <button id="btn-stap1" class="button-transparent" style="color:#F8B1BF; position: relative; top: 30px ">&lt;--- Terug naar stap 1 om datum te wijzigen</button>
+            </div>
+            <div id="userinfo-validation-info" hidden>
+                <h4 style="background: rgb(242, 115, 144); padding: 0.4em; text-align:center"><b id="userinfo-validation-datetime">DO 15 SEPTEMBER 2016 OM 09.30 U</b></h4><br />
+                <table id="userinfo-validation-info-table" style="font-weight: bold; margin-bottom: 5em">
+                    <tr>
+                        <td>Naam:</td>
+                        <td>Maritha Dujin</td>
+                    </tr>
+                    <tr>
+                        <td>Trouwdatum:&nbsp;</td>
+                        <td>10/07/17</td>
+                    </tr>
+                    <tr>
+                        <td>Telefoon:</td>
+                        <td>06- 123 45 678</td>
+                    </tr>
+                    <tr>
+                        <td>E-mail:</td>
+                        <td>maritha.duijin@gmail.com</td>
+                    </tr>
+                </table>
+                <button id="btn-stap2-back" class="button-transparent" style="color:#F8B1BF; position: relative; top: 30px ">&lt;--- Terug naar stap 2 om gegevens te wijzigen</button>
+            </div>
+        </div>
+    </div>
+</div>
