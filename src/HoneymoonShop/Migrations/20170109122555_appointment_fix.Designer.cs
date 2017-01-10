@@ -8,9 +8,10 @@ using HoneymoonShop.Data;
 namespace HoneymoonShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170109122555_appointment_fix")]
+    partial class appointment_fix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -63,26 +64,6 @@ namespace HoneymoonShop.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("HoneymoonShop.Models.Appointment", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("Date");
-
-                    b.Property<DateTime>("MDate");
-
-                    b.Property<string>("Mail");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("PNumber");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Appointment");
                 });
 
             modelBuilder.Entity("HoneymoonShop.Models.Category", b =>

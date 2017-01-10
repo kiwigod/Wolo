@@ -1,0 +1,14 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        @foreach (var t in ViewBag.Time)
+        {
+            <input type="radio" name="time" value="@t" />@t <br />
+
+        }
+    </div>
+</div>
