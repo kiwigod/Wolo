@@ -42,7 +42,6 @@ namespace HoneymoonShop.Controllers
 
             List<string> files = new List<string>();
             string path = Path.Combine(_env.WebRootPath, $"images/dress/{dress.ID}");
-            DirectoryInfo di = new DirectoryInfo(path);
             foreach (string s in Directory.GetFiles(path))
             {
                 string filename = s.Replace(path + "\\", string.Empty);

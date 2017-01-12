@@ -80,6 +80,8 @@ namespace HoneymoonShop.Migrations
 
                     b.Property<string>("PNumber");
 
+                    b.Property<bool>("newsletter");
+
                     b.HasKey("ID");
 
                     b.ToTable("Appointment");
@@ -216,9 +218,9 @@ namespace HoneymoonShop.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Description");
+                    b.Property<DateTime>("Date");
 
-                    b.Property<string>("Mail");
+                    b.Property<string>("Description");
 
                     b.Property<string>("Name");
 

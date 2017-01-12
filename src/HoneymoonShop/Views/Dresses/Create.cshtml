@@ -1,81 +1,129 @@
 @model HoneymoonShop.Models.Dress
 
 @{
-    Layout = null;
+
 }
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Jurk toevoegen</h3><br />
+            <h4>Foto's uploaden</h4>
+            <h5>Stap 1/2</h5>
+        </div>
+    </div>
+    <form asp-action="AddImage" asp-controller="Dresses" method="post" enctype="multipart/form-data">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class=" col-md-10">
+                    <input type="file" name="files" multiple />
+                    <button type="submit" class="btn btn-default" value="Upload foto's'">Upload foto's</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
-</head>
-<body>
-
-<form asp-action="Create">
-    <div class="form-horizontal">
-        <h4>Dress</h4>
-        <hr />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="CategoryID" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <select asp-for="CategoryID" class ="form-control" asp-items="ViewBag.CategoryID"></select>
+@*<div class="container">
+    <form asp-action="Create">
+        <div class="form-horizontal">
+            <h4>Dress</h4>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CategoryID" class="col-md-2 control-label">Categorie</label>
+                <div class="col-md-10">
+                    <select asp-for="CategoryID" class="form-control" asp-items="ViewBag.CategoryID"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="col-md-2 control-label">Beschrijving</label>
+                <div class="col-md-10">
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManuID" class="col-md-2 control-label">Merk</label>
+                <div class="col-md-10">
+                    <select asp-for="ManuID" class="form-control" asp-items="ViewBag.ManuID"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="NecklineID" class="col-md-2 control-label">Neklijn</label>
+                <div class="col-md-10">
+                    <select asp-for="NecklineID" class="form-control" asp-items="ViewBag.NecklineID"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="col-md-2 control-label">Prijs</label>
+                <div class="col-md-10">
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="SilhouetteID" class="col-md-2 control-label">Silhouette</label>
+                <div class="col-md-10">
+                    <select asp-for="SilhouetteID" class="form-control" asp-items="ViewBag.SilhouetteID"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="StyleID" class="col-md-2 control-label">Stijl</label>
+                <div class="col-md-10">
+                    <select asp-for="StyleID" class="form-control" asp-items="ViewBag.StyleID"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Color" class="col-md-2 control-label">Kleuren</label>
+                <div class="col-md-10" id="Color">
+                    @foreach (var c in ViewBag.ColorID)
+                    {
+                        <input type="checkbox" name="ColorID" value="@c.ID" />@c.Name <br />
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Feature" class="col-md-2 control-label">Kenmerken</label>
+                <div class="col-md-10" id="Feature">
+                    @foreach (var f in ViewBag.FeatureID)
+                    {
+                        <input type="checkbox" name="FeatureID" value="@f.ID" />@f.Name <br />
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button data-toggle="modal" data-target="#addImg" class="btn btn-default" value="Upload foto's'">Upload foto's</button>
+                </div> 
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <label asp-for="Description" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="ManuID" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <select asp-for="ManuID" class ="form-control" asp-items="ViewBag.ManuID"></select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="NecklineID" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <select asp-for="NecklineID" class ="form-control" asp-items="ViewBag.NecklineID"></select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Price" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="SilhouetteID" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <select asp-for="SilhouetteID" class ="form-control" asp-items="ViewBag.SilhouetteID"></select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="StyleID" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <select asp-for="StyleID" class ="form-control" asp-items="ViewBag.StyleID"></select>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+    </form>
+    <div class="modal fade" id="addImg" tabindex="-1" role="dialog" aria-labelledby="editLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form id="images" method="post" asp-controller="Dresses" asp-action="AddImageTemp" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h4>Foto's uploaden</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="file" name="files" multiple/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-default">Upload</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</form>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-</body>
-</html>

@@ -20,127 +20,42 @@ namespace HoneymoonShop.Controllers
         }
 
         // GET: Reviews
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string r)
         {
-            return View();
+            if (r!= null && r.Equals("pass")) ViewData["state"] = "Uw review is opgeslagen bedankt voor uw feedback!";
+            else ViewData["state"] = "";
+            //ViewData["state"] = await Message.Send("smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtp.gmail.com", 587, "smtptestcore@gmail.com", "smtptestcore@gmail.com", "testcore", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com");
+            return View(await _context.Review.ToListAsync());
         }
 
-        // GET: Reviews/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var review = await _context.Review.SingleOrDefaultAsync(m => m.ID == id);
-            if (review == null)
-            {
-                return NotFound();
-            }
-
-            return View(review);
-        }
-
-        // GET: Reviews/Create
         public IActionResult Create()
         {
+            ViewData["state"] = "";
             return View();
         }
 
-        // POST: Reviews/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Description,Mail,Name,Rating")] Review review)
+        public async Task<IActionResult> Validate(string name, string desc, int rat)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(review);
+                _context.Add(
+                    new Review()
+                    {
+                        Date = DateTime.Now,
+                        Description = desc,
+                        Name = name,
+                        Rating = rat
+                    }
+                );
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
             }
-            return View(review);
-        }
-
-        // GET: Reviews/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
+            catch
             {
                 return NotFound();
             }
-
-            var review = await _context.Review.SingleOrDefaultAsync(m => m.ID == id);
-            if (review == null)
-            {
-                return NotFound();
-            }
-            return View(review);
-        }
-
-        // POST: Reviews/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Description,Mail,Name,Rating")] Review review)
-        {
-            if (id != review.ID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(review);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ReviewExists(review.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("Index");
-            }
-            return View(review);
-        }
-
-        // GET: Reviews/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var review = await _context.Review.SingleOrDefaultAsync(m => m.ID == id);
-            if (review == null)
-            {
-                return NotFound();
-            }
-
-            return View(review);
-        }
-
-        // POST: Reviews/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var review = await _context.Review.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Review.Remove(review);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { r = "pass" });
         }
 
         private bool ReviewExists(int id)

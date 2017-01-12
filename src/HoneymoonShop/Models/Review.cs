@@ -10,7 +10,7 @@ namespace HoneymoonShop.Models
         public int ID { get; set; }
         public int Rating { get; set; }
         public string Name { get; set; }
-        public string Mail { get; set; }
+        public DateTime Date { get; set; }
         public string Description { get; set; }
     }
 }

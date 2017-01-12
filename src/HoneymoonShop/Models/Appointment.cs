@@ -13,5 +13,6 @@ namespace HoneymoonShop.Models
         public DateTime MDate { get; set; }
         public string PNumber { get; set; }
         public string Mail { get; set; }
+        public bool newsletter { get; set; }
     }
 }

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using HoneymoonShop.Data;
-using Microsoft.AspNetCore.Hosting;
 using HoneymoonShop.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.Threading.Tasks;
 
 namespace HoneymoonShop.Controllers
 {
@@ -20,13 +20,13 @@ namespace HoneymoonShop.Controllers
             _context = context;
             _env = env;
             opening = new Dictionary<int, double[]>();
-            opening.Add(1, new double[] { 12, 17.50 });
-            opening.Add(2, new double[] { 9.50, 17.50 });
-            opening.Add(3, new double[] { 9.50, 17.50 });
-            opening.Add(4, new double[] { 9.50, 17.50 });
-            opening.Add(5, new double[] { 9.50, 17.50 });
-            opening.Add(6, new double[] { 12, 18 });
-            opening.Add(7, new double[] { 11, 17 });
+            opening.Add(1, new double[] { 12, 17.50 });     // monday
+            opening.Add(2, new double[] { 9.50, 17.50 });   // tuesday
+            opening.Add(3, new double[] { 9.50, 17.50 });   // wednesday
+            opening.Add(4, new double[] { 9.50, 17.50 });   // thursday
+            opening.Add(5, new double[] { 9.50, 17.50 });   // friday
+            opening.Add(6, new double[] { 12, 18 });        // saturday
+            opening.Add(0, new double[] { 11, 17 });        // sunday
         }
 
         public IActionResult Index()
@@ -40,9 +40,9 @@ namespace HoneymoonShop.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Validate(string date, string time, string name, string mdate, string phone, string mail)
+        public async Task<IActionResult> Validate(string date, string time, string name, string mdate, string phone, string mail, bool newsletter)
         {
+            string state;
             /***************
              * [0] - year
              * [1] - month
@@ -64,17 +64,27 @@ namespace HoneymoonShop.Controllers
                     new Appointment()
                     {
                         Date = new DateTime(int.Parse(aDate[0]), int.Parse(aDate[1]), int.Parse(aDate[2]),
-                        int.Parse(aTime[0]), int.Parse(aTime[1]), 0)
+                            int.Parse(aTime[0]), int.Parse(aTime[1]), 0),
+                        Mail = mail,
+                        MDate = new DateTime(int.Parse(maDate[0]), int.Parse(maDate[1]), int.Parse(maDate[2])),
+                        Name = name,
+                        newsletter = newsletter,
+                        PNumber = phone
                     }
                 );
-                _context.SaveChanges();
-                string state = "Uw afspraak is gemaakt";
-                return View(state);
-            } catch
-            {
-                string state = "Er is iets mis gegaan bij het inplannen van uw afspraak";
-                return View(state);
+                await _context.SaveChangesAsync();
             }
+            catch(Exception e)
+            {
+                state = e.Message;
+            }
+
+            if (newsletter == true)
+            {
+                await Message.Send("smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtp.gmail.com", 587, "smtptestcore@gmail.com", "smtptestcore@gmail.com", "testcore", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com");
+
+            }
+            return View();
         }
 
         [HttpGet]
@@ -93,8 +103,10 @@ namespace HoneymoonShop.Controllers
                 a.Date.Day == int.Parse(aDate[2])
             ).ToList();
 
-            if (currentAppointments.Count == 0) {
-                double[] time = opening[((int)new DateTime(int.Parse(aDate[0]), int.Parse(aDate[1]), int.Parse(aDate[2])).Date.DayOfWeek)];
+            if (currentAppointments.Count == 0)
+            {
+                int index = (int)new DateTime(int.Parse(aDate[0]), int.Parse(aDate[1]), int.Parse(aDate[2])).Date.DayOfWeek;
+                double[] time = opening[index];
                 List<double> hoursOccupied = genTimetable(time);
                 return checkTime(hoursOccupied);
             }
@@ -104,9 +116,24 @@ namespace HoneymoonShop.Controllers
                 List<double> hoursOccupied = genTimetable(time);
                 foreach (Appointment a in currentAppointments)
                 {
-                    hoursOccupied.Remove(a.Date.Hour);
-                    hoursOccupied.Remove(a.Date.Hour + 1);
-                    hoursOccupied.Remove(a.Date.Hour + 2);
+                    if(a.Date.Minute == 0)
+                    {
+                        hoursOccupied.Remove(a.Date.Hour);
+                        hoursOccupied.Remove(a.Date.Hour + 0.5);
+                        hoursOccupied.Remove(a.Date.Hour + 1);
+                        hoursOccupied.Remove(a.Date.Hour + 1.5);
+                        hoursOccupied.Remove(a.Date.Hour + 2);
+                        hoursOccupied.Remove(a.Date.Hour + 2.5);
+                    }
+                    else
+                    {
+                        hoursOccupied.Remove(a.Date.Hour + 0.5);
+                        hoursOccupied.Remove(a.Date.Hour + 1);
+                        hoursOccupied.Remove(a.Date.Hour + 1.5);
+                        hoursOccupied.Remove(a.Date.Hour + 2);
+                        hoursOccupied.Remove(a.Date.Hour + 2.5);
+                        hoursOccupied.Remove(a.Date.Hour + 3);
+                    }
                 }
                 return checkTime(hoursOccupied);
             }
@@ -146,6 +173,7 @@ namespace HoneymoonShop.Controllers
             }
             return times;
         }
+
         private List<double> genTimetable(double[] time)
         {
             List<double> hoursOccupied = new List<double>();

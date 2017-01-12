@@ -139,14 +139,23 @@ namespace HoneymoonShop.Controllers
         }
 
         // GET: Dresses/Create
-        public IActionResult Create()
+        public IActionResult Create(int stage)
         {
-            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "ID");
-            ViewData["ManuID"] = new SelectList(_context.Manu, "ID", "ID");
-            ViewData["NecklineID"] = new SelectList(_context.Neckline, "ID", "ID");
-            ViewData["SilhouetteID"] = new SelectList(_context.Silhouette, "ID", "ID");
-            ViewData["StyleID"] = new SelectList(_context.Style, "ID", "ID");
-            return View();
+            switch (stage)
+            {
+                case 2:
+                    ViewData["CategoryID"] = new SelectList(_context.Category.OrderBy(c => c.Name).ToList(), "ID", "Name");
+                    ViewData["ManuID"] = new SelectList(_context.Manu.OrderBy(m => m.Name), "ID", "Name");
+                    ViewData["NecklineID"] = new SelectList(_context.Neckline.OrderBy(n => n.Name), "ID", "Name");
+                    ViewData["SilhouetteID"] = new SelectList(_context.Silhouette.OrderBy(s => s.Name), "ID", "Name");
+                    ViewData["StyleID"] = new SelectList(_context.Style.OrderBy(s => s.Name), "ID", "Name");
+                    ViewData["ColorID"] = _context.Color.ToList();
+                    ViewData["FeatureID"] = _context.Feature.ToList();
+                    return View();
+
+                default:
+                    return RedirectToAction("AddImage");
+            }
         }
 
         // POST: Dresses/Create
@@ -154,7 +163,7 @@ namespace HoneymoonShop.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,CategoryID,Description,ManuID,NecklineID,Price,SilhouetteID,StyleID")] Dress dress)
+        public async Task<IActionResult> Create([Bind("ID,CategoryID,Description,ManuID,NecklineID,Price,SilhouetteID,StyleID")] Dress dress, string[] ColorID, string[] FeatureID)
         {
             if (ModelState.IsValid)
             {
@@ -173,7 +182,8 @@ namespace HoneymoonShop.Controllers
         // GET: Dresses/Overview
         public IActionResult Overview()
         {
-            return RedirectToAction("OverviewFiltered", "Dresses", new {
+            return RedirectToAction("OverviewFiltered", "Dresses", new
+            {
                 manu = new string[1] { "all" },
                 style = new string[1] { "all" },
                 pricemin = 0,
@@ -208,7 +218,8 @@ namespace HoneymoonShop.Controllers
             if (page != 1)
             {
                 displayedDress = dresses.Skip(page - 1 * amnt).Take(amnt).ToList();
-            } else
+            }
+            else
             {
                 displayedDress = dresses.Take(amnt).ToList();
             }
@@ -225,7 +236,7 @@ namespace HoneymoonShop.Controllers
                 }
             }
 
-            switch(sort)
+            switch (sort)
             {
                 case "hl":
                     displayedDress.Sort((x, y) => y.Price.CompareTo(x.Price));
@@ -257,80 +268,134 @@ namespace HoneymoonShop.Controllers
             }
         }
 
-        // GET: Dresses/AddImage/5
-        public IActionResult AddImage(int? id)
-        {
-            var dress = _context.Dress.Where(d => d.ID == id).First();
-            try
-            {
-                string path = Path.Combine(_env.WebRootPath, $"images/dress/{id}");
-                DirectoryInfo di = new DirectoryInfo(path);
-                List<string> files = new List<string>();
-                foreach (string s in Directory.GetFiles(path))
-                {
-                    string filename = s.Replace(path + "\\", string.Empty);
-                    files.Add($"{id}/" + filename);
-                }
-                ViewData["Images"] = files;
-            } catch
-            {
-                ViewData["Images"] = new List<string>();
-            }
+        //[HttpPost]
+        //public async Task<List<string>> AddImageTemp(ICollection<IFormFile> files)
+        //{
+        //    List<string> paths = new List<string>();
+        //    var uploads = Path.Combine(_env.WebRootPath, $"images/dress/temp");
+        //    Directory.CreateDirectory(uploads);
+        //    string[] accepted = { "jpg", "jpeg", "png", "webp", "bmp" };
+        //    foreach(var file in files)
+        //    {
+        //        string[] filename = file.FileName.Split('.');
+        //        if (accepted.Contains(filename[filename.Length - 1]))
+        //        {
+        //            var FileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create);
+        //            await file.CopyToAsync(FileStream);
+        //            paths.Add("temp/" + file.FileName);
+        //        }
+        //    }
+        //    return paths;
+        //}
 
-            return View();
-        }
+        //// GET: Dresses/AddImage/5
+        //public IActionResult AddImage(int? id)
+        //{
+        //    var dress = _context.Dress.Where(d => d.ID == id).First();
+        //    try
+        //    {
+        //        string path = Path.Combine(_env.WebRootPath, $"images/dress/{id}");
+        //        DirectoryInfo di = new DirectoryInfo(path);
+        //        List<string> files = new List<string>();
+        //        foreach (string s in Directory.GetFiles(path))
+        //        {
+        //            string filename = s.Replace(path + "\\", string.Empty);
+        //            files.Add($"{id}/" + filename);
+        //        }
+        //        ViewData["Images"] = files;
+        //    }
+        //    catch
+        //    {
+        //        ViewData["Images"] = new List<string>();
+        //    }
 
-        // POST: Dresses/AddImage
-        // Saves images in the images/dress folder, can only upload up to 4 images
-        // TODO: return usefull message when trying to upload more than 4 images or when uploaded file is not accepted
+        //    return View();
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddImage(int? id, ICollection<IFormFile> files)
+        public async Task<IActionResult> AddImage(ICollection<IFormFile> images)
         {
-            var uploads = Path.Combine(_env.WebRootPath, $"images/dress/{id}");
+            _context.Remove(_context.Dress.Where(d => d.Description == "Temp").First());
+            await _context.SaveChangesAsync();
+            _context.Add(new Dress() { Description = "Temp" });
+            await _context.SaveChangesAsync();
+
+            Dress temp = _context.Dress.Where(d => d.Description == "Temp").First();
+            var uploads = Path.Combine(_env.WebRootPath, $"images/dress/{temp.ID}");
             Directory.CreateDirectory(uploads);
             string[] accepted = { "jpg", "jpeg", "png", "webp", "bmp" };
 
-            foreach (var file in files)
+            foreach (var image in images)
             {
-                if (file.Length > 0)
+                if (image.Length > 0)
                 {
-                    string[] s = file.FileName.Split('.');
-                    foreach (string type in accepted)
+                    string[] filename = image.FileName.Split('.');
+                    if (accepted.Contains(filename[filename.Length-1]))
                     {
-                        if (s[1] == type)
+                        List<string> imgs = new List<string>();
+                        foreach(string img in Directory.GetFiles(uploads))
                         {
-                            try
-                            {
-                                var FileStream = new FileStream(Path.Combine(uploads, "1." + s[1]), FileMode.Create);
-                                await file.CopyToAsync(FileStream);
-                            }
-                            catch
-                            {
-                                try
-                                {
-                                    var FileStream = new FileStream(Path.Combine(uploads, "2." + s[1]), FileMode.Create);
-                                    await file.CopyToAsync(FileStream);
-                                }
-                                catch
-                                {
-                                    try
-                                    {
-                                        var FileStream = new FileStream(Path.Combine(uploads, "3." + s[1]), FileMode.Create);
-                                        await file.CopyToAsync(FileStream);
-                                    }
-                                    catch
-                                    {
-                                        return NotFound();
-                                    }
-                                }
-                            }
+                            string imgname = img.Replace(uploads + "\\", string.Empty);
+                            string[] imgdet = imgname.Split('.');
+                            imgs.Add(imgdet[0]);
                         }
+                        var stream = new FileStream(Path.Combine(uploads, $"{(int.Parse(imgs[imgs.Count - 1]) + 1) + filename[filename.Length - 1]}"), FileMode.Create);
+                        await image.CopyToAsync(stream);
                     }
                 }
             }
-            return RedirectToAction("AddImage", id);
+            return RedirectToAction("Create", new { stage = 2 });
         }
+
+        //// POST: Dresses/AddImage
+        //// Saves images in the images/dress folder, can only upload up to 4 images
+        //// TODO: return usefull message when trying to upload more than 4 images or when uploaded file is not accepted
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> AddImage(int? id, ICollection<IFormFile> files)
+        //{
+        //    var uploads = Path.Combine(_env.WebRootPath, $"images/dress/{id}");
+        //    Directory.CreateDirectory(uploads);
+        //    string[] accepted = { "jpg", "jpeg", "png", "webp", "bmp" };
+
+        //    foreach (var file in files)
+        //    {
+        //        if (file.Length > 0)
+        //        {
+        //            string[] s = file.FileName.Split('.');
+        //            if (accepted.Contains(s[s.Length - 1]))
+        //            {
+        //                try
+        //                {
+        //                    var FileStream = new FileStream(Path.Combine(uploads, "1." + s[s.Length - 1]), FileMode.Create);
+        //                    await file.CopyToAsync(FileStream);
+        //                }
+        //                catch
+        //                {
+        //                    try
+        //                    {
+        //                        var FileStream = new FileStream(Path.Combine(uploads, "2." + s[s.Length - 1]), FileMode.Create);
+        //                        await file.CopyToAsync(FileStream);
+        //                    }
+        //                    catch
+        //                    {
+        //                        try
+        //                        {
+        //                            var FileStream = new FileStream(Path.Combine(uploads, "3." + s[s.Length - 1]), FileMode.Create);
+        //                            await file.CopyToAsync(FileStream);
+        //                        }
+        //                        catch
+        //                        {
+        //                            return NotFound();
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return RedirectToAction("AddImage", id);
+        //}
 
         public IActionResult AddColor(int? id)
         {
@@ -385,7 +450,7 @@ namespace HoneymoonShop.Controllers
                 return NotFound();
             }
 
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _context.Add(dc);
                 await _context.SaveChangesAsync();
@@ -462,7 +527,7 @@ namespace HoneymoonShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, int cat, string desc, int manu, int neck, int price,int sil,int style, int[] color, int[] feature, int[] image)
+        public IActionResult Edit(int id, int cat, string desc, int manu, int neck, int price, int sil, int style, int[] color, int[] feature, int[] image)
         {
             string s = String.Empty;
             Dress d = new Dress() { ID = id, CategoryID = cat, Description = desc, ManuID = manu, NecklineID = neck, Price = price, SilhouetteID = sil, StyleID = style };

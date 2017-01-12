@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet-HoneymoonShop-6761c212-d07d-400a-be56-20c4c69b7297",
 
   "dependencies": {
@@ -43,7 +43,8 @@
     "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": {
       "version": "1.0.0-preview2-final",
       "type": "build"
-    }
+    },
+    "System.Threading.Tasks": "4.0.11"
   },
 
   "tools": {

@@ -25,11 +25,27 @@ function requestTime() {
     var request = year + "-" + month + "-" + day;
     $.ajax({
         method: "GET",
-        url: "TimeAvailableAtDate",
+        url: "timeAvailableAtDate",
         data: { date: request }
     })
       .done(function (msg) {
           addTimes(msg);
+      });
+}
+
+function postUserinfo() {
+    var day = selectedDay.toLocaleString('en-US', { minimumIntegerDigits: 2 });
+    var month = (date.getMonth() + 1).toLocaleString('en-US', { minimumIntegerDigits: 2 });
+    var year = date.getFullYear();
+    var request = year + "-" + month + "-" + day;
+
+    $.ajax({
+        method: "POST",
+        url: "validate",
+        data: { mdate: datefieldValue, time: $("input[name=tijdstip]:checked").val(), phone: phonenumberfieldValue, mail: mailfieldValue, name: namefieldValue, date: request, newsletter: $("#nieuwsbrief").is(":checked") }
+    })
+      .done(function (msg) {
+          location.href = 'validate';
       });
 }
 
@@ -74,6 +90,8 @@ var fieldsFilled = function () {
 }
 
 function addTimes(msg) {
+
+    $("#tijdstip-form").empty();
 
     var times = msg.split(",");
 
@@ -151,6 +169,9 @@ var fillCalendar = function () {
 $(document).ready(function () {
 
     fillCalendar();
+    $("#btn-bevestig").click(function () {
+        postUserinfo();
+    });
 
     $("#next").click(function () {
         var currentMonth = date.getMonth();
