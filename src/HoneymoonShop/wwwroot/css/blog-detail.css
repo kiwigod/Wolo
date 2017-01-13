@@ -1,0 +1,133 @@
+﻿body{
+    /*display: flex;*/
+    /*font-size: 18px;*/
+    /*letter-spacing: 1px;
+    text-decoration: none;*/
+}
+
+p{
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-decoration: none;
+}
+
+b#ev-txt{
+    font-size: 30px;
+    position: absolute;
+    text-align: center;
+    top:50%;
+    left:33%;
+    letter-spacing: -1px;
+}
+
+
+#evenement-img{
+    position: relative;
+    margin-left: 16.5%;
+}
+
+.mySlides{
+    margin-left: 5%;
+    position: relative;
+    margin-right: 5%;
+}
+
+.btn-1{
+    position: absolute;
+    top: 50%;
+    
+}
+
+.btn-2{
+    position: absolute;
+    top: 50%;
+    left: 64%;
+}
+
+
+a#element{
+   margin-left: 40%;
+    color:black;
+    
+}
+
+
+/*p#blog-txt-1{
+    width:325px;
+    height:490px;
+    text-align: left;
+    margin-left: 25%;
+    
+}
+
+p#blog-txt-2{
+    margin-top:-35%;
+    margin-left: 25%;
+}*/
+.video-img{
+    margin-left: 5%;
+    /* box-shadow: 2px 2px#888888; */
+    position: relative;
+}
+b#arrow{
+    color: deeppink;
+}
+
+
+
+
+a#bekijk-vid{
+    font-size: 20px;
+    color:white;
+    position: absolute;
+    top:65%;
+    right:50%;
+}
+
+span#span-vid{
+    position: absolute;
+    top:71%;
+    right:43%;
+    background-color:white;    
+    padding: 20px 20px 30px 20px;
+   box-shadow: -4px 8px 5px 0px rgba(235,235,235,1);
+  
+}
+
+p#blog-txt-3{
+    /*text-align: left;
+    margin-left: 25%;*/
+}
+
+h4#deel-dit{
+    letter-spacing: normal;
+    margin-left: 25%;
+}
+
+img#blog-img{
+    position: relative;
+    margin-left:25%;
+}
+
+#blog-txt{
+    /*position: absolute;
+    margin-left: 22%;*/
+    /*top:55%;*/
+}
+
+
+b#ev-txt2{
+    font-family: 'Cookie', cursive;
+    color:#ffe8f0;
+    font-size: 12em;
+    position: relative;
+    /*margin-left: 17%;*/
+}
+
+b#blog-txt2{
+   font-family: 'Cookie', cursive;
+    color:#ffe8f0;
+    font-size: 12em;
+    position: relative;
+    margin-left: 30%;
+}

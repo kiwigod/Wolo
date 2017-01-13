@@ -71,5 +71,9 @@ namespace HoneymoonShop.Data
         public DbSet<Review> Review { get; set; }
 
         public DbSet<Appointment> Appointment { get; set; }
+
+        public DbSet<Blog> Blog { get; set; }
+
+        public DbSet<Post> Post { get; set; }
     }
 }

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
+using System.Threading;
 
 namespace HoneymoonShop.Controllers
 {
@@ -109,7 +110,7 @@ namespace HoneymoonShop.Controllers
                 foreach (Dress d in _context.Dress.Include(d => d.Manu))
                 {
                     if (d.Equals(dress)) { }
-                    else if (d.StyleID == dress.StyleID) recDress.Add(d);
+                    else if (d.StyleID == dress.StyleID && !recDress.Contains(d)) recDress.Add(d);
                     if (recDress.Count >= 5) break;
                 }
             }
@@ -144,14 +145,23 @@ namespace HoneymoonShop.Controllers
             switch (stage)
             {
                 case 2:
-                    ViewData["CategoryID"] = new SelectList(_context.Category.OrderBy(c => c.Name).ToList(), "ID", "Name");
-                    ViewData["ManuID"] = new SelectList(_context.Manu.OrderBy(m => m.Name), "ID", "Name");
-                    ViewData["NecklineID"] = new SelectList(_context.Neckline.OrderBy(n => n.Name), "ID", "Name");
-                    ViewData["SilhouetteID"] = new SelectList(_context.Silhouette.OrderBy(s => s.Name), "ID", "Name");
-                    ViewData["StyleID"] = new SelectList(_context.Style.OrderBy(s => s.Name), "ID", "Name");
-                    ViewData["ColorID"] = _context.Color.ToList();
-                    ViewData["FeatureID"] = _context.Feature.ToList();
-                    return View();
+                    ViewData["cat"] = new SelectList(_context.Category.OrderBy(c => c.Name).ToList(), "ID", "Name");
+                    ViewData["manu"] = new SelectList(_context.Manu.OrderBy(m => m.Name), "ID", "Name");
+                    ViewData["neck"] = new SelectList(_context.Neckline.OrderBy(n => n.Name), "ID", "Name");
+                    ViewData["sil"] = new SelectList(_context.Silhouette.OrderBy(s => s.Name), "ID", "Name");
+                    ViewData["style"] = new SelectList(_context.Style.OrderBy(s => s.Name), "ID", "Name");
+                    ViewData["color"] = _context.Color.ToList();
+                    ViewData["feature"] = _context.Feature.ToList();
+                    List<string> files = new List<string>();
+                    Dress dress = _context.Dress.Where(d => d.Description == "Temp").First();
+                    string path = Path.Combine(_env.WebRootPath, $"images/dress/{dress.ID}");
+                    foreach (string s in Directory.GetFiles(path))
+                    {
+                        string filename = s.Replace(path + "\\", string.Empty);
+                        files.Add($"{dress.ID}/" + filename);
+                    }
+                    ViewData["image"] = files;
+                    return View(dress);
 
                 default:
                     return RedirectToAction("AddImage");
@@ -161,23 +171,37 @@ namespace HoneymoonShop.Controllers
         // POST: Dresses/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,CategoryID,Description,ManuID,NecklineID,Price,SilhouetteID,StyleID")] Dress dress, string[] ColorID, string[] FeatureID)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(dress);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "ID", dress.CategoryID);
-            ViewData["ManuID"] = new SelectList(_context.Manu, "ID", "ID", dress.ManuID);
-            ViewData["NecklineID"] = new SelectList(_context.Neckline, "ID", "ID", dress.NecklineID);
-            ViewData["SilhouetteID"] = new SelectList(_context.Silhouette, "ID", "ID", dress.SilhouetteID);
-            ViewData["StyleID"] = new SelectList(_context.Style, "ID", "ID", dress.StyleID);
-            return View(dress);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(int CategoryID, string Description, int ManuID, int NecklineID, int Price, int SilhouetteID, int StyleID, int[] ColorID, int[] FeatureID, int[] Image)
+        //{
+        //    int id = _context.Dress.Where(d => d.Description.Equals("Temp")).First().ID;
+        //    return RedirectToAction("Search", "Controlpanel", new { art = id });
+        //    Dress dress = new Dress()
+        //    {
+        //        ID = id,
+        //        CategoryID = CategoryID,
+        //        Description = Description,
+        //        ManuID = ManuID,
+        //        NecklineID = NecklineID,
+        //        SilhouetteID = SilhouetteID,
+        //        StyleID = StyleID,
+        //        Price = Price
+        //    };
+        //    _context.Update(dress);
+
+        //    foreach (int c in ColorID)
+        //    {
+        //        _context.Add(new DressColor() { ColorID = c, DressID = dress.ID });
+        //    }
+
+        //    foreach (int f in FeatureID)
+        //    {
+        //        _context.Add(new DressFeature() { FeatureID = f, DressID = dress.ID });
+        //    }
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction("Details", new { id = dress.ID });
+        //}
 
         // GET: Dresses/Overview
         public IActionResult Overview()
@@ -268,58 +292,23 @@ namespace HoneymoonShop.Controllers
             }
         }
 
-        //[HttpPost]
-        //public async Task<List<string>> AddImageTemp(ICollection<IFormFile> files)
-        //{
-        //    List<string> paths = new List<string>();
-        //    var uploads = Path.Combine(_env.WebRootPath, $"images/dress/temp");
-        //    Directory.CreateDirectory(uploads);
-        //    string[] accepted = { "jpg", "jpeg", "png", "webp", "bmp" };
-        //    foreach(var file in files)
-        //    {
-        //        string[] filename = file.FileName.Split('.');
-        //        if (accepted.Contains(filename[filename.Length - 1]))
-        //        {
-        //            var FileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create);
-        //            await file.CopyToAsync(FileStream);
-        //            paths.Add("temp/" + file.FileName);
-        //        }
-        //    }
-        //    return paths;
-        //}
-
-        //// GET: Dresses/AddImage/5
-        //public IActionResult AddImage(int? id)
-        //{
-        //    var dress = _context.Dress.Where(d => d.ID == id).First();
-        //    try
-        //    {
-        //        string path = Path.Combine(_env.WebRootPath, $"images/dress/{id}");
-        //        DirectoryInfo di = new DirectoryInfo(path);
-        //        List<string> files = new List<string>();
-        //        foreach (string s in Directory.GetFiles(path))
-        //        {
-        //            string filename = s.Replace(path + "\\", string.Empty);
-        //            files.Add($"{id}/" + filename);
-        //        }
-        //        ViewData["Images"] = files;
-        //    }
-        //    catch
-        //    {
-        //        ViewData["Images"] = new List<string>();
-        //    }
-
-        //    return View();
-        //}
+        public IActionResult AddImage()
+        {
+            return View();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddImage(ICollection<IFormFile> images)
         {
-            _context.Remove(_context.Dress.Where(d => d.Description == "Temp").First());
-            await _context.SaveChangesAsync();
-            _context.Add(new Dress() { Description = "Temp" });
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Remove(_context.Dress.Where(d => d.Description.Equals("Temp")).First());
+                await _context.SaveChangesAsync();
+            }
+            catch { }
+            _context.Add(new Dress() { CategoryID = 1, ManuID = 1, NecklineID = 1, SilhouetteID = 1, StyleID = 1, Description = "Temp" });
+            _context.SaveChanges();
 
             Dress temp = _context.Dress.Where(d => d.Description == "Temp").First();
             var uploads = Path.Combine(_env.WebRootPath, $"images/dress/{temp.ID}");
@@ -331,71 +320,38 @@ namespace HoneymoonShop.Controllers
                 if (image.Length > 0)
                 {
                     string[] filename = image.FileName.Split('.');
-                    if (accepted.Contains(filename[filename.Length-1]))
+                    if (accepted.Contains(filename[filename.Length-1].ToLower()))
                     {
                         List<string> imgs = new List<string>();
-                        foreach(string img in Directory.GetFiles(uploads))
+                        foreach (string img in Directory.GetFiles(uploads))
                         {
                             string imgname = img.Replace(uploads + "\\", string.Empty);
                             string[] imgdet = imgname.Split('.');
                             imgs.Add(imgdet[0]);
                         }
-                        var stream = new FileStream(Path.Combine(uploads, $"{(int.Parse(imgs[imgs.Count - 1]) + 1) + filename[filename.Length - 1]}"), FileMode.Create);
-                        await image.CopyToAsync(stream);
+                        if (Directory.GetFiles(uploads).Length == 0)
+                        {
+
+                            using (var stream = new FileStream(Path.Combine(uploads, $"1.{filename[filename.Length - 1]}"), FileMode.Create))
+                            {
+                                await image.CopyToAsync(stream);
+                            }
+                        }
+                        else
+                        {
+                            string name = $"{(int.Parse(imgs[imgs.Count - 1]) + 1).ToString() + "." + filename[filename.Length - 1]}";
+                            using (var stream = new FileStream(Path.Combine(uploads, name), FileMode.Create))
+                            {
+                                await image.CopyToAsync(stream);
+                            }
+                        }
                     }
                 }
             }
+            //Thread.Sleep(1000);
+            int id = _context.Dress.Where(d => d.Description.Equals("Temp")).First().ID;
             return RedirectToAction("Create", new { stage = 2 });
         }
-
-        //// POST: Dresses/AddImage
-        //// Saves images in the images/dress folder, can only upload up to 4 images
-        //// TODO: return usefull message when trying to upload more than 4 images or when uploaded file is not accepted
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> AddImage(int? id, ICollection<IFormFile> files)
-        //{
-        //    var uploads = Path.Combine(_env.WebRootPath, $"images/dress/{id}");
-        //    Directory.CreateDirectory(uploads);
-        //    string[] accepted = { "jpg", "jpeg", "png", "webp", "bmp" };
-
-        //    foreach (var file in files)
-        //    {
-        //        if (file.Length > 0)
-        //        {
-        //            string[] s = file.FileName.Split('.');
-        //            if (accepted.Contains(s[s.Length - 1]))
-        //            {
-        //                try
-        //                {
-        //                    var FileStream = new FileStream(Path.Combine(uploads, "1." + s[s.Length - 1]), FileMode.Create);
-        //                    await file.CopyToAsync(FileStream);
-        //                }
-        //                catch
-        //                {
-        //                    try
-        //                    {
-        //                        var FileStream = new FileStream(Path.Combine(uploads, "2." + s[s.Length - 1]), FileMode.Create);
-        //                        await file.CopyToAsync(FileStream);
-        //                    }
-        //                    catch
-        //                    {
-        //                        try
-        //                        {
-        //                            var FileStream = new FileStream(Path.Combine(uploads, "3." + s[s.Length - 1]), FileMode.Create);
-        //                            await file.CopyToAsync(FileStream);
-        //                        }
-        //                        catch
-        //                        {
-        //                            return NotFound();
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return RedirectToAction("AddImage", id);
-        //}
 
         public IActionResult AddColor(int? id)
         {

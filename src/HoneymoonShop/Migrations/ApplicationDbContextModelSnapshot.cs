@@ -87,6 +87,18 @@ namespace HoneymoonShop.Migrations
                     b.ToTable("Appointment");
                 });
 
+            modelBuilder.Entity("HoneymoonShop.Models.Blog", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Type");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Blog");
+                });
+
             modelBuilder.Entity("HoneymoonShop.Models.Category", b =>
                 {
                     b.Property<int>("ID")
@@ -211,6 +223,24 @@ namespace HoneymoonShop.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Neckline");
+                });
+
+            modelBuilder.Entity("HoneymoonShop.Models.Post", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("BlogID");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Description");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BlogID");
+
+                    b.ToTable("Post");
                 });
 
             modelBuilder.Entity("HoneymoonShop.Models.Review", b =>
@@ -413,6 +443,14 @@ namespace HoneymoonShop.Migrations
                     b.HasOne("HoneymoonShop.Models.Feature", "Feature")
                         .WithMany("DressFeatures")
                         .HasForeignKey("FeatureID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("HoneymoonShop.Models.Post", b =>
+                {
+                    b.HasOne("HoneymoonShop.Models.Blog", "Blog")
+                        .WithMany("Posts")
+                        .HasForeignKey("BlogID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

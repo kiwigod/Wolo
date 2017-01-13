@@ -1,0 +1,80 @@
+﻿body{
+     font-family: 'Lato', sans-serif;
+}
+
+
+#ev-txt{
+    font-family: 'Cookie', cursive;;
+    font-size: 15em;
+    color:#fce8f2;
+    margin-left:30%;
+    text-align: center;
+}
+
+#ev-txt-2{
+  font-size: 3em;
+    font-family: 'Lato', sans-serif;
+  
+   margin-left:-53%;
+}
+a{color:black;}
+#txt-3{
+    font-size: 1.5em;
+    font-family: 'Lato', sans-serif;
+    margin-left:25%;
+    text-align: center;
+}
+
+#txt-3-3{
+    font-size: 1.5em;
+    font-family: 'Lato', sans-serif;
+    margin-left:28%;
+    text-align: center;
+}
+
+.deel{
+    background-color: deeppink;
+    width:215px;
+    height: 50px;
+    text-align: center;
+     margin-top:10%;
+    left:45%;
+}
+ 
+
+#deel-txt{
+   
+      font-size: 1em;
+    font-family: 'Lato', sans-serif; 
+    color:white;
+
+}
+
+.img-class{
+    margin-left:15.5%;
+}
+
+#tips{
+    font-size:1.3em;
+    
+       
+}
+
+#tips-txt{
+    font-size: 1.1em;
+    letter-spacing: 1px;
+}
+
+#u-l{
+    font-size:1.2em;
+    color:pink;
+}
+
+
+#u-l p{color:black;}
+
+#downarrow{
+    color:deeppink;
+    font-size: 2em;
+}
+

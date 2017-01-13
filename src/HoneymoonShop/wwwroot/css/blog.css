@@ -1,0 +1,205 @@
+﻿.containerstyle{
+    background-color: white;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+}
+
+.titles{
+    line-height:2.9em;
+    padding-top:11.0em;
+}
+
+.title-big{
+    font-family:'Script MT';
+    font-size:12.3em;
+    color:mistyrose;
+    text-align:center;
+    padding-bottom:0;
+    
+}
+
+.title{
+    text-align:center;
+    font-weight:800;
+    font-size:2.57em;
+    line-height:1.1em;
+    letter-spacing:-0.02em;
+
+    padding:1.1em;
+    padding-top:0;
+    padding-bottom:0.9em;
+}
+
+.menu-button{
+    outline: 0.05em solid black;
+    font-weight: 700;
+    font-size: 1.545em;
+    background-color:white;
+    padding-left:0.95em;
+    padding-right:1.0em;
+    padding-top:0.15em;
+    padding-bottom:0.08em;
+
+    margin:0.28em;
+}
+
+.menu-button:hover{
+    color:white;
+    background-color:#F5587D;
+    outline-color:#F5587D;
+}
+
+
+.blog-top-picture{
+    /*background:url(http://placehold.it/1390x460);*/
+    /*height:33.7em;*/
+    display:flex;
+    flex-flow: row;
+    /*justify-content:flex-start;*/
+    align-items:flex-end;
+    /*margin-bottom:1.9em;*/
+    box-shadow: 0em 0.23em 1.9em -0.38em rgba(227,227,227,1);
+}
+
+.blog-top-block{
+    background-color: white;
+    /*margin-right:21em;*/
+    /*display:flex;*/
+    /*flex-flow:column nowrap;*/
+    margin-top:14.4em;
+    padding-left:2.59em;
+    padding-right:2.36em;
+    padding-bottom:0em;
+    width:32.69em;
+}
+
+.top-block-header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:1.0em;
+}
+
+.block-item-titel{
+    font-weight: 800;
+    font-size: 1.25em;
+    margin-top:1.2em;
+    line-height:2.1em;
+    border-bottom-width:0.31em;
+    border-bottom-color:#ffcdc8;
+    border-bottom-style:solid;
+    padding-bottom:0.54em;
+    
+}
+
+.block-item-titel:after{
+    content: " \2661";
+}
+
+.block-item-date{
+    font-weight: 800;
+    font-size: 0.88em;
+    line-height:1.58em;
+    text-align:center;
+    background-color: #ffcdc8;
+    color: white;
+    padding-right:0.63em;
+    padding-left:0.60em;
+    padding-top:1.77em;
+    padding-bottom:0.10em;
+}
+
+.block-item-text{
+    line-height: 1.4em;
+    font-weight:100;
+    font-size:1.21em;
+    letter-spacing:0.03em;
+    padding-bottom:1.42em;
+    padding-top:0.36em;
+}
+
+.block-item-text.bigger{
+    margin-top:0;
+    font-size:1.382em;
+    padding-top:0;
+}
+
+.items-display{
+    display: flex;
+    justify-content:center;
+    padding:1.37em;
+    padding-left:4.9em;
+    padding-right:4.9em;
+    padding-top:0;
+}
+
+.blog-item{
+    margin:2.55em;
+    margin-top:4.0em;
+    margin-bottom:0.36em;
+    box-shadow: 0px 0px 2.05em -0.22em rgba(227,227,227,1);
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    
+}
+
+.blog-item-top{
+    margin-right:2.0em;
+    padding-top:0.5em;
+    margin-left:2.0em;
+}
+
+.blog-item-picture{
+   background:url(http://placekitten.com/285/308);
+   height:20.95em;
+   width:22.15em;
+   
+   
+}
+
+.berichten-display{
+    display: flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    padding-bottom:1.47em;
+}
+
+.berichten-button{
+    font-weight:800;
+    font-size:1.71em;
+    letter-spacing:2.5px;
+    text-align:center;
+    color:white;
+    background-color: #F5587D;
+    padding-top:13px;
+    padding-bottom:12px;
+    margin-bottom:35px;
+    margin-top:55px;
+    margin-left:527px;
+    margin-right:527px;
+}
+
+.blog-bottom-picture{
+    background: url(http://placehold.it/1390x580);
+    height: 580px;
+    margin-top:80px;
+}
+
+.arrow-down{
+    margin-top:20px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 14px 14px 0 14px;
+    border-color: #F5587D transparent transparent transparent;
+
+}
+
+.index-btn:hover{
+    background:pink;
+}
+

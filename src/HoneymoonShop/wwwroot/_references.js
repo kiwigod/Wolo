@@ -1,4 +1,5 @@
 ﻿/// <autosync enabled="true" />
+/// <reference path="js/blog.js" />
 /// <reference path="js/bootstrap.min.js" />
 /// <reference path="js/calendar.js" />
 /// <reference path="js/jquery-3.1.1.min.js" />

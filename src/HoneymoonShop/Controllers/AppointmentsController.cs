@@ -77,13 +77,23 @@ namespace HoneymoonShop.Controllers
             catch(Exception e)
             {
                 state = e.Message;
+                return NotFound();
             }
+
+            string message = $"Uw afspraak is ingepland op {aDate[1]}-{aDate[2]}";
+            await Message.Send("smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", message, "smtp.gmail.com", 587, "smtptestcore@gmail.com", "smtptestcore@gmail.com", "testcore", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com");
 
             if (newsletter == true)
             {
-                await Message.Send("smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtp.gmail.com", 587, "smtptestcore@gmail.com", "smtptestcore@gmail.com", "testcore", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com");
-
+                string message2 = "U bent aangemeld voor onze nieuwsbrief";
+                await Message.Send("smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", message2, "smtp.gmail.com", 587, "smtptestcore@gmail.com", "smtptestcore@gmail.com", "testcore", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com");
             }
+            //return RedirectToAction("Complete");
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Complete()
+        {
             return View();
         }
 

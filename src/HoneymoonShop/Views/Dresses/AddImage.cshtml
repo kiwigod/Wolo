@@ -1,30 +1,26 @@
+@model HoneymoonShop.Models.Dress
+
 @{
-    Layout = null;
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>AddImage</title>
-</head>
-<body>
-
-<form method="post" asp-action="AddImage" enctype="multipart/form-data">
-    <ul>
-        @foreach(string s in ViewBag.Images)
-        {
-            <li><img src="~/images/dress/@s" /></li>
-
-        }
-    </ul>
-    <input type="file" name="files" multiple />
-    <input type="submit" value="Upload" />
-</form>
-
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Jurk toevoegen</h3><br />
+            <h4>Foto's uploaden</h4>
+            <h5>Stap 1/2</h5>
+        </div>
+    </div>
+    <form asp-action="AddImage" asp-controller="Dresses" method="post" enctype="multipart/form-data">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class=" col-md-10">
+                    <input type="file" name="images" multiple />
+                    <button type="submit" class="btn btn-default" value="Upload foto's'">Upload foto's</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-</body>
-</html>
