@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using HoneymoonShop.Data;
 using HoneymoonShop.Models;
 using HoneymoonShop.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HoneymoonShop
 {
@@ -47,7 +48,11 @@ namespace HoneymoonShop
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.SslPort = 44352;
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();

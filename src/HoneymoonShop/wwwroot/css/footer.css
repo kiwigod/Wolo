@@ -1,0 +1,147 @@
+/* font-family: 'Molle', cursive;
+    color:pink;
+    font-size: 7em;
+    position: relative;
+    margin-left: 17%;
+
+font-family: 'Fjalla One', sans-serif;
+*/
+
+body{
+    background-color:#FCE8E7;
+}
+
+.fullrow1{
+    margin-left: 16.5%;    
+}
+
+#footer-box-1{
+    background-color: #F0597C;
+    width: 320px;
+    height: 190px;
+    position: relative;
+    margin-left:6%; 
+    margin-bottom: 2%;
+}
+
+#footer-box-2{
+    background-color: #F0597C;
+    width: 320px;
+    height: 190px;
+    position: relative;
+    margin-left: 4.5%; 
+    margin-bottom: 2%;
+   
+}
+
+#footer-box-3{
+    background-color: #F0597C;
+    width: 320px;
+    height: 190px;
+    position: relative;
+    margin-left: 4.5%;   
+    margin-bottom: 2%;
+}
+
+p#txt-1{
+    font-family: 'Cookie', cursive;
+    color:pink;
+    font-size: 5em;
+    text-align: center;
+    padding-top: 4.5%;
+    position: absolute;
+    padding-left:.7em;
+}
+p#txt-1-1{
+    position: relative;
+    padding-top: 20%;
+    letter-spacing: 1px;
+    text-align: center;
+    color:white;
+    font-size: 1.8em;
+    
+       
+}
+
+p#txt-2{
+    font-family: 'Cookie', cursive;
+    color:pink;
+    font-size: 5em;
+    text-align: center;
+    padding-top: 4.5%;
+    position: relative;
+    padding-left: .0em;
+}
+p#txt-2-1{
+    position: relative;
+    top: -32%;
+    letter-spacing: 1px;
+    text-align: center;
+    color:white;
+    font-size: 1.8em;
+}
+img#deel-dit{
+    position: relative;
+    margin-left:13%;
+    margin-top: -20%;
+}
+
+p#txt-3{
+    font-family: 'Cookie', cursive;
+    color:pink;
+    font-size: 5em;
+    text-align: center;
+    padding-top: 4.5%;
+    position: relative;
+    padding-left: 7.5%;
+}
+p#txt-3-1{
+    position: relative;
+    padding-top: 20%;
+    letter-spacing: 1px;
+    text-align: center;
+    color:white;
+    font-size: 1.8em;
+    padding-left: 1%;    
+}
+
+.fullrow2{
+    margin-left: 16.5%;
+}
+
+p#info-txt{
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.09em;
+}
+
+img#weddingshow{
+    position: relative;
+    margin-left: 58%;
+    margin-bottom: 5%;
+}
+
+.list1{
+    font-family: 'Lato', sans-serif;
+    font-size: 1.1em;
+    position: relative;
+    text-align: left;
+    text-decoration: none;    
+    margin-left: 20%;    
+    
+}
+
+
+.list-nopadbot>li {
+    padding-bottom: 0px;
+    background-color: #FCE8E7;
+    border: #FCE8E7;
+}
+
+a{
+    color:black;
+}
+
+
+
+
