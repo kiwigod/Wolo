@@ -13,17 +13,17 @@ var remailfieldValue;
 var datefieldValue;
 var phonenumberfieldValue;
 
-var nonAvailableDays = "";
+var nonAvailableDays;
 
-function requestDate(){
+function requestDate() {
     $.ajax({
         method: "GET",
+        async: false,
         url: "DatesUnavailableInMonth",
         data: { month: (date.getMonth() + 1), year: date.getFullYear() }
     })
       .done(function (msg) {
           nonAvailableDays = msg.split(",");
-          console.log(nonAvailableDays.indexOf("24"));
       });
 }
 
@@ -167,20 +167,23 @@ var fillCalendar = function () {
     var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0)
 
     removeEntries();
-    
+
     requestDate();
+
+
 
     $("#calender-currentday").text(MONTHS[date.getMonth()].concat(" " + date.getFullYear()));
     for (var i = 0; i < lastDay.getDate() ; i++) {
         var tableData = $(tableRows[Math.ceil((firstDay.getDate() + i + DAYS[firstDay.getDay()]) / 7) - 1]).children()[DAYS[(firstDay.getDay() + i) % 7]];
         var day = i + 1;
+
         if (date.getTime() < currentDate.getTime() || (day <= currentDate.getDate() && (date.getMonth() == currentDate.getMonth() && date.getFullYear() == currentDate.getFullYear()))) {
             $(tableData).html("<label class=\"nondate\">" + day + "<\label>");
         }
-        else if (nonAvailableDays.indexOf(i.toString()) > -1) {
+        else if (nonAvailableDays.indexOf(day.toString()) > -1) {
             $(tableData).html("<label class=\"occupied\" style=\"color:black\">" + day + "<\label>");
         }
-        else{
+        else {
             $(tableData).html("<input class=\"dateinput\" type=\"radio\" id=\"date" + day + "\" name=\"date\" value=\"" + day + "\"> <label for=\"date" + day + "\">" + day + "</label>");
         }
     }

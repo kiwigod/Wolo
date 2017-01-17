@@ -1,0 +1,62 @@
+@model IEnumerable<HoneymoonShop.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Overview";
+}
+<div class="container" style="background:white">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Overview</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Datum & tijd
+                        </th>
+                        <th>
+                            Trouwdatum
+                        </th>
+                        <th>
+                            E-mail adres
+                        </th>
+                        <th>
+                            Naam
+                        </th>
+                        <th>
+                            Telefoonnummer
+                        </th>
+                        <th>
+                            Nieuwsbrief
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Mail)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.newsletter)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

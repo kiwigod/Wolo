@@ -23,11 +23,19 @@
         </div>
     </div>
     <div class="row">
-        <ul>
-            <li><b>Artikelen</b></li>
-            <li><a asp-controller="Dresses" asp-action="Create">Voeg een jurk toe</a></li>
-            <li><a data-toggle="modal" data-target="#addSuit">Voeg een pak toe</a></li>
-        </ul>
+        <div class="col-md-6">
+            <ul>
+                <li><b>Artikelen</b></li>
+                <li><a asp-controller="Dresses" asp-action="Create">Voeg een jurk toe</a></li>
+                <li><a data-toggle="modal" data-target="#addSuit">Voeg een pak toe</a></li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <ul>
+                <li><b>Afspraken</b></li>
+                <li><a asp-controller="Appointmentes" asp-action="Overview">Alle afspraken</a></li>
+            </ul>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-3 col-sm-12">

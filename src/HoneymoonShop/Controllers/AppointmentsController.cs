@@ -113,6 +113,16 @@ namespace HoneymoonShop.Controllers
             return s;
         }
 
+        public IActionResult Overview()
+        {
+            List<Appointment> appointments = _context.Appointment
+                .Where(a => a.Date.Date.Day >= DateTime.Now.Day)
+                .Where(a => a.Date.Date.Month >= DateTime.Now.Month)
+                .Where(a => a.Date.Date.Year >= DateTime.Now.Year)
+                .ToList();
+            return View(appointments);
+        }
+
         [HttpGet]
         public string TimeAvailableAtDate(string date)
         {
