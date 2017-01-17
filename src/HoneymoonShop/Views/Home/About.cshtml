@@ -1,7 +1,99 @@
 ﻿@{
-    ViewData["Title"] = "About";
+    ViewData["Title"] = "Winkel";
+    ViewData["Background"] = "url(\"http://placehold.it/4096x2160 \")";
+    ViewData["HeaderHeight"] = "62vh";
 }
-<h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
+@section HeaderOverlay{
+    <div class="container-fluid">
+        <div class="bg-text" data-bg-text="Winkel" style="text-align:center">
+            <p style="margin-top:16%; font-size:2em; color:white">Onze winkel in het centrum van Rotterdam</p>
+            <p style="font-size:2.5em; color:white"><b>GROOTSTE BRUIDSSPECIAALZAAK VAN DE BENELUX</b></p>
+        </div>
+    </div>
+}
+
+<div class="container padding-box" style="display:flex; flex-direction:column; background:white">
+    <div class="row" style="margin-top:3em">
+        <div class="col-md-4 col-xs-12 padding-box-right">
+            <div class="box width-box" style="background:url(/images/web/dresslocation.jpg)">
+                <h4><b>LOCATIE</b></h4>
+                <hr>
+                <div style="padding-top:5.5em; padding-bottom:2em">
+                    <a data-toggle="modal" data-target="#modal" style="text-decoration:none"><div style="background:white; height:4em; width:12em; padding-top:1.4em; text-align:center"><b>KAART BEKIJKEN</b></div></a>
+                </div>
+            </div>
+            <div id="modal" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Locatie</h4>
+                        </div>
+                        <div class="modal-body">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2460.770191415024!2d4.480231216204235!3d51.91990377970509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c4335eb7d77f69%3A0xced024273a65f17e!2sHoneymoon+Shop!5e0!3m2!1sen!2snl!4v1484682917297" width="560" height="600" frameborder="0" style="border:0" allowfullscreen></iframe>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box width-box">
+                <h4><b>OPENINGSTIJDEN</b></h4>
+                <hr>
+                <p>
+                    ma 12.00 - 17.30
+                    <br> di t/m vr 09.30 - 17.30
+                    <br> za 09.30 - 17.30
+                    <br> zo 11.00 - 17.00
+                    <br>
+                    <br> Wij werken het liefst op <a asp-controller="Appointments" asp-action="Create" style="text-decoration:underline">afspraak</a>
+                </p>
+            </div>
+            <div class="box width-box" style="background:#F0597C">
+                <p style="color:white; font-size:2em; padding:1em"><b style="font-weight:bolder;">WIJ ZIJN OPZOEK NAAR EEN VERKOOP STYLISTE</b></p>
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-12 padding-box-right">
+            <div class="box width-box" style="background:#CCE7D4">
+                <p style="font-size:2em">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                <h4><b><a asp-controller="Reviews" asp-action="Index">WIJ KRIJGEN EEN 8 VAN ONZE KLANTEN</a></b></h4> 
+                <a asp-controller="Reviews" asp-action="Create">Plaats een review </a>
+            </div>
+            <div class="box width-box">
+                <h4><b>SERVICE</b></h4>
+                <hr>
+                <p>De Honeymoon shop heeft aantal servicepunten in Nederland. Hier kun je je bruidskleding laten afspelden en vermaken.</p>
+                <br> <a href="#" style="text-decoration:underline">Lees meer</a>
+            </div>
+            <div class="box width-box">
+                <h4><b>HISTORIE</b></h4>
+                <hr>
+                <p>De Honeymoon shop is al meer dan 45 jaar verantwoordelijk voor de trouwkleding van duizenden bruidsparen in Nederland en ver daarbuiten.</p>
+                <br> <a href="#" style="text-decoration:underline">Lees verder</a>
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-12">
+            <div class="box width-box">
+                <h4><b>VEELGESTELDE VRAGEN</b></h4>
+                <hr>
+                <p>Niet gevonden wat je zocht? Kijk in de veelgestelde vragen!</p>
+                <br> <a href="#" style="text-decoration:underline">Naar veel gestelde vragen</a>
+            </div>
+            <div class="box width-box">
+                <h4><b>NAAI ATELIER</b></h4>
+                <hr>
+                <p>Vakdiploma's, -kennis en een grote ervaring staan bij de Honeymoon shop garant voor een foutloos resultaat. Onze coupeuse zijn 'Coup de Paris'. Of te wel 'Het neusje van de zal'.</p>
+                <br>
+                <a href="#" style="text-decoration:underline">Less meer</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-xs-12" style="padding-left:0%; padding-right:0%">
+            <img src="~/images/web/footer_about.jpg" class="img-responsive" />
+        </div>
+    </div>
+</div>

@@ -639,3 +639,51 @@ blockquote {
     max-height: 11em;
     overflow-y: scroll;
 }
+
+@media (max-width: @screen-xs-max) {
+    .width-box {
+        width: auto;
+    }
+    .spacing {
+        text-align: center;
+        padding-bottom: 2em;
+    }
+    .orientation {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (min-width: @screen-sm-min) {
+    .width-box {
+        width: 23em;
+    }
+    .spacing {
+        text-align: center;
+        padding-bottom: 2em;
+    }
+    .orientation {
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+.bg-text {
+    padding: 20px 20px 26em 20px;
+    position: relative;
+    width: inherit;
+    overflow: hidden;
+}
+
+.bg-text::after {
+    font-family: 'Cookie', cursive;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.3);
+    content: attr(data-bg-text);
+    display: block;
+    font-size: 10em;
+    line-height: 1;
+    position: absolute;
+    right: 40%;
+    bottom: 58%;
+}
