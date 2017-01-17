@@ -236,7 +236,7 @@ button>b {
 }
 
 /**************Dress Overview*************/
-input[type=checkbox] + label {
+/*input[type=checkbox] + label {
     position: relative;
     height: 1.5em;
     width: 1.5em;
@@ -244,16 +244,46 @@ input[type=checkbox] + label {
     border-radius: 50%;
     border: solid 2px pink;
     background-color: white;
-    box-shadow: 0 0 1px #FFF;/* Soften the jagged edge */
+    box-shadow: 0 0 1px #FFF;
     cursor: pointer;
-    margin: 1em;
+    margin: 0.6em;
     
 }
 
 input[type=checkbox] + label:hover, 
 input[type=checkbox]:checked + label{
     background-color: pink;
-}
+}*/
+
+input[type=checkbox].css-checkbox {
+							position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+						}
+
+						input[type=checkbox].css-checkbox + label.css-label {
+							padding-left:22px;
+							height:17px; 
+							display:inline-block;
+							line-height:17px;
+							background-repeat:no-repeat;
+							background-position: 0 0;
+							font-size:17px;
+							vertical-align:middle;
+							cursor:pointer;
+
+						}
+
+						input[type=checkbox].css-checkbox:checked + label.css-label {
+							background-position: 0 -17px;
+						}
+						label.css-label {
+				background-image:url(http://csscheckbox.com/checkboxes/u/csscheckbox_af295f854ac8c480338c221f32d75917.png);
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
 
 
 .filter > button{

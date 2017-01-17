@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="~/css/overview.css" />
     <script>
         $(function () {
             $("#slider-range").slider({
@@ -21,8 +22,8 @@
                     $("#pricemax").val(ui.values[1]);
                 }
             });
-            $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-              " - $" + $("#slider-range").slider("values", 1));
+            $("#amount").val('\u20AC' + $("#slider-range").slider("values", 0) +
+              " - " + '\u20AC' + $("#slider-range").slider("values", 1));
         });
 
         $("#container").ready(function () {
@@ -62,10 +63,6 @@
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
-            $("#price input").on("input change", function () {
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
-                doPush(route);
-            });
             $("#neck input").click(function () {
                 var children = $("#neck input");
                 neckq = "";
@@ -103,6 +100,15 @@
                 doPush(route);
             });
         });
+
+        function searchPrice() {
+            console.log($("#pricemax").val());
+            console.log($("#pricemin").val());
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
+            doPush(route);
+            window.location.replace(route);
+        }
+
         function sorting() {
             var e = document.getElementById("sort");
             sortq = "&sort=" + e.options[e.selectedIndex].value;
@@ -133,6 +139,28 @@
             history.pushState(state, title, path);
         }
     </script>
+    <script>
+        function flipArrow(id) {
+            var e = document.getElementById(id);
+            var trans = e.style.transform;
+            if (trans == "rotate(0deg)") {
+                e.style.transform = "rotate(180deg)";
+            }
+            else {
+                e.style.transform = "rotate(0deg)";
+            }
+        }
+
+        function changeColor(elmnt) {
+            var bcol = elmnt.style.background;
+            if (bcol == "rgb(246, 246, 246)") {
+                elmnt.style.background = "white";
+            }
+            else {
+                elmnt.style.background = "rgb(246, 246, 246)";
+            }
+        }
+    </script>
 }
 
 <div class="container" style="background:white">
@@ -154,85 +182,173 @@
                 <div style="margin-bottom:2em">
                     @foreach (Category c in ViewBag.CategoryID)
                     {
-                        <div style="background:#fce8e7; margin-bottom:0.3em"><a href=""><b>@c.Name</b></a></div>
+                        <a asp-controller="Dresses" asp-action="Overview"><div style="background:#fce8e7; margin-bottom:0.3em; padding:0.4em; padding-left:5%"><b>@c.Name</b></div></a>
                     }
-                    <div style="background:#fce8e7; margin-bottom:0.3em"><a href=""><b>Nieuwe Collectie</b></a></div>
-                    <div style="background:#fce8e7; margin-bottom:0.3em"><a href=""><b>Alle jurken bekijken</b></a></div>
+                    <a asp-controller="Dresses" asp-action="Overview"><div style="background:#fce8e7; margin-bottom:0.3em; padding:0.4em; padding-left:5%"><b>Nieuwe Collectie</b></div></a>
+                    <a asp-controller="Dresses" asp-action="Overview"><div style="background:#fce8e7; margin-bottom:0.3em; padding:0.4em; padding-left:5%"><b>Alle jurken bekijken</b></div></a>
                 </div>
 
                 <h5><b>Filter op:</b></h5>
                 <!--Manu-->
-                <div style="background:#f6f6f6"><a href="#manu" data-toggle="collapse"><h4>Merk</h4></a></div>
-                <div id="manu" class="collapse in" style="background:#fcfcfc">
+                <a href="#manu" data-toggle="collapse" style="text-decoration:none" onclick="flipArrow('manua')">
+                    <div class="element" onclick="changeColor(this)" style="background:#f6f6f6;">
+                        <div style="display:flex">
+                            <h4 style="flex-basis:90%; padding-left:5%">Merk</h4>
+                            <p class="arrow" id="manua" style="transform:rotate(0deg); text-align:center">&#9650;</p>
+                        </div>
+                    </div>
+                </a>
+                <div id="manu" class="collapse in" style="background:#fcfcfc; margin:0.5em">
                     @foreach (Manu m in ViewBag.ManuID)
                     {
                         var id = "cManu" + m.ID;
-                    <input id="@id" type="checkbox" name="manu" value="@m.ID" style="display:none" />
-                    <label for="@id" style="margin-bottom: -.3em;display:inline-block"></label>
-                    <p style="display:inline-block">@m.Name</p>
-                    <br />
+                        try
+                        {
+                            if (ViewBag.Manucheck[m.ID] == 1)
+                            { <input id="@id" type="checkbox" name="manu" value="@m.ID" class="css-checkbox" style="" checked />}
+                        }
+                        catch
+                        {
+                            <input id="@id" type="checkbox" name="manu" value="@m.ID" class="css-checkbox" style="" />
+                        }
+                        <label for="@id" class="css-label" style="font-weight:lighter; margin-bottom:0.8em">@m.Name</label>
+                        <br />
                     }
                 </div>
 
                 <!--Style-->
-                <div style="background:#f6f6f6"><a href="#style" data-toggle="collapse"><h4>Stijl</h4></a></div>
-                <div id="style" class="collapse in" style="background:#fcfcfc">
+                <a href="#style" data-toggle="collapse" style="text-decoration:none" onclick="flipArrow('stylea')">
+                    <div class="element" onclick="changeColor(this)" style="background:#f6f6f6;">
+                        <div style="display:flex">
+                            <h4 style="flex-basis:90%; padding-left:5%">Stijl</h4>
+                            <p class="arrow" id="stylea" style="transform:rotate(0deg); text-align:center">&#9650;</p>
+                        </div>
+                    </div>
+                </a>
+                <div id="style" class="collapse in" style="background:#fcfcfc; margin:0.5em">
                     @foreach (Style s in ViewBag.StyleID)
                     {
                         var id = "cStyle" + s.ID;
-                    <input id="@id" type="checkbox" name="style" value="@s.ID" style="display:none" />
-                    <label for="@id" style="margin-bottom: -.3em;display:inline-block"></label>
-                    <p style="display:inline-block">@s.Name</p>
-                    <br />
+                        try
+                        {
+                            if (ViewBag.Stylecheck[s.ID] == 1)
+                            {
+                                <input id="@id" type="checkbox" name="style" value="@s.ID" class="css-checkbox" checked />
+
+                            }
+
+                        }
+                        catch
+                        {
+                            <input id="@id" type="checkbox" name="style" value="@s.ID" class="css-checkbox" />
+
+                        }
+                        <label for="@id" style="font-weight:lighter; margin-bottom:0.8em" class="css-label">@s.Name</label>
+                        <br />
                     }
                 </div>
 
                 <!--Price-->
                 <input type="hidden" name="pricemin" id="pricemin" value="0" />
                 <input type="hidden" name="pricemax" id="pricemax" value="15000" />
-                <div style="background:#f6f6f6"><a href="#price" data-toggle="collapse"><h4>Prijs</h4></a></div>
+                <a href="#price" data-toggle="collapse" style="text-decoration:none" onclick="flipArrow('pricea')">
+                    <div class="element" onclick="changeColor(this)" style="background:#f6f6f6;">
+                        <div style="display:flex">
+                            <h4 style="flex-basis:90%; padding-left:5%">Prijs</h4>
+                            <p class="arrow" id="pricea" style="transform:rotate(0deg); text-align:center">&#9650;</p>
+                        </div>
+                    </div>
+                </a>
                 <div id="price" class="collapse in" style="background:#fcfcfc">
                     <input type="text" id="amount" readonly style="border:0; font-weight:bold; background:none">
-                    <div id="slider-range"></div>
+                    <div id="slider-range" onclick="searchPrice()"></div>
                 </div>
 
                 <h5 style="margin-top:2em"><b>Filters verfijnen:</b></h5>
                 <!--Neckline-->
-                <div style="background:#f6f6f6"><a href="#neck" data-toggle="collapse"><h4>Neklijn</h4></a></div>
-                <div id="neck" class="collapse" style="background:#fcfcfc">
+                <a href="#neck" data-toggle="collapse" style="text-decoration:none" onclick="flipArrow('necka')">
+                    <div class="element" onclick="changeColor(this)" style="background:white;">
+                        <div style="display:flex">
+                            <h4 style="flex-basis:90%; padding-left:5%">Neklijn</h4>
+                            <p class="arrow" id="necka" style="transform:rotate(0deg); text-align:center">&#9660;</p>
+                        </div>
+                    </div>
+                </a>
+                <div id="neck" class="collapse" style="background:#fcfcfc; margin:0.5em">
                     @foreach (Neckline n in ViewBag.NecklineID)
                     {
                         var id = "cNeck" + n.ID;
-                    <input id="@id" type="checkbox" name="neckline" value="@n.ID" style="display:none" />
-                    <label for="@id" style="margin-bottom: -.3em;display:inline-block"></label>
-                    <p style="display:inline-block">@n.Name</p>
-                    <br />
+                        try
+                        {
+                            if (ViewBag.Neckcheck[n.ID] == 1)
+                            {
+                                <input id="@id" type="checkbox" name="neckline" value="@n.ID" class="css-checkbox" checked />
+                            }
+                        }
+                        catch
+                        {
+                            <input id="@id" type="checkbox" name="neckline" value="@n.ID" class="css-checkbox" />
+                        }
+                        <label for="@id" class="css-label" style="font-weight:lighter; margin-bottom:0.8em">@n.Name</label>
+                        <br />
                     }
                 </div>
 
                 <!--Silhouette-->
-                <div style="background:#f6f6f6"><a href="#sil" data-toggle="collapse"><h4>Silhouette</h4></a></div>
-                <div id="sil" class="collapse" style="background:#fcfcfc">
+                <a href="#sil" data-toggle="collapse" style="text-decoration:none" onclick="flipArrow('sila')">
+                    <div class="element" onclick="changeColor(this)" style="background:white;">
+                        <div style="display:flex">
+                            <h4 style="flex-basis:90%; padding-left:5%">Silhouette</h4>
+                            <p class="arrow" id="sila" style="transform:rotate(0deg); text-align:center">&#9660;</p>
+                        </div>
+                    </div>
+                </a>
+                <div id="sil" class="collapse" style="background:#fcfcfc; margin:0.5em">
                     @foreach (Silhouette s in ViewBag.SilhouetteID)
                     {
                         var id = "cSil" + s.ID;
-                    <input id="@id" type="checkbox" name="silhouette" value="@s.ID" style="display:none" />
-                    <label for="@id" style="margin-bottom: -.3em;display:inline-block"></label>
-                    <p style="display:inline-block">@s.Name</p>
-                    <br />
+                        try
+                        {
+                            if (ViewBag.Silcheck[s.ID] == 1)
+                            {
+                                <input id="@id" type="checkbox" name="silhouette" value="@s.ID" class="css-checkbox" checked />
+                            }
+                        }
+                        catch
+                        {
+                            <input id="@id" type="checkbox" name="silhouette" value="@s.ID" class="css-checkbox" />
+                        }
+                        <label for="@id" style="font-weight:lighter; margin-bottom:0.8em" class="css-label">@s.Name</label>
+                        <br />
                     }
                 </div>
 
                 <!--Color-->
-                <div style="background:#f6f6f6"><a href="#color" data-toggle="collapse"><h4>Kleur</h4></a></div>
-                <div id="color" class="collapse" style="background:#fcfcfc">
+                <a href="#color" data-toggle="collapse" style="text-decoration:none" onclick="flipArrow('colora')">
+                    <div class="element" onclick="changeColor(this)" style="background:white;">
+                        <div style="display:flex">
+                            <h4 style="flex-basis:90%; padding-left:5%">Kleur</h4>
+                            <p class="arrow" id="colora" style="transform:rotate(0deg); text-align:center">&#9660;</p>
+                        </div>
+                    </div>
+                </a>
+                <div id="color" class="collapse" style="background:#fcfcfc; margin:0.5em">
                     @foreach (Color c in ViewBag.ColorID)
                     {
                         var id = "cColor" + c.ID;
-                    <input id="@id" type="checkbox" name="color" value="@c.ID" style="display:none" />
-                    <label for="@id" style="margin-bottom: -.3em;display:inline-block"></label>
-                    <p style="display:inline-block">@c.Name</p>
-                    <br />
+                        try
+                        {
+                            if (ViewBag.Colorcheck[c.ID] == 1)
+                            {
+                                <input id="@id" type="checkbox" name="color" value="@c.ID" class="css-checkbox" checked />
+                            }
+                        }
+                        catch
+                        {
+                            <input id="@id" type="checkbox" name="color" value="@c.ID" class="css-checkbox" />
+                        }
+                        <label for="@id" class="css-label" style="font-weight:lighter; margin-bottom:0.8em">@c.Name</label>
+                        <br />
                     }
                 </div>
             </form>
@@ -271,7 +387,7 @@
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            @for(int i=1; i<=ViewBag.Pages; i++)
+                            @for (int i = 1; i <= ViewBag.Pages; i++)
                             {
                                 <li>
                                     <a onclick="goto(@i)">@i</a>

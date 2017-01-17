@@ -98,6 +98,22 @@ namespace HoneymoonShop.Controllers
         }
 
         [HttpGet]
+        public string DatesUnavailableInMonth(int month, int year)
+        {
+            int days = DateTime.DaysInMonth(year, month);
+            string s = string.Empty;
+            for (int i=1; i<=days; i++)
+            {
+                string today = $"{year}-{month}-{i}";
+                if (TimeAvailableAtDate(today).Length == 0)
+                {
+                    s += $"{i},";
+                }
+            }
+            return s;
+        }
+
+        [HttpGet]
         public string TimeAvailableAtDate(string date)
         {
             /***************

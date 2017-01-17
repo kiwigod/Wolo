@@ -8,21 +8,251 @@
     <script src="~/js/jquery-3.1.1.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
     <link href="~/css/style.css" rel="stylesheet">
+    <link href="~/css/header.css" rel="stylesheet">
+    <link href="~/css/footer.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cookie|Lato" rel="stylesheet">
     <title>@ViewData["Title"] - HoneymoonShop</title>
+    <style>
+        *{
+    font-family: 'Lato', sans-serif;
+}
+
+.tablet-fsize {
+    font-size: 1.2em
+}
+
+button>b {
+    color: white;
+}
+
+.index-button {
+    width: 15em;
+    font-size: 1.3em;
+}
+
+.max-height-center {
+    height: 100%;
+/*    text-align: center;*/
+    padding-top: 1em;
+}
+
+.navbar-pink {
+    background-image: linear-gradient(to bottom, #FAC9C4 0, #FAC9C4 100%);
+    
+    
+}
+
+.navbar-transparent {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
+
+.primary-button {
+    background: #f0597c;
+    border-color: #f0597c;
+}
+
+.primary-button:hover {
+    background: #ee446c;
+    border-color: #ee446c;
+}
+
+.header-background {
+    height: 100vh;
+    background-image: url("http://placehold.it/4096x2160");
+    background-size: 100% 100%;
+}
+a{
+    color:black;
+} 
+
+
+
+.search > input{
+    border:none;
+    border-radius: 0%;
+}
+
+.search button{
+    border:none;
+    border-radius: 0%;
+}
+
+
+
+#website{
+    margin: 1em;
+    
+}
+#webshop{
+    margin: 1em;
+
+    margin-left: 0%;
+   
+}
+#searchfield{
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#searchfield:focus{
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#searchbutton:focus{
+    border:none;
+}
+
+.fullrow1{
+    margin-left: 16.5%;    
+}
+
+#footer-box-1{
+    background-color: #ce5f87;
+    width: 320px;
+    height: 190px;
+    position: relative;
+    margin-left:6%; 
+    margin-bottom: 2%;
+}
+
+#footer-box-2{
+    background-color: #ce5f87;
+    width: 320px;
+    height: 190px;
+    position: relative;
+    margin-left: 4.5%; 
+    margin-bottom: 2%;
+   
+}
+
+#footer-box-3{
+    background-color: #ce5f87;
+    width: 320px;
+    height: 190px;
+    position: relative;
+    margin-left: 4.5%;   
+    margin-bottom: 2%;
+}
+
+p#txt-1{
+    font-family: 'Cookie', cursive;
+    color:pink;
+    font-size: 5em;
+    text-align: center;
+    padding-top: 4.5%;
+    position: absolute;
+    padding-left:.7em;
+}
+p#txt-1-1{
+    position: relative;
+    padding-top: 20%;
+    letter-spacing: 1px;
+    text-align: center;
+    color:white;
+    font-size: 1.8em;
+    
+       
+}
+
+p#txt-2{
+    font-family: 'Cookie', cursive;
+    color:pink;
+    font-size: 5em;
+    text-align: center;
+    padding-top: 4.5%;
+    position: relative;
+    padding-left: .0em;
+}
+p#txt-2-1{
+    position: relative;
+    top: -32%;
+    letter-spacing: 1px;
+    text-align: center;
+    color:white;
+    font-size: 1.8em;
+}
+img#deel-dit{
+    position: relative;
+    margin-left:13%;
+    margin-top: -20%;
+}
+
+p#txt-3{
+    font-family: 'Cookie', cursive;
+    color:pink;
+    font-size: 5em;
+    text-align: center;
+    padding-top: 4.5%;
+    position: relative;
+    padding-left: 7.5%;
+}
+p#txt-3-1{
+    position: relative;
+    padding-top: 20%;
+    letter-spacing: 1px;
+    text-align: center;
+    color:white;
+    font-size: 1.8em;
+    padding-left: 1%;    
+}
+
+.fullrow2{
+    margin-left: 16.5%;
+}
+
+p#info-txt{
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.09em;
+}
+
+img#weddingshow{
+    position: relative;
+    margin-left: 58%;
+    margin-bottom: 5%;
+}
+
+.list1{
+    font-family: 'Lato', sans-serif;
+    font-size: 1.1em;
+    position: relative;
+    text-align: left;
+    text-decoration: none;    
+    margin-left: 20%;    
+    
+}
+
+
+.list-nopadbot>li {
+    padding-bottom: 0px;
+    background-color: #fce8f2;
+    border: #fce8f2;
+}
+
+a{
+    color:black;
+}
+    </style>
     @RenderSection("Imports", required: false)
 </head>
 <body>
+
+
     <div class="container" style="background:@ViewData["Background"]; height:@ViewData["HeaderHeight"]; background-size: 100% 100%;">
-        <div class="container-fluid navbar-pink" style="padding:0">
+        <div class="container-fluid navbar-pink" style="padding:0; margin-left: -1%;">
             <div class="row disappear-xs" style="height:100%">
-                <div class="max-height-center col-lg-2 col-md-2 col-sm-2 col-xs-12"><a href="#"><b>WEBSITE</b></a></div>
-                <div class="max-height-center col-lg-1 col-md-1 col-sm-1 col-xs-12"><a href="#" style="color:#f0577a"><b>WEBSHOP</b></a></div>
+                <div class="max-height-center col-lg-1 col-md-2 col-sm-2 col-xs-12" style="margin-top: 1.5em; margin-bottom: 1.5em; padding-top:0%;"><a href="#"><b id="website">WEBSITE</b></a></div>
+                <div class="max-height-center col-lg-1 col-md-1 col-sm-1 col-xs-12" style="margin-top: 1.5em; margin-bottom: 1.5em; padding-top:0%;"><a href="#" style="color:#f0577a"><b id="webshop">WEBSHOP</b></a></div>
                 <div class="max-height-center col-lg-4 col-md-4 col-sm-2 col-xs-12 nopad-xs"></div>
-                <div class="max-height-center col-lg-2col-lg-2 col-md-2 col-sm-3 col-xs-12"><b>T</b> (010) 4126143</div>
-                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Wat zoek je?" style="height: 3.1em;"> <span class="input-group-btn">
-                            <button class="btn btn-default primary-button" type="button" style="background-color: white; height:3.1em; width: 3.1em"> <span class="glyphicon glyphicon-search" aria-hidden="true" style="color: black"></span> </button>
+                <div id="tel" class="max-height-center col-lg-offset-1 col-lg-2 col-md-2 col-sm-3 col-xs-12" style="
+                     text-align: right; margin-top: 1.5em; margin-bottom: 1.5em; padding-top:0%;
+                     "><b>T</b>(010) 4126143</div>
+                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12" style="background: white; width: 270px; float: right; padding-top: 0.67em; padding-bottom: .67em;">
+                    <div class="input-group search">
+                        <input id="searchfield" type="text" class="form-control" placeholder="Wat zoek je?" style="height: 100%;margin-top: .5em;"> <span class="input-group-btn">
+                            <button id="searchbutton" class="btn btn-default primary-button" type="button" style="background-color: white; height:3.1em; width: 3.1em"> <span class="glyphicon glyphicon-search" aria-hidden="true" style="color: black"></span> </button>
                         </span>
                     </div>
                 </div>
@@ -40,7 +270,7 @@
                 <li><a href="#"><b>AFSPRAAK MAKEN</b></a></li>
             </ul>
         </div>
-        <div class="container-fluid" style="padding: 0">
+        <div class="container-fluid" style="padding: 0; padding-top: 1em">
             <nav class="navbar navbar-default navbar-transparent">
                 <div class="container-fluid hide-sm">
                     <div class="navbar-header">
@@ -54,11 +284,13 @@
                             <li><a href="#"><b>DE WINKEL</b></a></li>
                             <li><a href="#"><b>BLOG</b></a></li>
                             <li><a href="#"><b>CONTACT</b></a></li>
-                            <li><form class="navbar-form navbar-left">
-                                <div class="input-group">
-                                    <button type="button" class="btn btn-default primary-button"><b>AFSPRAAK MAKEN</b></button>
-                                </div>
-                            </form> </li>
+                            <li>
+                                <form class="navbar-form navbar-left">
+                                    <div class="input-group">
+                                        <button type="button" class="btn btn-default primary-button"><b>AFSPRAAK MAKEN</b></button>
+                                    </div>
+                                </form>
+                            </li>
                         </ul>
                         <ul class="appear-xs nav navbar-nav thinner-xs">
                             <li><a href="#"><b>WEBSITE</b></a></li>
@@ -69,6 +301,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Wat zoek je?" style="height: 3.1em;"> <span class="input-group-btn">
                                             <button class="btn btn-default primary-button" type="button" style="background-color: white; height:3.1em; width: 3.1em"> <span class="glyphicon glyphicon-search" aria-hidden="true" style="color: black"></span> </button>
+
                                         </span>
                                     </div>
                                 </form>
@@ -80,74 +313,95 @@
         </div>
         @RenderSection("HeaderOverlay", required: false)
     </div>
+
+
+
+
+
+
     @RenderBody()
     <hr>
     <footer>
-        <div class="container">
-            <div class="row" style="padding-right:4em; padding-left:4em">
-                <div class="col-lg-4 col-md-4 img-spacing-footer"> <img id="center" src="http://placehold.it/320x190" class="img-responsive"> </div>
-                <div class="col-lg-4 col-md-4 img-spacing-footer"> <img id="center" src="http://placehold.it/320x190" class="img-responsive"> </div>
-                <div class="col-lg-4 col-md-4"> <img id="center" src="http://placehold.it/320x190" class="img-responsive"> </div>
+        <br> <br> <br>
+        <div class="row fullrow1 container">
+            <a id="link-pasafspraak" href="http://google.nl">
+                <div class="col-md-4 txt-1" id="footer-box-1">
+                    <p id="txt-1">Afspraak</p>
+                    <p id="txt-1-1">  <b>MAAK EEN <br>PASAFSPRAAK</b></p>
+                </div>
+            </a>
+            <a id="link-social" href="http://google.nl">
+                <div class="col-md-4" id="footer-box-2">
+                    <p id="txt-2">Social</p>
+                    <p id="txt-2-1">  <b>VOLG ONS</b></p>
+                    <img src="images/deel-dit.png" width="214" height="57" border="0" usemap="#map" id="deel-dit" class="img-responsive" />
+                    <map name="map">
+                        <area shape="rect" coords="1,1,46,57" alt="facebook" href="http://facebook.com" />
+                        <area shape="rect" coords="47,2,91,55" alt="twitter" href="http://twitter.com" />
+                        <area shape="rect" coords="93,1,131,55" alt="pinterest" href="http://pinterest.com" />
+                        <area shape="rect" coords="132,2,167,57" alt="youtube" href="http://youtube.com" />
+                        <area shape="rect" coords="167,1,213,58" alt="instagram" href="http://instagram.com" />
+                    </map>
+                </div>
+            </a>
+            <a id="link-review" href="http://google.nl">
+                <div class="col-md-4 txt-1" id="footer-box-3">
+                    <p id="txt-1">Reviews</p>
+                    <p id="txt-3-1">  <b>BEKIJK ONZE REVIEWS</b></p>
+                </div>
+            </a>
+        </div>
+        <div class="row container fullrow2">
+
+            <p id="info-txt"> Korte Hoogstraat 4, 3011 Rotterdam &emsp;<b>email</b> info@honeymoonshop.nl&emsp;<b>tel </b>(010) 412 61 43&emsp;<b>whatsapp</b>  (06)25 19 99 27<br> <b>Openingstijden&emsp;MA</b>12.00-17.30&emsp;<b>DI t/m VR</b> 09.30-17.30 <b>ZA&emsp;</b> 09.30-18.00&emsp;<b>DI t/m VR</b> 09.30-17.30  </p>
+
+        </div>
+        <div class="row container">
+            <br> <br><br>
+            <img src="images/grand-weddingshow.png" alt="grand weddingprize icon" id="weddingshow" class="img-responsive" />
+
+        </div>
+        <div class="row container list1">
+            <br> <br><br>
+            <br><br>
+            <div class="col-md-4 col-sm-4">
+                <ul class="list-group list-nopadbot">
+                    <li class="list-group-item txt1" style="color:#f0597c"><b>WINKEL</b></li>
+                    <li class="list-group-item"><a href="#">Over de Honeymoon shop</a></li>
+                    <li class="list-group-item"><a href="#">Servicepunten</a></li>
+                    <li class="list-group-item"><a href="#">Routebeschrijving</a></li>
+                    <li class="list-group-item"><a href="#">Beurzen en evenementen</a></li>
+                    <li class="list-group-item"><a href="#">Vacatures</a></li>
+                    <li class="list-group-item"><a href="#">Verkoopvoorwaarden</a></li>
+                    <li class="list-group-item"><a href="#">CBW erkend</a></li>
+                    <li class="list-group-item"><a href="#">Contact</a></li>
+                </ul>
             </div>
-            <div class="row" style="padding-right:5em; padding-left:5em; margin-top:2em">
-                <div class="col-md-12" style="text-align:center">
-                    <ul class="list-group list-nopad">
-                        <li class="list-group-item">Korte Hoogstraat 4, 3011 GL Rotterdam</li>
-                        <li class="list-group-item"><b>email</b> info@honeymoonshop.nl</li>
-                        <li class="list-group-item"><b>tel</b> (010) 412 61 43</li>
-                        <li class="list-group-item"><b>whatsapp</b> (06) 25 19 99 27</li>
-                    </ul>
-                    <ul class="list-group list-nopad">
-                        <li class="list-group-item"><b>Openingstijden</b></li>
-                        <li class="list-group-item"><b>MA</b> 12.00-17.30</li>
-                        <li class="list-group-item"><b>DI t/m VR</b> 09.30-17.30</li>
-                        <li class="list-group-item"><b>ZA</b> 09.30-18.00</li>
-                        <li class="list-group-item"><b>DI t/m VR</b> 11.00-17.00</li>
-                    </ul>
-                </div>
+            <div class="col-md-4 col-sm-4">
+                <ul class="list-group list-nopadbot">
+                    <li class="list-group-item" style="color:#f0597c"><b>SERVICE</b></li>
+                    <li class="list-group-item"><a href="#">Beoordelingen</a></li>
+                    <li class="list-group-item"><a href="#">Dressfinder</a></li>
+                    <li class="list-group-item"><a href="#">Gratis trouwmagazine</a></li>
+                    <li class="list-group-item"><a href="#">Niewsbrief</a></li>
+                    <li class="list-group-item"><a href="#">Veel gestelde vragen</a></li>
+                    <li class="list-group-item"><a href="#">CBW erkend</a></li>
+                    <li class="list-group-item"><a href="#">Reinigen van je trouwjurk</a></li>
+                    <li class="list-group-item"><a href="#">10 redenen om je afspraak te maken</a></li>
+                    <li class="list-group-item"><a href="#">The Perfect Match</a></li>
+                </ul>
             </div>
-            <div class="row">
-                <div class="col-md-12" style="margin-top:2.5em"> <img id="center" src="http://placehold.it/200x50" class="img-responsive"></div>
-            </div>
-            <div class="row" style="margin-top:4em; padding-left:5em; padding-right:5em">
-                <div class="col-md-4 col-sm-4">
-                    <ul class="list-group list-nopadbot list-center">
-                        <li class="list-group-item" style="color:#f0597c"><b>WINKEL</b></li>
-                        <li class="list-group-item"><a href="#">Over de Honeymoon shop</a></li>
-                        <li class="list-group-item"><a href="#">Servicepunten</a></li>
-                        <li class="list-group-item"><a href="#">Routebeschrijving</a></li>
-                        <li class="list-group-item"><a href="#">Beurzen en evenementen</a></li>
-                        <li class="list-group-item"><a href="#">Vacatures</a></li>
-                        <li class="list-group-item"><a href="#">Verkoopvoorwaarden</a></li>
-                        <li class="list-group-item"><a href="#">CBW erkend</a></li>
-                        <li class="list-group-item"><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 col-sm-4">
-                    <ul class="list-group list-nopadbot list-center">
-                        <li class="list-group-item" style="color:#f0597c"><b>SERVICE</b></li>
-                        <li class="list-group-item"><a href="#">Beoordelingen</a></li>
-                        <li class="list-group-item"><a href="#">Dressfinder</a></li>
-                        <li class="list-group-item"><a href="#">Gratis trouwmagazine</a></li>
-                        <li class="list-group-item"><a href="#">Niewsbrief</a></li>
-                        <li class="list-group-item"><a href="#">Veel gestelde vragen</a></li>
-                        <li class="list-group-item"><a href="#">CBW erkend</a></li>
-                        <li class="list-group-item"><a href="#">Reinigen van je trouwjurk</a></li>
-                        <li class="list-group-item"><a href="#">10 redenen om je afspraak te maken</a></li>
-                        <li class="list-group-item"><a href="#">The Perfect Match</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 col-sm-4">
-                    <ul class="list-group list-nopadbot list-center">
-                        <li class="list-group-item" style="color:#f0597c"><b>ACTIES</b></li>
-                        <li class="list-group-item"><a href="#">The Grand Wedding Show</a></li>
-                        <li class="list-group-item"><a href="#">Summer Sale</a></li>
-                        <li class="list-group-item"><a href="#">Trouwjurken onder de 1000 euro</a></li>
-                        <li class="list-group-item"><a href="#">Trouwjurken voor de volslanke bruid</a></li>
-                    </ul>
-                </div>
+            <div class="col-md-4 col-sm-4">
+                <ul class="list-group list-nopadbot">
+                    <li class="list-group-item" style="color:#f0597c"><b>ACTIES</b></li>
+                    <li class="list-group-item"><a href="#">The Grand Wedding Show</a></li>
+                    <li class="list-group-item"><a href="#">Summer Sale</a></li>
+                    <li class="list-group-item"><a href="#">Trouwjurken onder de 1000 euro</a></li>
+                    <li class="list-group-item"><a href="#">Trouwjurken voor de volslanke bruid</a></li>
+                </ul>
             </div>
         </div>
+
     </footer>
     @RenderSection("scripts", required: false)
 </body>

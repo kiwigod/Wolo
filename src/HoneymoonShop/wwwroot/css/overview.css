@@ -1,5 +1,17 @@
-﻿@media (min-width: 1200px) {
-  .container {
-    width: 1350px;
-  }
+﻿.element:before {
+    content:"\a0";
+    display:block;
+    line-height:0%;
+    border-top:1px solid black; 
+}
+.element:after{
+    content:"\a0";
+    display:block;
+    line-height:0%;
+    border-bottom:1px solid black;
+}
+.arrow{
+    flex-basis:10%; 
+    margin-top:4.5%; 
+    color:#FAC9C5;
 }

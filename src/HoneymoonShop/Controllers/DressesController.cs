@@ -284,12 +284,31 @@ namespace HoneymoonShop.Controllers
             {
                 ViewData["CategoryID"] = _context.Category.ToList();
                 ViewData["ColorID"] = _context.Color.ToList();
+                ViewData["Colorcheck"] = check(color);
                 ViewData["ManuID"] = _context.Manu.ToList();
+                ViewData["Manucheck"] = check(manu);
                 ViewData["NecklineID"] = _context.Neckline.ToList();
+                ViewData["Neckcheck"] = check(neckline);
                 ViewData["SilhouetteID"] = _context.Silhouette.ToList();
+                ViewData["Silcheck"] = check(silhouette);
                 ViewData["StyleID"] = _context.Style.ToList();
+                ViewData["Stylecheck"] = check(style);
                 return View("Overview");
             }
+        }
+
+        private Dictionary<int, int> check(string[] array)
+        {
+            Dictionary<int, int> arraycheck = new Dictionary<int, int>();
+            foreach(string s in array)
+            {
+                if (s.Equals("all")) break;
+                else
+                {
+                    arraycheck.Add(int.Parse(s), 1);
+                }
+            }
+            return arraycheck;
         }
 
         public IActionResult AddImage()

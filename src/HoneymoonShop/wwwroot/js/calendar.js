@@ -13,6 +13,20 @@ var remailfieldValue;
 var datefieldValue;
 var phonenumberfieldValue;
 
+var nonAvailableDays = "";
+
+function requestDate(){
+    $.ajax({
+        method: "GET",
+        url: "DatesUnavailableInMonth",
+        data: { month: (date.getMonth() + 1), year: date.getFullYear() }
+    })
+      .done(function (msg) {
+          nonAvailableDays = msg.split(",");
+          console.log(nonAvailableDays.indexOf("24"));
+      });
+}
+
 function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
@@ -45,7 +59,7 @@ function postUserinfo() {
         data: { mdate: datefieldValue, time: $("input[name=tijdstip]:checked").val(), phone: phonenumberfieldValue, mail: mailfieldValue, name: namefieldValue, date: request, newsletter: $("#nieuwsbrief").is(":checked") }
     })
       .done(function (msg) {
-          location.href = 'validate';
+          location.href = 'complete';
       });
 }
 
@@ -153,6 +167,8 @@ var fillCalendar = function () {
     var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0)
 
     removeEntries();
+    
+    requestDate();
 
     $("#calender-currentday").text(MONTHS[date.getMonth()].concat(" " + date.getFullYear()));
     for (var i = 0; i < lastDay.getDate() ; i++) {
@@ -160,7 +176,11 @@ var fillCalendar = function () {
         var day = i + 1;
         if (date.getTime() < currentDate.getTime() || (day <= currentDate.getDate() && (date.getMonth() == currentDate.getMonth() && date.getFullYear() == currentDate.getFullYear()))) {
             $(tableData).html("<label class=\"nondate\">" + day + "<\label>");
-        } else {
+        }
+        else if (nonAvailableDays.indexOf(i.toString()) > -1) {
+            $(tableData).html("<label class=\"occupied\" style=\"color:black\">" + day + "<\label>");
+        }
+        else{
             $(tableData).html("<input class=\"dateinput\" type=\"radio\" id=\"date" + day + "\" name=\"date\" value=\"" + day + "\"> <label for=\"date" + day + "\">" + day + "</label>");
         }
     }
