@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using HoneymoonShop.Models;
 
 namespace HoneymoonShop.Controllers
 {
@@ -20,8 +21,6 @@ namespace HoneymoonShop.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 

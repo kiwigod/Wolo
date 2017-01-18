@@ -34,13 +34,12 @@
         <div class="dropdown show-sm">
             <a asp-controller="Home" asp-action="Index" id="dropdownMenu" class="btn btn-default dropdown-toggle primary-button index-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background:none"> <b>HONEYMOON SHOP</b> <span class="caret"></span> </a>
             <ul class="dropdown-menu tablet-fsize" style="background:none" aria-labelledby="dropdown">
-                <li><a style="color: #f0577a" href="#"><b>HOME</b></a></li>
-                <li><a asp-controller="Dresses" asp-action="Overview"><b>BRUID</b></a></li>
-                <li><a href="#"><b>BRUIDEGOM</b></a></li>
-                <li><a href="#"><b>DE WINKEL</b></a></li>
-                <li><a href="#"><b>BLOG</b></a></li>
-                <li><a href="#"><b>CONTACT</b></a></li>
-                <li><a href="#"><b>AFSPRAAK MAKEN</b></a></li>
+                <li><a style="color: #f0577a" asp-controller="Home" asp-action="Index"><b>HOME</b></a></li>
+                <li><a asp-controller="Dresses" asp-action="Index"><b>BRUID</b></a></li>
+                <li><a asp-controller="Suits" asp-action="Overview"><b>BRUIDEGOM</b></a></li>
+                <li><a asp-controller="Home" asp-action="About"><b>DE WINKEL</b></a></li>
+                <li><a asp-controller="Blogs" asp-action="Index"><b>BLOG</b></a></li>
+                <li><a asp-controller="Home" asp-action="Contact"><b>CONTACT</b></a></li>
             </ul>
         </div>
         <div class="container-fluid" style="padding: 0; padding-top: 1em">
@@ -51,16 +50,16 @@
                     </div>
                     <div class="collapse navbar-collapse" id="collapseNav">
                         <ul class="nav navbar-nav navbar-right thinner-xs scale-nav">
-                            <li><a style="color: #f0577a" href="#"><b>HOME</b></a></li>
-                            <li><a asp-controller="Dresses" asp-action="Overview"><b>BRUID</b></a></li>
-                            <li><a href="#"><b>BRUIDEGOM</b></a></li>
-                            <li><a href="#"><b>DE WINKEL</b></a></li>
-                            <li><a href="#"><b>BLOG</b></a></li>
-                            <li><a href="#"><b>CONTACT</b></a></li>
+                            <li><a style="color: #f0577a" asp-controller="Home" asp-action="Index"><b>HOME</b></a></li>
+                            <li><a asp-controller="Dresses" asp-action="Index"><b>BRUID</b></a></li>
+                            <li><a asp-controller="Suits" asp-action="Overview"><b>BRUIDEGOM</b></a></li>
+                            <li><a asp-controller="Home" asp-action="About"><b>DE WINKEL</b></a></li>
+                            <li><a asp-controller="Blogs" asp-action="Index"><b>BLOG</b></a></li>
+                            <li><a asp-controller="Home" asp-action="Contact"><b>CONTACT</b></a></li>
                             <li>
                                 <form class="navbar-form navbar-left">
                                     <div class="input-group">
-                                        <button type="button" class="btn btn-default primary-button"><b>AFSPRAAK MAKEN</b></button>
+                                        <a style="color:white" class="btn btn-default primary-button" asp-controller="Appointments" asp-action="Create"><b>AFSPRAAK MAKEN</b></a>
                                     </div>
                                 </form>
                             </li>
@@ -74,7 +73,6 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Wat zoek je?" style="height: 3.1em;"> <span class="input-group-btn">
                                             <button class="btn btn-default primary-button" type="button" style="background-color: white; height:3.1em; width: 3.1em"> <span class="glyphicon glyphicon-search" aria-hidden="true" style="color: black"></span> </button>
-
                                         </span>
                                     </div>
                                 </form>

@@ -12,5 +12,6 @@ namespace HoneymoonShop.Models
         public string ColorCode { get; set; }
 
         public List<DressColor> DressColors { get; set; }
+        public List<SuitColor> SuitColors { get; set; }
     }
 }

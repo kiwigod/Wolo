@@ -61,5 +61,12 @@ namespace HoneymoonShop.Controllers
 
             return View(dress);
         }
+
+        [HttpGet]
+        public IActionResult SearchBrand(string s)
+        {
+            List<Dress> dresses = _context.Dress.Include(d => d.Manu).Where(d => d.Manu.Name.Contains(s)).ToList();
+            return View();
+        }
     }
 }
