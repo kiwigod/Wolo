@@ -20,12 +20,16 @@ namespace HoneymoonShop.Controllers
         private readonly ApplicationDbContext _context;
         private IHostingEnvironment _env;
         private List<Dress> dresses;
+        private int lastMin;
+        private int lastMax;
 
         public DressesController(ApplicationDbContext context, IHostingEnvironment env)
         {
             _context = context;
             _env = env;
             dresses = new List<Dress>();
+            lastMax = -1;
+            lastMin = -1;
         }
 
         // GET: Dresses
@@ -187,9 +191,9 @@ namespace HoneymoonShop.Controllers
         }
 
         [HttpGet]
-        public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color, int request, string sort, int amnt, int page, int cat)
+        public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color, int request, string sort, int amnt, int page)
         {
-            if (dresses.Count < 1)
+            if (dresses.Count < 1 || pricemin != lastMin || pricemax != lastMax)
             {
                 dresses = _context.Dress
                     .Include(d => d.Manu)
@@ -200,10 +204,11 @@ namespace HoneymoonShop.Controllers
                     .Where(d => neckline.Contains(d.NecklineID.ToString()) || neckline.Contains("all"))
                     .Where(d => silhouette.Contains(d.SilhouetteID.ToString()) || silhouette.Contains("all"))
                     .Where(d => d.DressColors.Where(dc => dc.DressID == d.ID).Any(dc => color.Contains(dc.ColorID.ToString())) || color.Contains("all"))
+                    //.Where(d => d.CategoryID == int.Parse(cat) || cat.Contains("all"))
                     .ToList();
             }
 
-            List<Dress> displayedDress = dresses;
+            List<Dress> displayedDress = new List<Dress>();
             if (page != 1)
             {
                 displayedDress = dresses.Skip(page - 1 * amnt).Take(amnt).ToList();
@@ -244,7 +249,9 @@ namespace HoneymoonShop.Controllers
             ViewData["Pages"] = (int)Math.Ceiling((double)dresses.Count / 10);
             ViewData["Images"] = img;
             ViewData["Dress"] = displayedDress;
-            ViewData["MaxPrice"] = dresses.Max(d => d.Price);
+            ViewData["MinPrice"] = pricemin;
+            ViewData["Maxprice"] = pricemax;
+            ViewData["DressMax"] = _context.Dress.Max(d => d.Price);
             if (request == 1) return PartialView("OverviewPartial");
             else
             {

@@ -8,11 +8,13 @@
     <!--Cat-->
     <h4><b>CATEGORIEEN:</b></h4>
     <div style="margin-bottom:2em">
-        @foreach (Category c in ViewBag.CategoryID)
+        @{
+            foreach (Category c in ViewBag.CategoryID)
             {
-            <a asp-controller="Dresses" asp-action="Overview/cat=@c.ID"><div style="background:#fce8e7; margin-bottom:0.3em; padding:0.4em; padding-left:5%"><b>@c.Name</b></div></a>
+                <a onclick="catChange(@c.ID, '@c.Name')"><div style="background:#fce8e7; margin-bottom:0.3em; padding:0.4em; padding-left:5%"><b>@c.Name</b></div></a>
+            }
         }
-        <a asp-controller="Dresses" asp-action="Overview?sort=new"><div style="background:#fce8e7; margin-bottom:0.3em; padding:0.4em; padding-left:5%"><b>Nieuwe Collectie</b></div></a>
+        <a asp-controller="Dresses" asp-action="Overview"><div style="background:#fce8e7; margin-bottom:0.3em; padding:0.4em; padding-left:5%"><b>Nieuwe Collectie</b></div></a>
         <a asp-controller="Dresses" asp-action="Overview"><div style="background:#fce8e7; margin-bottom:0.3em; padding:0.4em; padding-left:5%"><b>Alle jurken bekijken</b></div></a>
     </div>
 
@@ -77,13 +79,13 @@
     </div>
 
     <!--Price-->
-    <input type="hidden" name="pricemin" id="pricemin" value="0" />
-    <input type="hidden" name="pricemax" id="pricemax" value="15000" />
+    <input type="hidden" name="pricemin" id="pricemin" value="@ViewBag.MinPrice" />
+    <input type="hidden" name="pricemax" id="pricemax" value="@ViewBag.MaxPrice" />
     <a href="#price" data-toggle="collapse" style="text-decoration:none" onclick="flipArrow('pricea')">
         <div class="element" onclick="changeColor(this)" style="background:#f6f6f6;">
             <div style="display:flex">
                 <h4 style="flex-basis:90%; padding-left:5%">Prijs</h4>
-                <p class="arrow" id="pricea" style="transform:rotate(0deg); text-align:center">&#9650;</p>
+                <p class="arrow" id="pricea" style="transform:rotate(0deg); text-align:center; flex-basis:10%">&#9650;</p>
             </div>
         </div>
     </a>

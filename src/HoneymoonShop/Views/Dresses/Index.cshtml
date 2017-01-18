@@ -39,6 +39,7 @@
         var neckq = "&neckline=all";
         var silq = "&silhouette=all";
         var colorq = "&color=all";
+        var catq = "&cat=all";
 
         $(document).ready(function () {
             $("#manu input").click(function () {
@@ -49,7 +50,7 @@
                         manuq += "&manu=" + children.get(i).value;
                     }
                 } if (manuq == "") manuq = "&manu=all";
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
+                var route = "Dresses/OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
@@ -61,7 +62,7 @@
                         styleq += "&style=" + children.get(i).value;
                     }
                 } if (styleq == "") styleq = "&style=all";
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
+                var route = "Dresses/OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
@@ -73,7 +74,7 @@
                         neckq += "&neckline=" + children.get(i).value;
                     }
                 } if (neckq == "") neckq = "&neckline=all";
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
+                var route = "Dresses/OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
@@ -85,7 +86,7 @@
                         silq += "&silhouette=" + children.get(i).value;
                     }
                 } if (silq == "") silq = "&silhouette=all";
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
+                var route = "Dresses/OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
@@ -97,7 +98,7 @@
                         colorq += "&color=" + children.get(i).value;
                     }
                 } if (colorq == "") colorq = "&color=all";
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
+                var route = "Dresses/OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
@@ -106,15 +107,14 @@
         function searchPrice() {
             console.log($("#pricemax").val());
             console.log($("#pricemin").val());
-            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
+            var route = "Dresses/OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
             doPush(route);
-            window.location.replace(route);
         }
 
         function sorting() {
             var e = document.getElementById("sort");
             sortq = "&sort=" + e.options[e.selectedIndex].value;
-            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
+            var route = "Dresses/OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
             $("#overview").load(route + "&request=1");
             doPush(route);
         }
@@ -122,16 +122,19 @@
         function amnt() {
             var e = document.getElementById("amnt");
             amntq = "&amnt=" + e.options[e.selectedIndex].value;
-            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
+            var route = "Dresses/OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
             doPush(route);
             window.location.replace(route);
         }
 
-        function goto(page) {
-            if (page < 1) page = 1;
-            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=" + page;
+        function catChange(catid, catname) {
+            catq = "&cat=" + catid;
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=1";
+            document.getElementById("breadcrumb").innerHTML =
+                "<li><a asp-action=\"Index\" asp-controller=\"Home\" style=\"color:#f47590\">Home</a></li>" +
+                "<li><a asp-action=\"Index\" asp-controller=\"Dresses\" style=\"color:#f47590\">Bruid</a></li>" +
+                "<li class=\"active\">" + catname + "</li>"
             doPush(route);
-            window.location.replace(route);
         }
 
         function doPush(route) {
