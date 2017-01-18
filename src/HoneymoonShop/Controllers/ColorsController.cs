@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using HoneymoonShop.Data;
 using HoneymoonShop.Models;
 
@@ -16,7 +12,7 @@ namespace HoneymoonShop.Controllers
 
         public ColorsController(ApplicationDbContext context)
         {
-            _context = context;    
+            _context = context;
         }
 
         // POST: Colors/Create
@@ -71,7 +67,8 @@ namespace HoneymoonShop.Controllers
             {
                 _context.Update(c);
                 _context.SaveChanges();
-            } catch
+            }
+            catch
             {
                 return NotFound();
             }

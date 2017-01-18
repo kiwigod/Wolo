@@ -101,5 +101,11 @@ namespace HoneymoonShop.Data
         public DbSet<Blog> Blog { get; set; }
 
         public DbSet<Post> Post { get; set; }
+
+        public DbSet<Suit> Suit { get; set; }
+
+        public DbSet<SuitFeature> SuitFeature { get; set; }
+
+        public DbSet<SuitColor> SuitColor { get; set; }
     }
 }
