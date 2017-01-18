@@ -2,15 +2,15 @@
 
 @{
     ViewData["Title"] = "Dressfinder";
-    ViewData["Background"] = "url(\"http://placehold.it/3000x2160 \")";
+    ViewData["Background"] = "url(images/web/top_dresses.jpg)";
     ViewData["HeaderHeight"] = "40em";
 }
 
 @section Imports {
-<link rel="stylesheet" href="~/css/overview.css" />
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="~/css/jquery-ui.min.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="~/css/overview.css" />
 <script>
         $(function () {
             $("#slider-range").slider({
@@ -24,8 +24,8 @@
                     $("#pricemax").val(ui.values[1]);
                 }
             });
-            $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-              " - $" + $("#slider-range").slider("values", 1));
+            $("#amount").val('\u20AC' + $("#slider-range").slider("values", 0) +
+              " - " + '\u20AC' + $("#slider-range").slider("values", 1));
         });
 
         $("#container").ready(function () {
@@ -65,10 +65,6 @@
                 $("#overview").load(route + "&request=1");
                 doPush(route);
             });
-            $("#price input").on("input change", function () {
-                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
-                doPush(route);
-            });
             $("#neck input").click(function () {
                 var children = $("#neck input");
                 neckq = "";
@@ -106,16 +102,98 @@
                 doPush(route);
             });
         });
+
+        function searchPrice() {
+            console.log($("#pricemax").val());
+            console.log($("#pricemin").val());
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
+            doPush(route);
+            window.location.replace(route);
+        }
+
+        function sorting() {
+            var e = document.getElementById("sort");
+            sortq = "&sort=" + e.options[e.selectedIndex].value;
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
+            $("#overview").load(route + "&request=1");
+            doPush(route);
+        }
+
+        function amnt() {
+            var e = document.getElementById("amnt");
+            amntq = "&amnt=" + e.options[e.selectedIndex].value;
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
+            doPush(route);
+            window.location.replace(route);
+        }
+
+        function goto(page) {
+            if (page < 1) page = 1;
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=" + page;
+            doPush(route);
+            window.location.replace(route);
+        }
+
         function doPush(route) {
             var state = {},
                 title = "Dress Overview",
                 path = route;
             history.pushState(state, title, path);
+            location.reload();
         }
 </script>
+<script>
+        function flipArrow(id) {
+            var e = document.getElementById(id);
+            var trans = e.style.transform;
+            if (trans == "rotate(0deg)") {
+                e.style.transform = "rotate(180deg)";
+            }
+            else {
+                e.style.transform = "rotate(0deg)";
+            }
+        }
+
+        function changeColor(elmnt) {
+            var bcol = elmnt.style.background;
+            if (bcol == "rgb(246, 246, 246)") {
+                elmnt.style.background = "white";
+            }
+            else {
+                elmnt.style.background = "rgb(246, 246, 246)";
+            }
+        }
+</script>
+<style>
+    #text {
+        padding: 20px 20px 26em 20px;
+        position: relative;
+        width: inherit;
+        overflow: hidden;
+    }
+    #text::after{
+        font-family: 'Cookie', cursive;
+        font-style: italic;
+        color: rgba(255, 255, 255, 0.3);
+        content: attr(data-bg-text);
+        display: block;
+        font-size: 10em;
+        line-height: 1;
+        position: absolute;
+        right: 33%;
+        bottom: 66%;
+    }
+</style>
 }
 
-@section HeaderOverlay {}
+@section HeaderOverlay {
+<div class="container-fluid">
+    <div id="text" data-bg-text="Dressfinder" style="text-align:center">
+        <p style="margin-top:10%; font-size:2em; color:white">Opzoek naar de perfecte jurk</p>
+        <p style="font-size:2.5em; color:white"><b>VAN BEGIN TOT EIND KUNNEN WIJ JE HELPEN</b></p>
+    </div>
+</div>
+}
 
 <div class="container" style="background:white">
     <div class="row">
@@ -128,129 +206,40 @@
         </div>
     </div>
     <div class="row" style="padding-top:3em">
-        <div class="col-lg-2 col-md-2 col-md-offset-1 col-lg-offset-1">
-            <form>
-                <!--Cat-->
-                <h4><b>CATEGORIEEN:</b></h4>
-                <div style="margin-bottom:2em">
-                    @foreach (Category c in ViewBag.CategoryID)
-                    {
-                        <div style="background:#fce8e7; margin-bottom:0.3em"><a href=""><b>@c.Name</b></a></div>
-                    }
-                    <div style="background:#fce8e7; margin-bottom:0.3em"><a href=""><b>Nieuwe Collectie</b></a></div>
-                    <div style="background:#fce8e7; margin-bottom:0.3em"><a href=""><b>Alle jurken bekijken</b></a></div>
-                </div>
-
-                <h5><b>Filter op:</b></h5>
-                <!--Manu-->
-                <div style="background:#f6f6f6"><a href="#manu" data-toggle="collapse"><h4>Merk</h4></a></div>
-                <div id="manu" class="collapse in" style="background:#fcfcfc">
-                    @foreach (Manu m in ViewBag.ManuID)
-                    {
-                        var id = "cManu" + m.ID;
-                        <input id="@id" type="checkbox" name="manu" value="@m.ID" style="display:none" />
-                        <label for="@id" style="margin-bottom: -.3em;display:inline-block"></label>
-                        <p style="display:inline-block">@m.Name</p>
-                        <br />
-                    }
-                </div>
-
-                <!--Style-->
-                <div style="background:#f6f6f6"><a href="#style" data-toggle="collapse"><h4>Stijl</h4></a></div>
-                <div id="style" class="collapse in" style="background:#fcfcfc">
-                    @foreach (Style s in ViewBag.StyleID)
-                    {
-                        var id = "cStyle" + s.ID;
-                        <input id="@id" type="checkbox" name="style" value="@s.ID" style="display:none" />
-                        <label for="@id" style="margin-bottom: -.3em;display:inline-block"></label>
-                        <p style="display:inline-block">@s.Name</p>
-                        <br />
-                    }
-                </div>
-
-                <!--Price-->
-                <input type="hidden" name="pricemin" id="pricemin" value="0" />
-                <input type="hidden" name="pricemax" id="pricemax" value="15000" />
-                <div style="background:#f6f6f6"><a href="#price" data-toggle="collapse"><h4>Prijs</h4></a></div>
-                <div id="price" class="collapse in" style="background:#fcfcfc">
-                    <input type="text" id="amount" readonly style="border:0; font-weight:bold; background:none">
-                    <div id="slider-range"></div>
-                </div>
-
-                <h5 style="margin-top:2em"><b>Filters verfijnen:</b></h5>
-                <!--Neckline-->
-                <div style="background:#f6f6f6"><a href="#neck" data-toggle="collapse"><h4>Neklijn</h4></a></div>
-                <div id="neck" class="collapse" style="background:#fcfcfc">
-                    @foreach (Neckline n in ViewBag.NecklineID)
-                    {
-                        var id = "cNeck" + n.ID;
-                        <input id="@id" type="checkbox" name="neckline" value="@n.ID" style="display:none" />
-                        <label for="@id" style="margin-bottom: -.3em;display:inline-block"></label>
-                        <p style="display:inline-block">@n.Name</p>
-                        <br />
-                    }
-                </div>
-
-                <!--Silhouette-->
-                <div style="background:#f6f6f6"><a href="#sil" data-toggle="collapse"><h4>Silhouette</h4></a></div>
-                <div id="sil" class="collapse" style="background:#fcfcfc">
-                    @foreach (Silhouette s in ViewBag.SilhouetteID)
-                    {
-                        var id = "cSil" + s.ID;
-                        <input id="@id" type="checkbox" name="silhouette" value="@s.ID" style="display:none" />
-                        <label for="@id" style="margin-bottom: -.3em;display:inline-block"></label>
-                        <p style="display:inline-block">@s.Name</p>
-                        <br />
-                    }
-                </div>
-
-                <!--Color-->
-                <div style="background:#f6f6f6"><a href="#color" data-toggle="collapse"><h4>Kleur</h4></a></div>
-                <div id="color" class="collapse" style="background:#fcfcfc">
-                    @foreach (Color c in ViewBag.ColorID)
-                    {
-                        var id = "cColor" + c.ID;
-                        <input id="@id" type="checkbox" name="color" value="@c.ID" style="display:none" />
-                        <label for="@id" style="margin-bottom: -.3em;display:inline-block"></label>
-                        <p style="display:inline-block">@c.Name</p>
-                        <br />
-                    }
-                </div>
-            </form>
-        </div>
+        @Html.Partial("Filter")
         <div class="col-md-8 col-lg-8">
             <div id="overview" class="overview" style="">
                 <div>
                     <a href="#" class="overview-item" style="flex-basis:100%">
                         <div style="height:auto">
-                            <img src="http://placehold.it/1000x260" class="img-responsive"/>
+                            <img src="~/images/web/allaboutthedress.png" class="img-responsive"/>
                         </div>
                     </a>
                 </div>
-                <div style="margin-right:4.28em; margin-top:1em">
+                <div style="margin-right:1.66em; margin-top:1em">
                     <a href="#" class="overview-item">
                         <div style="height:auto">
-                            <img src="http://placehold.it/250x250" class="img-responsive" />
+                            <img src="~/images/web/wintercollection.png" class="img-responsive" />
                         </div>
                     </a>
                 </div>
-                <div style="margin-right:4.28em; margin-top:1em">
+                <div style="margin-right:1.66em; margin-top:1em">
                     <a href="#" class="overview-item">
                         <div style="height:auto">
-                            <img src="http://placehold.it/250x250" class="img-responsive" />
+                            <img src="~/images/web/brandmaggie.png" class="img-responsive" />
                         </div>
                     </a>
                 </div>
                 <div style="margin-top:1em">
                     <a href="#" class="overview-item">
                         <div style="height:auto">
-                            <img src="http://placehold.it/250x250" class="img-responsive" />
+                            <img src="~/images/web/webshop.png" class="img-responsive" />
                         </div>
                     </a>
                 </div>
-                <div style="width: 100%; height: 20px; border-bottom: 1px solid black; text-align: center; margin-top:4em">
+                <div style="width: 100%; height: 20px; border-bottom: 2px solid black; text-align: center; margin-top:4em">
                     <span style="font-size: 25px; background-color: white; padding: 0 10px;">
-                        Nieuwe Collectie
+                        <b>Nieuwe Collectie</b>
                     </span>
                 </div>
                 @foreach (Dress d in Model)
@@ -268,7 +257,10 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-xs-12" style="padding-left:0%; padding-right:0%">
+            <img src="~/images/web/botdressindex.png" class="img-responsive" />
+        </div>
+    </div>
+</div>

@@ -103,15 +103,15 @@ namespace HoneymoonShop.Controllers
             {
                 if (d.Equals(dress)) { }
                 else if (d.ManuID == dress.ManuID) recDress.Add(d);
-                if (recDress.Count >= 5) break;
+                if (recDress.Count >= 4) break;
             }
-            if (recDress.Count <= 5)
+            if (recDress.Count <= 4)
             {
                 foreach (Dress d in _context.Dress.Include(d => d.Manu))
                 {
                     if (d.Equals(dress)) { }
                     else if (d.StyleID == dress.StyleID && !recDress.Contains(d)) recDress.Add(d);
-                    if (recDress.Count >= 5) break;
+                    if (recDress.Count >= 4) break;
                 }
             }
 
@@ -168,41 +168,6 @@ namespace HoneymoonShop.Controllers
             }
         }
 
-        // POST: Dresses/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(int CategoryID, string Description, int ManuID, int NecklineID, int Price, int SilhouetteID, int StyleID, int[] ColorID, int[] FeatureID, int[] Image)
-        //{
-        //    int id = _context.Dress.Where(d => d.Description.Equals("Temp")).First().ID;
-        //    return RedirectToAction("Search", "Controlpanel", new { art = id });
-        //    Dress dress = new Dress()
-        //    {
-        //        ID = id,
-        //        CategoryID = CategoryID,
-        //        Description = Description,
-        //        ManuID = ManuID,
-        //        NecklineID = NecklineID,
-        //        SilhouetteID = SilhouetteID,
-        //        StyleID = StyleID,
-        //        Price = Price
-        //    };
-        //    _context.Update(dress);
-
-        //    foreach (int c in ColorID)
-        //    {
-        //        _context.Add(new DressColor() { ColorID = c, DressID = dress.ID });
-        //    }
-
-        //    foreach (int f in FeatureID)
-        //    {
-        //        _context.Add(new DressFeature() { FeatureID = f, DressID = dress.ID });
-        //    }
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction("Details", new { id = dress.ID });
-        //}
-
         // GET: Dresses/Overview
         public IActionResult Overview()
         {
@@ -222,7 +187,7 @@ namespace HoneymoonShop.Controllers
         }
 
         [HttpGet]
-        public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color, int request, string sort, int amnt, int page)
+        public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color, int request, string sort, int amnt, int page, int cat)
         {
             if (dresses.Count < 1)
             {
@@ -279,6 +244,7 @@ namespace HoneymoonShop.Controllers
             ViewData["Pages"] = (int)Math.Ceiling((double)dresses.Count / 10);
             ViewData["Images"] = img;
             ViewData["Dress"] = displayedDress;
+            ViewData["MaxPrice"] = dresses.Max(d => d.Price);
             if (request == 1) return PartialView("OverviewPartial");
             else
             {
