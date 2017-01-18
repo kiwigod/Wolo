@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Details - " + Html.DisplayFor(model => model.ID);
     ViewData["Background"] = "white";
-    ViewData["HeaderHeight"] = "6em";
+    ViewData["HeaderHeight"] = "20%";
 }
 
 @section Imports {
@@ -12,10 +12,10 @@
 
 @section HeaderOverlay {}
 
-<div class="container" style="background:white">
+<div class="container" style="background:white; padding-top:3em">
     <div class="row" style="padding-bottom:4em; padding-top:3em">
         <div class="col-md-3 col-md-offset-1">
-            <a asp-action="Overview"><span>&#8592;</span>Terug naar overzicht</a>
+            <a asp-action="Overview"><span><img src="~/images/web/arrow.png" /></span>Terug naar overzicht</a>
         </div>
     </div>
     <div class="row">
@@ -48,7 +48,7 @@
                 }
             </p>
             <p>Kom deze jurk passen!</p>
-            <a class="btn btn-default primary-button index-button" href="#" style="color:white; font-size:1.02em;"><b>PASAFSPRAAK MAKEN</b></a>
+            <a class="btn btn-default primary-button index-button" asp-controller="Appointments" asp-action="Create" style="color:white; font-size:1.02em;"><b>PASAFSPRAAK MAKEN</b></a>
         </div>
     </div>
 
@@ -62,11 +62,11 @@
         </div>
     </div>
     <div class="row" style="margin-top:2em">
-        <div class="overview">
+        <div class="overview" style="margin-left:10%">
             <div>
                 <a href="#" class="overview-item">
                     <div class="overview-item" style="height:auto">
-                        <img src="http://placehold.it/125x150" />
+                        <img src="~/images/web/sieraad1.png" />
                         <h4>Abrazi</h4>
                     </div>
                 </a>
@@ -74,7 +74,7 @@
             <div>
                 <a href="#" class="overview-item">
                     <div class="overview-item" style="height:auto">
-                        <img src="http://placehold.it/125x150" />
+                        <img src="~/images/web/sieraad2.png" />
                         <h4>Abrazi</h4>
                     </div>
                 </a>
@@ -82,7 +82,7 @@
             <div>
                 <a href="#" class="overview-item">
                     <div class="overview-item" style="height:auto">
-                        <img src="http://placehold.it/125x150" />
+                        <img src="~/images/web/sieraad1.png" />
                         <h4>Abrazi</h4>
                     </div>
                 </a>
@@ -90,7 +90,7 @@
             <div>
                 <a href="#" class="overview-item">
                     <div class="overview-item" style="height:auto">
-                        <img src="http://placehold.it/125x150" />
+                        <img src="~/images/web/sieraad2.png" />
                         <h4>Abrazi</h4>
                     </div>
                 </a>
@@ -116,13 +116,9 @@
             {
                 <div>
                     <a asp-action="Details/@d.ID" class="overview-item">
-                        <div class="grow overview-item" style="height:auto">
+                        <div class="overview-item" style="height:auto">
                             <img src="~/images/dress/@ViewBag.RecImages[d.ID]" />
                             <h4>@d.Manu.Name</h4>
-                            <div>
-                                <p>Artikel nr. @d.ID</p>
-                                <label></label>
-                            </div>
                         </div>
                     </a>
                 </div>
