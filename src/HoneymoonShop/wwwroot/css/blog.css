@@ -54,7 +54,6 @@
 
 
 .blog-top-picture{
-    /*background:url(http://placehold.it/1390x460);*/
     /*height:33.7em;*/
     display:flex;
     flex-flow: row;
@@ -157,8 +156,6 @@
    background:url(http://placekitten.com/285/308);
    height:20.95em;
    width:22.15em;
-   
-   
 }
 
 .berichten-display{
@@ -196,7 +193,6 @@
     border-style: solid;
     border-width: 14px 14px 0 14px;
     border-color: #F5587D transparent transparent transparent;
-
 }
 
 .index-btn:hover{

@@ -1,27 +1,85 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-    ViewData["Background"] = "url(\"http://placehold.it/4096x2160 \")";
-    ViewData["HeaderHeight"] = "100vh";
+    ViewData["Background"] = "url(images/web/header_index.jpg)";
+    ViewData["HeaderHeight"] = "63em";
 }
 
 @section Imports{
     <script src="~/js/script.js"></script>
+    <link rel="stylesheet" href="~/css/blog.css" />
+    <style>
+        #header {
+            padding: 20px 20px 26em 20px;
+            position: relative;
+            width: inherit;
+            overflow: hidden;
+        }
+        
+        #header::after {
+            font-family: 'Cookie', cursive;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.4);
+            content: attr(data-bg-header);
+            display: block;
+            font-size: 10em;
+            line-height: 1;
+            position: absolute;
+            right: 33%;
+            bottom: 66%;
+        }
+
+        #steps_head {
+            padding: 20px 20px 20px 20px;
+            position: relative;
+            width: inherit;
+            overflow: hidden;
+        }
+        #steps_head::after {
+            font-family: 'Cookie', cursive;
+            font-style: italic;
+            color: rgba(255, 229, 232, 0.5);
+            content: attr(data-bg-steps);
+            display: block;
+            font-size: 15em;
+            line-height: 1;
+            position: absolute;
+            right: 20%;
+            bottom: 4%;
+        }
+
+        #blog_head {
+            padding: 20px 20px 20px 20px;
+            position: relative;
+            width: inherit;
+            overflow: hidden;
+        }
+        #blog_head::after {
+            font-family: 'Cookie', cursive;
+            font-style: italic;
+            color: rgba(255, 229, 232, 0.5);
+            content: attr(data-bg-blog);
+            display: block;
+            font-size: 15em;
+            line-height: 1;
+            position: absolute;
+            right: 40%;
+            bottom: 10%;
+        }
+    </style>
 }
 
 @section HeaderOverlay{
-    <div class="container-fluid" style="margin-top:30%">
-        <div class="row">
-            <h2 class="col-lg-12 col-md-12" style="color: white; text-align:center">Al bijna 50 jaar de grootste bruidszaak van Nederland.</h2>
-        </div>
-        <div class="row">
-            <h1 class="col-lg-12 col-md-12" style="color: white; text-align:center; margin-top:0"><b>HOE KUNNEN WE JOU HELPEN?</b></h1>
-        </div>
-        <div class="row" style="margin-top:3em">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="text-align:right">
+    <div class="container-fluid">
+        <div id="header" data-bg-header="Bruidswinkel" style="text-align:center">
+            <p style="margin-top:23%; font-size:2em; color:white">Al bijna 50 jaar de grootste bruidszaak van Nederland.</p>
+            <p style="font-size:2.5em; color:white"><b>HOE KUNNEN WE JOU HELPEN?</b></p>
+            <div>
                 <a asp-controller="Dresses" asp-action="Overview" class="btn btn-default primary-button index-button" style="border-width:6px"> <b>BRUID</b></a>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <a class="btn btn-default primary-button index-button" style="background-color:rgba(0,0,0,0); border: 6px solid white"> <b>BRUIDEGOM</b></a>
+            </div>
+            <div style="margin-top:16%">
+                <b style="color:white">scroll</b>
+                <p style="color:white">&#9660;</p>
             </div>
         </div>
     </div>
@@ -29,20 +87,22 @@
 
 <div class="container jurk-pak-height" style="background:white">
     <div class="row">
-        <div class="col-md-12 bgtext" style="text-align:center; background:url(http://placehold.it/4096x300)">
-            <h2 style="padding-top:4.0em">
-                <b>
-                    EEN JURK OF PAK KOPEN?<br>
-                    ZO WERKT HET...
-                </b>
-            </h2>
+        <div class="col-md-12">
+            <div id="steps_head" data-bg-steps="One stop shop" style="text-align:center">
+                <h2 style="padding-top:5%">
+                    <b>
+                        EEN JURK OF PAK KOPEN?<br>
+                        ZO WERKT HET...
+                    </b>
+                </h2>
+            </div>
         </div>
     </div>
     <div class="row" style="margin-top:4em">
-        <div class="col-md-8 col-sm-12 col-xs-12 header-background" style="height:32em">
+        <div class="col-md-8 col-sm-12 col-xs-12" style="height:32em; background:url(/images/web/steps.jpg); margin-left:8%; max-width:60%">
             <div class="container-fluid hide-md hide-xs" style="height:100%">
                 <div class="row" style="height:100%">
-                    <div class="col-lg-3 col-md-3" style="margin-top:55%">
+                    <div class="col-lg-3 col-md-3" style="margin-top:51%">
                         <div class="circle" id="hashtagbutton">#</div>
                     </div>
                     <div class="col-lg-9 col-md-9" style="margin-top:40%;">
@@ -54,11 +114,11 @@
                     </div>
                 </div>
             </div>
-            <div class="container-fluid hide-lg hide-xs hide-sm" style="height:100%">
+            <div class="container-fluid " style="height:100%">
                 <div class="row">
-                    <div class="col-md-3" style="margin-top:66%">
-                        <div class="circle">
-                            <p></p>
+                    <div class="circle-top-offset col-md-3 hide-lg">
+                        <div class="circle" id="hashtagbutton2">
+                            #
                         </div>
                     </div>
                 </div>
@@ -95,7 +155,7 @@
                 </p>
             </div>
         </div>
-        <div class="col-sm-6 col-xs-12 hide-lg hide-md show-sm show-xs">
+        <div class="col-md-3 col-sm-6 col-xs-12 hide-lg hide-md show-sm show-xs">
             <ul class="list-group">
                 <li class="list-group-item">
                     <button class="button-transparent" id="test">
@@ -119,32 +179,68 @@
                 </li>
             </ul>
         </div>
-        <div class="col-sm-6 col-xs-12 hide-lg hide-md show-sm show-xs" style="">
+        <div class="col-md-offset-3 col-sm-6 col-xs-12 hide-lg hide-md show-sm show-xs" style="">
             <p><b style="color:#f0597c">►</b> <b>BEKIJK VIDEO</b></p>
-            <p style="background:white; padding:1em">
+            <p style="background:white; padding:1em" id="text3">
                 Hoe vind je de perfercte outfit?
                 <br> Onze specialisten nemen echte de tijd voor je en helpen met elke stap. Oneindig jurken/pakken passen? Geen probleem! Er kunnen zoveel mensen mee als jij zelf wilt.
             </p>
         </div>
     </div>
 </div>
-<div class="container">
+<div class="container" style="background:white">
     <div class="row">
-        <div class="col-md-12 bgtext" style="text-align:center; background:url(http://placehold.it/4096x300)">
-            <h2 style="padding-top:4.0em">
-                <b>
-                    BLIJF OP DE HOOGTE OVER<br>
-                    DE BRUIDSWERELD
-                </b>
-            </h2>
+        <div class="col-md-12">
+            <div id="blog_head" data-bg-blog="Blog" style="text-align:center">
+                <h2 style="padding-top:5%">
+                    <b>
+                        EEN JURK OF PAK KOPEN?<br>
+                        ZO WERKT HET...
+                    </b>
+                </h2>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6" style="background:url(http://placehold.it/800x300)"> </div>
-        <div class="col-md-6" style="background:url(http://placehold.it/800x300)"> </div>
+</div>
+<div class="container" >
+    <div class="row blog-top-picture">
+        <div style="height:33em; flex-basis:50%; background:url(/images/web/blog/post1.jpg)">
+            <div class="blog-top-block">
+                <div class="top-block-header">
+                    <div class="block-item-titel">EVENEMENT</div>
+                    <div class="block-item-date">
+                        <div style="font-size:1.95em">10</div>
+                        <div>JAN</div>
+                    </div>
+                </div>
+                <div class="block-item-text">
+                    Afgelopen weekend waren wij op de Love & Marriage beurs in Ahoy
+                    te Rotterdam. Hier hebben wij de mooiste jurken uit de 2017
+                    collectie geshowd.
+                </div>
+                <div class="block-item-text"><u><a asp-controller="Posts" asp-action="Details/1">Lees meer</a></u> <strong>&#8594;</strong></div>
+            </div>
+        </div>
+        <div style="height:33em; flex-basis:50%; background:url(/images/web/blog/post2.jpg)">
+            <div class="blog-top-block">
+                <div class="top-block-header">
+                    <div class="block-item-titel">EVENEMENT</div>
+                    <div class="block-item-date">
+                        <div style="font-size:1.95em">10</div>
+                        <div>JAN</div>
+                    </div>
+                </div>
+                <div class="block-item-text">
+                    Afgelopen weekend waren wij op de Love & Marriage beurs in Ahoy
+                    te Rotterdam. Hier hebben wij de mooiste jurken uit de 2017
+                    collectie geshowd.
+                </div>
+                <div class="block-item-text"><u><a asp-controller="Posts" asp-action="Details/1">Lees meer</a></u> <strong>&#8594;</strong></div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="container padding-box" style="display:flex; flex-direction:column; background:white; padding-top:4.5em;">
+<div class="container padding-box" style="display:flex; flex-direction:column; padding-top:5%; background:white">
     <div class="row">
         <div class="col-md-4 col-xs-12 padding-box-right" style="">
             <div class="box">
@@ -245,7 +341,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-xs-12" style="padding-left:0%; padding-right:0%">
-            <img src="http://placehold.it/4096x2000" class="img-responsive" />
+            <img src="~/images/web/index_footer.png" class="img-responsive" />
         </div>
     </div>
 </div>

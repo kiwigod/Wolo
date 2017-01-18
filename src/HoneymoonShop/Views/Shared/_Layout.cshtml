@@ -16,10 +16,10 @@
 </head>
 <body>
     <div class="container" style="background:@ViewData["Background"]; height:@ViewData["HeaderHeight"]; background-size: 100% 100%;">
-        <div class="container-fluid navbar-pink" style="padding:0; margin-left: -1%;">
+        <div class="container-fluid navbar-pink" style="padding:0; margin-left: -1.1%;">
             <div class="row disappear-xs" style="height:100%">
-                <div class="max-height-center col-lg-1 col-md-2 col-sm-2 col-xs-12" style="margin-top: 1.5em; margin-bottom: 1.5em; padding-top:0%;"><a href="#"><b id="website">WEBSITE</b></a></div>
-                <div class="max-height-center col-lg-1 col-md-1 col-sm-1 col-xs-12" style="margin-top: 1.5em; margin-bottom: 1.5em; padding-top:0%;"><a href="#" style="color:#f0577a"><b id="webshop">WEBSHOP</b></a></div>
+                <div class="max-height-center col-lg-1 col-md-2 col-sm-2 col-xs-12" style="margin-top: 1.5em; margin-bottom: 1.5em; padding-top:0%;"><a asp-controller="Home" asp-action="Index"><b id="website">WEBSITE</b></a></div>
+                <div class="max-height-center col-lg-1 col-md-1 col-sm-1 col-xs-12" style="margin-top: 1.5em; margin-bottom: 1.5em; padding-top:0%;"><a asp-controller="Dresses" asp-action="Overview" style="color:#f0577a"><b id="webshop">WEBSHOP</b></a></div>
                 <div class="max-height-center col-lg-4 col-md-4 col-sm-2 col-xs-12 nopad-xs"></div>
                 <div id="tel" class="max-height-center col-lg-offset-1 col-lg-2 col-md-2 col-sm-3 col-xs-12" style="text-align: right; margin-top: 1.5em; margin-bottom: 1.5em; padding-top:0%;"><b>T</b>(010) 4126143</div>
                 <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12" style="background: white; width: 270px; float: right; padding-top: 0.67em; padding-bottom: .67em;">
@@ -35,11 +35,12 @@
             <a asp-controller="Home" asp-action="Index" id="dropdownMenu" class="btn btn-default dropdown-toggle primary-button index-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background:none"> <b>HONEYMOON SHOP</b> <span class="caret"></span> </a>
             <ul class="dropdown-menu tablet-fsize" style="background:none" aria-labelledby="dropdown">
                 <li><a style="color: #f0577a" asp-controller="Home" asp-action="Index"><b>HOME</b></a></li>
-                <li><a asp-controller="Dresses" asp-action="Index"><b>BRUID</b></a></li>
-                <li><a asp-controller="Suits" asp-action="Overview"><b>BRUIDEGOM</b></a></li>
+                <li><a asp-controller="Dresses" asp-action="Overview"><b>BRUID</b></a></li>
+                <li><a href="#"><b>BRUIDEGOM</b></a></li>
                 <li><a asp-controller="Home" asp-action="About"><b>DE WINKEL</b></a></li>
                 <li><a asp-controller="Blogs" asp-action="Index"><b>BLOG</b></a></li>
                 <li><a asp-controller="Home" asp-action="Contact"><b>CONTACT</b></a></li>
+                <li><a href="#"><b>AFSPRAAK MAKEN</b></a></li>
             </ul>
         </div>
         <div class="container-fluid" style="padding: 0; padding-top: 1em">
@@ -51,15 +52,16 @@
                     <div class="collapse navbar-collapse" id="collapseNav">
                         <ul class="nav navbar-nav navbar-right thinner-xs scale-nav">
                             <li><a style="color: #f0577a" asp-controller="Home" asp-action="Index"><b>HOME</b></a></li>
-                            <li><a asp-controller="Dresses" asp-action="Index"><b>BRUID</b></a></li>
-                            <li><a asp-controller="Suits" asp-action="Overview"><b>BRUIDEGOM</b></a></li>
+                            <li><a asp-controller="Dresses" asp-action="Overview"><b>BRUID</b></a></li>
+                            <li><a href="#"><b>BRUIDEGOM</b></a></li>
                             <li><a asp-controller="Home" asp-action="About"><b>DE WINKEL</b></a></li>
                             <li><a asp-controller="Blogs" asp-action="Index"><b>BLOG</b></a></li>
                             <li><a asp-controller="Home" asp-action="Contact"><b>CONTACT</b></a></li>
                             <li>
+
                                 <form class="navbar-form navbar-left">
                                     <div class="input-group">
-                                        <a style="color:white" class="btn btn-default primary-button" asp-controller="Appointments" asp-action="Create"><b>AFSPRAAK MAKEN</b></a>
+                                        <a asp-controller="Appointments" asp-action="Create" class="btn btn-default primary-button" style="color:white"><b>AFSPRAAK MAKEN</b></a>
                                     </div>
                                 </form>
                             </li>
@@ -73,6 +75,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Wat zoek je?" style="height: 3.1em;"> <span class="input-group-btn">
                                             <button class="btn btn-default primary-button" type="button" style="background-color: white; height:3.1em; width: 3.1em"> <span class="glyphicon glyphicon-search" aria-hidden="true" style="color: black"></span> </button>
+
                                         </span>
                                     </div>
                                 </form>
@@ -86,20 +89,20 @@
     </div>
     @RenderBody()
     <hr>
-    <footer>
+    <footer class="container">
         <br> <br> <br>
-        <div class="row fullrow1 container">
-            <a id="link-pasafspraak" href="http://google.nl">
-                <div class="col-md-4 txt-1" id="footer-box-1">
-                    <p id="txt-1">Afspraak</p>
-                    <p id="txt-1-1">  <b>MAAK EEN <br>PASAFSPRAAK</b></p>
+        <div class="row fullrow" style="display:flex; flex-wrap: wrap;">
+            <a id="link-pasafspraak" class="footer-img" href="http://google.nl">
+                <div class="col-md-4 footer-box">
+                    <p class="">Afspraak</p>
+                    <p class="">  <b>MAAK EEN <br>PASAFSPRAAK</b></p>
                 </div>
             </a>
-            <a id="link-social" href="http://google.nl">
-                <div class="col-md-4" id="footer-box-2">
-                    <p id="txt-2">Social</p>
-                    <p id="txt-2-1">  <b>VOLG ONS</b></p>
-                    <img src="~/images/web/deel-dit.png" width="214" height="57" border="0" usemap="#map" id="deel-dit" class="img-responsive" />
+            <a id="link-social" class="footer-img" href="http://google.nl">
+                <div class="col-md-4 footer-box">
+                    <p class="">Social</p>
+                    <p class="">  <b>VOLG ONS</b></p>
+                    <img src="~/images/web/deel-dit.png" width="214" height="57" border="0" usemap="#map" class="img-responsive deel-dit" />
                     <map name="map">
                         <area shape="rect" coords="1,1,46,57" alt="facebook" href="http://facebook.com" />
                         <area shape="rect" coords="47,2,91,55" alt="twitter" href="http://twitter.com" />
@@ -109,24 +112,24 @@
                     </map>
                 </div>
             </a>
-            <a id="link-review" href="http://google.nl">
-                <div class="col-md-4 txt-1" id="footer-box-3">
-                    <p id="txt-1">Reviews</p>
-                    <p id="txt-3-1">  <b>BEKIJK ONZE REVIEWS</b></p>
+            <a id="link-review" class="footer-img" href="http://google.nl">
+                <div class="col-md-4 footer-box">
+                    <p class="">Reviews</p>
+                    <p class="">  <b>BEKIJK ONZE<br /> REVIEWS</b></p>
                 </div>
             </a>
         </div>
-        <div class="row container fullrow2">
-            <p id="info-txt"> Korte Hoogstraat 4, 3011 Rotterdam &emsp;<b>email</b> info@honeymoonshop.nl&emsp;<b>tel </b>(010) 412 61 43&emsp;<b>whatsapp</b>  (06)25 19 99 27<br> <b>Openingstijden&emsp;MA</b>12.00-17.30&emsp;<b>DI t/m VR</b> 09.30-17.30 <b>ZA&emsp;</b> 09.30-18.00&emsp;<b>DI t/m VR</b> 09.30-17.30  </p>
+        <div class="row fullrow">
+            <p class="info-txt"> Korte Hoogstraat 4, 3011 Rotterdam &emsp;<b>email</b> info@honeymoonshop.nl&emsp;<b>tel </b>(010) 412 61 43&emsp;<b>whatsapp</b>  (06)25 19 99 27<br> <b>Openingstijden&emsp;MA</b>12.00-17.30&emsp;<b>DI t/m VR</b> 09.30-17.30 <b>ZA&emsp;</b> 09.30-18.00&emsp;<b>DI t/m VR</b> 09.30-17.30  </p>
         </div>
-        <div class="row container">
+        <div class="row">
             <br> <br><br>
-            <img src="~/images/web/grand-weddingshow.png" alt="grand weddingprize icon" id="weddingshow" class="img-responsive" />
+            <img src="~/images/web/grand-weddingshow.png" alt="grand weddingprize icon" class="weddingshow img-responsive" />
         </div>
-        <div class="row container list1">
+        <div class="row list1 align-sm">
             <br> <br><br>
             <br><br>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-3 col-sm-5 col-sm-offset-3 col-lg-offset-0 col-md-offset-0">
                 <ul class="list-group list-nopadbot">
                     <li class="list-group-item txt1" style="color:#f0597c"><b>WINKEL</b></li>
                     <li class="list-group-item"><a href="#">Over de Honeymoon shop</a></li>
@@ -139,7 +142,7 @@
                     <li class="list-group-item"><a href="#">Contact</a></li>
                 </ul>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-3 col-sm-5 box-offset">
                 <ul class="list-group list-nopadbot">
                     <li class="list-group-item" style="color:#f0597c"><b>SERVICE</b></li>
                     <li class="list-group-item"><a href="#">Beoordelingen</a></li>
@@ -153,7 +156,7 @@
                     <li class="list-group-item"><a href="#">The Perfect Match</a></li>
                 </ul>
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-3 col-sm-4 box-offset2">
                 <ul class="list-group list-nopadbot">
                     <li class="list-group-item" style="color:#f0597c"><b>ACTIES</b></li>
                     <li class="list-group-item"><a href="#">The Grand Wedding Show</a></li>
