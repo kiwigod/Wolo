@@ -1,5 +1,7 @@
 ﻿@{
-
+    ViewData["Title"] = "Afspraak maken";
+    ViewData["Background"] = "white";
+    ViewData["HeaderHeight"] = "10";
 }
 
 @section Imports {
@@ -10,7 +12,16 @@
     }
 </style>
 }
-<div class="container">
+@section HeaderOverlay {
+    <div class="container-fluid" style="margin-bottom:2em">
+        <div class="row">
+            <div class="col-md-12" style="text-align:center">
+                <h2><b>MAAK JE PASAFSPRAAK</b></h2>
+            </div>
+        </div>
+    </div>
+}
+<div class="container" style="background:white; padding-bottom:2em">
     <div style="display: flex; flex-shrink: 0; flex-wrap: wrap; box-shadow: 0px 0px 30px darkgrey;">
         <div id="stappenplan" class="stappenplan-boxbox" style="padding:3em; background:white; display: flex">
             <div id="stappen"  style="height:100%; padding-right:3em; user-select: none; -webkit-user-select: none;">
@@ -209,6 +220,13 @@
                 </table>
                 <button id="btn-stap2-back" class="button-transparent" style="color:#F8B1BF; position: relative; top: 30px ">&lt;--- Terug naar stap 2 om gegevens te wijzigen</button>
             </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-xs-12" style="padding-left:0%; padding-right:0%">
+            <img src="~/images/web/afspraak_footer.png" class="img-responsive" />
         </div>
     </div>
 </div>

@@ -132,9 +132,9 @@ button>b {
     border-color: #ee446c;
 }
 
-.header-background {
+.steps-back {
     height: 100vh;
-    background-image: url("http://placehold.it/4096x2160");
+    background-image: url(/images/web/steps.jpg);
     background-size: 100% 100%;
 }
 
@@ -604,7 +604,7 @@ div[class*="overview-item"]>div{
     height: 19em;
     box-shadow: black 0px 0px 10px;
     margin: 1em;
-    flex-basis: calc(50% - 4em);
+    flex-basis: calc(50% - 2em);
 }
  
 .review-profile{

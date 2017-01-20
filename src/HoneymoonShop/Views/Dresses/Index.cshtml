@@ -1,4 +1,7 @@
 ﻿@{
+    ViewData["Title"] = "Jurken";
+    ViewData["Background"] = "url(/images/web/top_dresses.jpg)";
+    ViewData["HeaderHeight"] = "40em";
 }
 
 @section Imports {
@@ -47,38 +50,95 @@
         }
     </style>
 }
+@section HeaderOverlay {
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12" style="text-align:center; color:white; margin-top:12%">
+                <p style="font-size:2em; margin-bottom:0">Opzoek naar de perfecte jurk</p>
+                <p style="font-size:3em;"><b>VAN BEGIN TOT EIND KUNNEN Wij JE HELPEN</b></p>
+            </div>
+        </div>
+    </div>
+}
 
 <div class="container" style="background:white">
     <div class="row">
+        <div class="col-md-12" style="text-align:center">
+            <h2><b>DE TROUWJURK VOOR JE DROOMBRUILOFT</b></h2>
+        </div>
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <div id="dressview" style="height:45em; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; width:auto; -webkit-overflow-scrolling: touch; position:relative">
+            <div id="dressview" style="height:45em; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; width:auto; -webkit-overflow-scrolling: touch; position:relative; margin-left:1.2em; margin-top:2em">
                 <script src="~/js/debiki-utterscroll.js"></script>
                 <div class="image-container" >
-                    <img src="http://placehold.it/500x1500" />
+                    <img src="~/images/dress/index/1.jpg" />
                     <div class="text"><a asp-controller="Dresses" asp-action="Index" ><div><b>BEKIJK DE JURK</b></div></a></div>
                 </div>
                 <div class="image-container" >
-                    <img src="http://placehold.it/500x1500" />
+                    <img src="~/images/dress/index/5.jpg" />
                     <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
                 </div>
                 <div class="image-container" >
-                    <img src="http://placehold.it/500x1500" />
+                    <img src="~/images/dress/index/3.jpg" />
                     <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
                 </div>
                 <div class="image-container" >
-                    <img src="http://placehold.it/500x1500" />
+                    <img src="~/images/dress/index/4.jpg" />
                     <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
                 </div>
                 <div class="image-container" >
-                    <img src="http://placehold.it/500x1500" />
+                    <img src="~/images/dress/index/2.jpg" />
                     <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
                 </div>
                 <div class="image-container" >
-                    <img src="http://placehold.it/500x1500" />
+                    <img src="~/images/dress/index/6.jpg" />
                     <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
                 </div>
-                <div class="image-container" >
-                    <img src="http://placehold.it/500x1500" />
+                <div class="image-container">
+                    <img src="~/images/dress/index/1.jpg" />
+                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
+                </div>
+                <div class="image-container">
+                    <img src="~/images/dress/index/5.jpg" />
+                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
+                </div>
+                <div class="image-container">
+                    <img src="~/images/dress/index/3.jpg" />
+                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
+                </div>
+                <div class="image-container">
+                    <img src="~/images/dress/index/4.jpg" />
+                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
+                </div>
+                <div class="image-container">
+                    <img src="~/images/dress/index/2.jpg" />
+                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
+                </div>
+                <div class="image-container">
+                    <img src="~/images/dress/index/6.jpg" />
+                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
+                </div>
+                <div class="image-container">
+                    <img src="~/images/dress/index/1.jpg" />
+                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
+                </div>
+                <div class="image-container">
+                    <img src="~/images/dress/index/5.jpg" />
+                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
+                </div>
+                <div class="image-container">
+                    <img src="~/images/dress/index/3.jpg" />
+                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
+                </div>
+                <div class="image-container">
+                    <img src="~/images/dress/index/4.jpg" />
+                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
+                </div>
+                <div class="image-container">
+                    <img src="~/images/dress/index/2.jpg" />
+                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
+                </div>
+                <div class="image-container">
+                    <img src="~/images/dress/index/6.jpg" />
                     <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
                 </div>
             </div>
@@ -91,4 +151,13 @@
         </div>
     </div>
 </div>
-@Html.Partial("BlogPartial");
+<div class="container" style="background:white; padding-bottom:7em">
+    <div class="row" style="text-align:center">
+        <h2 class="col-md-12"><b>WAT KOMT ERBIJ KIJKEN?</b></h2>
+    </div>
+    @Html.Partial("_ButtonPartial")
+    <div class="row" style="text-align:center">
+        <p style="color:#F0597C; font-size:2em; margin-top:6em">&#9660;</p>
+    </div>
+</div>
+@Html.Partial("BlogPartial")

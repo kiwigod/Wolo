@@ -74,19 +74,42 @@ namespace HoneymoonShop.Controllers
                 );
                 await _context.SaveChangesAsync();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 state = e.Message;
                 return NotFound();
             }
 
             string message = $"Uw afspraak is ingepland op {aDate[1]}-{aDate[2]}";
-            await Message.Send("smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", message, "smtp.gmail.com", 587, "smtptestcore@gmail.com", "smtptestcore@gmail.com", "testcore", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com");
+            await Message.Send("smtptestcore@gmail.com",
+                "smtptestcore@gmail.com",
+                "smtptestcore@gmail.com",
+                "smtptestcore@gmail.com",
+                message, "smtp.gmail.com",
+                587,
+                "smtptestcore@gmail.com",
+                "smtptestcore@gmail.com",
+                "testcore",
+                name,
+                mail,
+                "Afspraak");
 
             if (newsletter == true)
             {
-                string message2 = "U bent aangemeld voor onze nieuwsbrief";
-                await Message.Send("smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com", message2, "smtp.gmail.com", 587, "smtptestcore@gmail.com", "smtptestcore@gmail.com", "testcore", "smtptestcore@gmail.com", "smtptestcore@gmail.com", "smtptestcore@gmail.com");
+                message = "U bent aangemeld voor onze nieuwsbrief";
+                await Message.Send("smtptestcore@gmail.com",
+                    "smtptestcore@gmail.com",
+                    "smtptestcore@gmail.com",
+                    "smtptestcore@gmail.com",
+                    message, 
+                    "smtp.gmail.com",
+                    587,
+                    "smtptestcore@gmail.com",
+                    "smtptestcore@gmail.com",
+                    "testcore",
+                    name,
+                    mail,
+                    "Nieuwsbrief");
             }
             //return RedirectToAction("Complete");
             return RedirectToAction("Index", "Home");
@@ -102,7 +125,7 @@ namespace HoneymoonShop.Controllers
         {
             int days = DateTime.DaysInMonth(year, month);
             string s = string.Empty;
-            for (int i=1; i<=days; i++)
+            for (int i = 1; i <= days; i++)
             {
                 string today = $"{year}-{month}-{i}";
                 if (TimeAvailableAtDate(today).Length == 0)
@@ -152,7 +175,7 @@ namespace HoneymoonShop.Controllers
                 List<double> hoursOccupied = genTimetable(time);
                 foreach (Appointment a in currentAppointments)
                 {
-                    if(a.Date.Minute == 0)
+                    if (a.Date.Minute == 0)
                     {
                         hoursOccupied.Remove(a.Date.Hour);
                         hoursOccupied.Remove(a.Date.Hour + 0.5);

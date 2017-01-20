@@ -1,9 +1,25 @@
-﻿@{
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Afspraak gemaakt";
+    ViewData["Background"] = "url(/images/web/header_afspraak.jpg)";
+    ViewData["HeaderHeight"] = "40em";
 }
 
 @section Imports {
-    <link href="https://fonts.googleapis.com/css?family=Cookie|Lato" rel="stylesheet">
     <link href="~/css/appointment.css" rel="stylesheet" />
+}
+
+@section HeaderOverlay {
+    <div class="container-fluid">
+        <div class="row" style="margin-top:9.5em">
+            <div class="col-md-12" style="text-align:center; color:white">
+                <h3>(Door)Pasafspraak maken voor je jurk of pak</h3>
+                <h2><b>VAN BEGIN TOT EIND KUNNEN WIJ JE HELPEN</b></h2>
+            </div>
+        </div>
+    </div>
 }
 
 <div class="container" style="background:white">
@@ -14,6 +30,9 @@
             <b id="ev-txt"> <i>Voltooid!</i></b>
             <b id="ev-txt-2" style=""> JE PAS AFSPRAAK IS GEMAAKT</b> <br>
             <span id="txt-3">Leuk! Je pasafspraak is gemaakt! Er is een bevestiging van je afspraak naar <br>  </span> <span id="txt-3-3">je E-mail gestuurd! Maak ook meteen een <u><a>afspraak voor je partner!</a> </u></span>
+
+
+
         </div>
 
         <div class="row">
@@ -40,5 +59,8 @@
             </div>
             <p id="downarrow" class="col-xs-12"> &#9660; </p>
         </div>
+
+
     </div>
+
 </div>

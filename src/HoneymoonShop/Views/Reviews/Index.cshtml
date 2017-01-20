@@ -1,10 +1,12 @@
 @model IEnumerable<HoneymoonShop.Models.Review>
 
 @{
-
+    ViewData["Title"] = "Reviews";
+    ViewData["Background"] = "white";
+    ViewData["HeaderHeight"] = "10";
 }
 
-<div class="container" style="background:white">
+<div class="container" style="background:white; display:flex; flex-wrap:wrap">
     <p>@ViewBag.state</p>
     @foreach (var r in Model)
     {
@@ -13,19 +15,20 @@
         {
             rate += "&#9733;";
         }
-        <div style="width:100%; display:flex; align-items: flex-start; flex-wrap: wrap; ">
-            <div class="review">
-                <div class="review-profile">
-                    <p style="color: gray">Reviewed by:</p>
-                    <p class="review-profile-name">@r.Name</p>
+        <div class="review">
+            <div class="review-profile">
+                <p style="color: gray">Reviewed by:</p>
+                <p class="review-profile-name">@r.Name</p>
 
-                </div>
-                <div class="review-message">
-                    <p style="display: inline; margin-right: 1em; margin-left: 1em;">@r.Date.Day/@r.Date.Month/@r.Date.Year</p>
-                    <p style="display: inline; color: white; font-size: 1.5em">@Html.Raw(rate)</p>
-                    <blockquote>@r.Description</blockquote>
-                </div>
+            </div>
+            <div class="review-message">
+                <p style="display: inline; margin-right: 1em; margin-left: 1em;">@r.Date.Day/@r.Date.Month/@r.Date.Year</p>
+                <p style="display: inline; color: white; font-size: 1.5em">@Html.Raw(rate)</p>
+                <blockquote>@r.Description</blockquote>
             </div>
         </div>
+        @*<div style="width:100%; display:flex; align-items: flex-start; flex-wrap: wrap; ">
+           
+        </div>*@
     }
 </div>

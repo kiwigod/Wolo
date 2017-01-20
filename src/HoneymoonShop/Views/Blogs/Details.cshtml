@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Details";
+    ViewData["Background"] = "white";
+    ViewData["HeaderHeight"] = "10";
 }
 
 @section Imports{
@@ -11,7 +13,17 @@
 }
 
 <div class="container" style="background:white">
-
+    <hr style="border-top:1px solid #E5E5E5; width:100%" />
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a asp-action="Index" asp-controller="Home" style="color:#f47590">Home</a></li>
+                <li><a asp-action="Index" asp-controller="Blog" style="color:#f47590">Blog</a></li>
+                <li><a asp-action="Index" asp-controller="Blog" style="color:#f47590">Evenementen</a></li>
+                <li class="active">Love &Aacute; Marriage beurs</li>
+            </ol>
+        </div>
+    </div>
 
     <div class="row center">
         <div class="col-md-6 titles">
