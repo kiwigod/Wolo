@@ -203,7 +203,11 @@ button>b {
         padding-right: 8em;
     }
     .padding-box-right {
-        padding-right: 3em;
+        /*padding-right: 8em;*/
+    }
+    .col-xs-12 {
+        padding-left: 0px;
+        /*padding-right: 0px;*/
     }
 }
  
@@ -686,4 +690,42 @@ blockquote {
     position: absolute;
     right: 40%;
     bottom: 58%;
+}
+
+.circle-top-offset {
+    margin-top: 66%;
+}
+
+@media (min-width: 992px) {
+    .circle-top-offset {
+        margin-top: 60%;
+    }
+}
+
+.occupied {
+    color: antiquewhite;
+}
+
+.stappenplan-boxbox {
+    flex-basis: 55%;
+}
+
+.stappen-box {
+    flex-basis: 45%;
+}
+
+@media (max-width: 768px) {
+    .stappenplan-boxbox {
+        flex-basis: 100%;
+    }
+
+    .stappen-box {
+        flex-basis: 100%;
+    }
+
+}
+
+.center{
+    display: flex;
+    justify-content: center;
 }

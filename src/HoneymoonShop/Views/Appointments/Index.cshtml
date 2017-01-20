@@ -1,0 +1,142 @@
+﻿@{
+    ViewData["Title"] = "Afspraak inspiratie";
+    ViewData["Background"] = "url(images/web/header_afspraak.jpg)";
+    ViewData["HeaderHeight"] = "40em";
+}
+
+@section Imports{
+    <style>
+        #header {
+            padding: 20px 20px 20px 20px;
+            position: relative;
+            width: inherit;
+            overflow: hidden;
+        }
+
+            #header::after {
+                font-family: 'Cookie', cursive;
+                font-style: italic;
+                color: rgba(255, 255, 255, 0.4);
+                content: attr(data-bg-header);
+                display: block;
+                font-size: 10em;
+                line-height: 1;
+                position: absolute;
+                right: 26%;
+                bottom: 20%;
+            }
+
+        #steps_head {
+            padding: 20px 20px 20px 20px;
+            position: relative;
+            width: inherit;
+            overflow: hidden;
+        }
+
+            #steps_head::after {
+                font-family: 'Cookie', cursive;
+                font-style: italic;
+                color: rgba(255, 229, 232, 0.5);
+                content: attr(data-bg-steps);
+                display: block;
+                font-size: 15em;
+                line-height: 1;
+                position: absolute;
+                right: 20%;
+                bottom: 4%;
+            }
+    </style>
+    <link rel="stylesheet" type="text/css" href="~/Css/afspr-inspiratie.css">
+    <script > $(document).ready(function () {
+
+     var text = ["Winkel", "Onze specialisten", "Naai-atelier", "Servicepunten"];
+     var dropdowns = ["#first-feature"];
+
+     $(".button-transparent").click(function () {
+         var buttonText = $(this).find("div").text();
+         $("#hashtagbutton").text(buttonText);
+         $("#hashtagbutton2").text(buttonText);
+         $("#text1").text(text[parseInt(buttonText) - 1]);
+         $("#text2").text(text[parseInt(buttonText) - 1]);
+         $("#text3").text(text[parseInt(buttonText) - 1]);
+     });
+
+     for (var i = 0; i < $("#thumbnail").children().length; i++) {
+         $($("#thumbnail").children()[i]).click(function () {
+             //$("#main-image").fadeOut(250);
+             $("#main-image").find("img").attr("src", $(this).attr("src"));
+             //$("#main-image").fadeIn(250);
+         });
+     }
+ });
+</script>
+}
+
+@section HeaderOverlay {
+    <div class="container-fluid">
+        <div id="header" data-bg-header="Afspraak maken" style="text-align:center">
+            <p style="margin-top:12%; font-size:2em; color:white">Plan jouw afspraak hier in</p>
+            <p style="font-size:2.5em; color:white"><b>VOOR WAT WIL JE EEN AFSPRAAK MAKEN?</b></p>
+        </div>
+    </div>
+}
+
+<div class="container" style="background:white">
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a asp-action="Index" asp-controller="Home" style="color:#f47590">Home</a></li>
+                <li class="active">Afspraak</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row container">
+        <div class="col-md-3 col1">
+            <b>SOORTEN AFSPRAKEN </b><br> <br>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        </div>
+
+        <div class="col-sm-3 col2">
+            <img src="https://wwcdn.weddingwire.com/vendor/920001_925000/921340/thumbnails/220x220_SQ_1472070467-e01b8be4e5fd3a66-bridesmaids__12_of_1_.jpg" alt=col2-img class="foto1" class="img-responsive">
+            <a href="http://google.nl" class="overimg"><h5 id="span1"><span><b>TROUWJURKEN <br>    PASSEN</b></span></h5></a>
+        </div>
+
+        <div class="col-sm-3 col3">
+            <img src="https://ae01.alicdn.com/kf/HTB15.tzLXXXXXb6apXXq6xXFXXXE/High-quality-2016-New-Men-s-Blazer-100-Cotton-Suit-Coat-Men-Business-Casual-Blazer-jacket.jpg_220x220.jpg" alt=col2-img class="foto2" class="img-responsive">
+            <a href="http://google.nl" class="overimg"><h5 id="span2"><span><b>TROUWPAKKEN <br>    PASSEN</b></span></h5></a>
+        </div>
+
+        <div class="col-sm-3 col4">
+            <img src="https://ae03.alicdn.com/kf/HTB1Y5OEOFXXXXXUXFXXq6xXFXXXq.jpg_220x220.jpg" alt=col2-img class="foto3" class="img-responsive">
+            <a href="http://google.nl" class="overimg"><h5 id="span3"><span><b>AFSPELDAFSPRAAK <br>    MAKEN</b></span></h5></a>
+        </div>
+
+
+    </div>
+    <!--Steps-->
+    <div class="row">
+        <div class="col-md-12">
+            <div id="steps_head" style="text-align:center">
+                <h1 style="color:#FBE1E5; font-family: 'Cookie';font-size:8em; font-style:italic; word-wrap:hyphenate">One Stop Shop</h1>
+                <h2 style="padding-top:5%; position: relative; top: -3.5em; font-weight: bolder;">
+                    
+                        EEN JURK OF PAK KOPEN?<br>
+                        ZO WERKT HET...
+         
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:4em">
+        @Html.Partial("_ButtonPartial")
+    </div>
+    <div class="col-md-12" style="text-align:center; margin-top:2em; margin-bottom:5em">
+        <p style="color:#F0597C; font-size:1.8em">&#9660;</p>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-xs-12" style="padding-left:0%; padding-right:0%">
+            <img src="~/images/web/afspraak_footer.png" class="img-responsive" />
+        </div>
+    </div>
+</div>

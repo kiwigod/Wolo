@@ -12,8 +12,8 @@
 }
 <div class="container">
     <div style="display: flex; flex-shrink: 0; flex-wrap: wrap; box-shadow: 0px 0px 30px darkgrey;">
-        <div id="stappenplan" style="flex-basis: 55%; padding:3em; background:white; display: flex">
-            <div id="stappen" style="height:100%; padding-right:3em; user-select: none; -webkit-user-select: none;">
+        <div id="stappenplan" class="stappenplan-boxbox" style="padding:3em; background:white; display: flex">
+            <div id="stappen"  style="height:100%; padding-right:3em; user-select: none; -webkit-user-select: none;">
                 <label id="stap1-label" class="staplabel">1</label><p id="stap1-text" class="staptext">Datum en tijd<br> selecteren</p>
                 <p id="stap1-path" class="stappath">I<br>I<br>I<br>I<br>I<br>I<br></p>
                 <label id="stap2-label" class="staplabel staplabel-disabled">2</label><p id="stap2-text" class="staptext staptext-disabled">Gegevens<br> invullen</p>
@@ -84,7 +84,7 @@
                 <button id="btn-bevestig" class="btn-primary" style="padding: 1em; text-transform: uppercase; background-color: #F0597C; border:none;"><b>Afspraak bevestigen</b></button>
             </div>
         </div>
-        <div id="rightpanel" style="flex-basis: 45%; padding:3em; background: rgb(240,89,124); color:white; font-weight: bold">
+        <div id="rightpanel" class="stappen-box" style="padding:3em; background: rgb(240,89,124); color:white; font-weight: bold">
             <div id="calendar" style="user-select:none; -webkit-user-select: none;">
                 <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
                 <h4 style="display:inline"><b> Selecteer een datum:</b></h4><br />

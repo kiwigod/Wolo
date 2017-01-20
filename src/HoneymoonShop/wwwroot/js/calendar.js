@@ -181,7 +181,7 @@ var fillCalendar = function () {
             $(tableData).html("<label class=\"nondate\">" + day + "<\label>");
         }
         else if (nonAvailableDays.indexOf(day.toString()) > -1) {
-            $(tableData).html("<label class=\"occupied\" style=\"color:black\">" + day + "<\label>");
+            $(tableData).html("<label class=\"occupied\">" + day + "<\label>");
         }
         else {
             $(tableData).html("<input class=\"dateinput\" type=\"radio\" id=\"date" + day + "\" name=\"date\" value=\"" + day + "\"> <label for=\"date" + day + "\">" + day + "</label>");

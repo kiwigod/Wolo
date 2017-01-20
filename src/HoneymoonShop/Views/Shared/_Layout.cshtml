@@ -40,7 +40,7 @@
                 <li><a asp-controller="Home" asp-action="About"><b>DE WINKEL</b></a></li>
                 <li><a asp-controller="Blogs" asp-action="Index"><b>BLOG</b></a></li>
                 <li><a asp-controller="Home" asp-action="Contact"><b>CONTACT</b></a></li>
-                <li><a href="#"><b>AFSPRAAK MAKEN</b></a></li>
+                <li><a asp-controller="Appointments" asp-action="Create"><b>AFSPRAAK MAKEN</b></a></li>
             </ul>
         </div>
         <div class="container-fluid" style="padding: 0; padding-top: 1em">
@@ -58,7 +58,7 @@
                             <li><a asp-controller="Blogs" asp-action="Index"><b>BLOG</b></a></li>
                             <li><a asp-controller="Home" asp-action="Contact"><b>CONTACT</b></a></li>
                             <li>
-
+                                
                                 <form class="navbar-form navbar-left">
                                     <div class="input-group">
                                         <a asp-controller="Appointments" asp-action="Create" class="btn btn-default primary-button" style="color:white"><b>AFSPRAAK MAKEN</b></a>
@@ -75,7 +75,6 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Wat zoek je?" style="height: 3.1em;"> <span class="input-group-btn">
                                             <button class="btn btn-default primary-button" type="button" style="background-color: white; height:3.1em; width: 3.1em"> <span class="glyphicon glyphicon-search" aria-hidden="true" style="color: black"></span> </button>
-
                                         </span>
                                     </div>
                                 </form>
@@ -99,7 +98,7 @@
                 </div>
             </a>
             <a id="link-social" class="footer-img" href="http://google.nl">
-                <div class="col-md-4 footer-box">
+                <div class="col-md-4 footer-box" >
                     <p class="">Social</p>
                     <p class="">  <b>VOLG ONS</b></p>
                     <img src="~/images/web/deel-dit.png" width="214" height="57" border="0" usemap="#map" class="img-responsive deel-dit" />
@@ -113,7 +112,7 @@
                 </div>
             </a>
             <a id="link-review" class="footer-img" href="http://google.nl">
-                <div class="col-md-4 footer-box">
+                <div class="col-md-4 footer-box" >
                     <p class="">Reviews</p>
                     <p class="">  <b>BEKIJK ONZE<br /> REVIEWS</b></p>
                 </div>

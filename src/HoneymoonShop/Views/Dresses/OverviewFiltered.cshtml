@@ -1,0 +1,260 @@
+@{
+    ViewData["Title"] = "Dress Overview";
+    ViewData["Background"] = "white";
+    ViewData["HeaderHeight"] = "6em";
+}
+
+@section Imports{
+    <link rel="stylesheet" href="~/css/jquery-ui.min.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="~/css/overview.css" />
+    <script>
+        $(function () {
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: @ViewBag.DressMax,
+                values: [@ViewBag.MinPrice, @ViewBag.MaxPrice],
+                slide: function (event, ui) {
+                    $("#amount").val('\u20AC' + ui.values[0] + " - \u20AC" + ui.values[1]);
+                    $("#pricemin").val(ui.values[0]);
+                    $("#pricemax").val(ui.values[1]);
+                }
+            });
+            $("#amount").val('\u20AC' + $("#slider-range").slider("values", 0) +
+              " - " + '\u20AC' + $("#slider-range").slider("values", 1));
+        });
+
+        $("#container").ready(function () {
+            $("#overview").load(window.location + "&request=1");
+        });
+
+        var amntq = "&amnt=24";
+        var sortq = "&sort=hl";
+        var manuq = "&manu=all";
+        var styleq = "&style=all";
+        var neckq = "&neckline=all";
+        var silq = "&silhouette=all";
+        var colorq = "&color=all";
+        var catq = "&cat=all";
+        var page = 1;
+
+        $(document).ready(function () {
+            $("#manu input").click(function () {
+                var children = $("#manu input");
+                manuq = "";
+                for (var i = 0; i < children.length; i++) {
+                    if (children.get(i).checked) {
+                        manuq += "&manu=" + children.get(i).value;
+                    }
+                } if (manuq == "") manuq = "&manu=all";
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+                $("#overview").load(route + "&request=1");
+                doPush(route);
+            });
+            $("#style input").click(function () {
+                var children = $("#style input");
+                styleq = "";
+                for (var i = 0; i < children.length; i++) {
+                    if (children.get(i).checked) {
+                        styleq += "&style=" + children.get(i).value;
+                    }
+                } if (styleq == "") styleq = "&style=all";
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+                $("#overview").load(route + "&request=1");
+                doPush(route);
+            });
+            $("#neck input").click(function () {
+                var children = $("#neck input");
+                neckq = "";
+                for (var i = 0; i < children.length; i++) {
+                    if (children.get(i).checked) {
+                        neckq += "&neckline=" + children.get(i).value;
+                    }
+                } if (neckq == "") neckq = "&neckline=all";
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+                $("#overview").load(route + "&request=1");
+                doPush(route);
+            });
+            $("#sil input").click(function () {
+                var children = $("#sil input");
+                silq = "";
+                for (var i = 0; i < children.length; i++) {
+                    if (children.get(i).checked) {
+                        silq += "&silhouette=" + children.get(i).value;
+                    }
+                } if (silq == "") silq = "&silhouette=all";
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+                $("#overview").load(route + "&request=1");
+                doPush(route);
+            });
+            $("#color input").click(function () {
+                var children = $("#color input");
+                colorq = "";
+                for (var i = 0; i < children.length; i++) {
+                    if (children.get(i).checked) {
+                        colorq += "&color=" + children.get(i).value;
+                    }
+                } if (colorq == "") colorq = "&color=all";
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+                $("#overview").load(route + "&request=1");
+                doPush(route);
+            });
+        });
+
+        function searchPrice() {
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+            doPush(route);
+            window.location.replace(route);
+        }
+
+        function sorting() {
+            var e = document.getElementById("sort");
+            sortq = "&sort=" + e.options[e.selectedIndex].value;
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+            $("#overview").load(route + "&request=1");
+            doPush(route);
+        }
+
+        function amnt() {
+            var e = document.getElementById("amnt");
+            amntq = "&amnt=" + e.options[e.selectedIndex].value;
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+            doPush(route);
+            window.location.replace(route);
+        }
+
+        function goto(page) {
+            if (page < 1) page = 1;
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+            doPush(route);
+            window.location.replace(route);
+        }
+
+        function catChange(catid, catname) {
+            catq = "&cat=" + catid;
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+            document.getElementById("breadcrumb").innerHTML =
+                "<li><a asp-action=\"Index\" asp-controller=\"Home\" style=\"color:#f47590\">Home</a></li>" +
+                "<li><a asp-action=\"Index\" asp-controller=\"Dresses\" style=\"color:#f47590\">Bruid</a></li>" +
+                "<li><a asp-action=\"Overview\" asp-controller=\"Dresses\" style=\"color:#f47590\">Dressfinder</a></li>" +
+                "<li class=\"active\">" + catname + "</li>";
+            doPush(route);
+        }
+
+        function sortNew() {
+            sortq = "&sort=new";
+            amntq = "&amnt=24";
+            manuq = "&manu=all";
+            styleq = "&style=all";
+            neckq = "&neckline=all";
+            silq = "&silhouette=all";
+            colorq = "&color=all";
+            catq = "&cat=all";
+            route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+            $("#overview").load(route + "&request=1");
+            doPush(route);
+            window.location.replace(route);
+        }
+
+        function doPush(route) {
+            var state = {},
+                title = "Dress Overview",
+                path = route;
+            history.pushState(state, title, path);
+        }
+    </script>
+    <script>
+        function flipArrow(id) {
+            var e = document.getElementById(id);
+            var trans = e.style.transform;
+            if (trans == "rotate(0deg)") {
+                e.style.transform = "rotate(180deg)";
+            }
+            else {
+                e.style.transform = "rotate(0deg)";
+            }
+        }
+
+        function changeColor(elmnt) {
+            var bcol = elmnt.style.background;
+            if (bcol == "rgb(246, 246, 246)") {
+                elmnt.style.background = "white";
+            }
+            else {
+                elmnt.style.background = "rgb(246, 246, 246)";
+            }
+        }
+    </script>
+}
+
+<div class="container" style="background:white">
+    <hr style="border-top:1px solid #E5E5E5; width:100%"/>
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb" id="breadcrumb">
+                <li><a asp-action="Index" asp-controller="Home" style="color:#f47590">Home</a></li>
+                <li><a asp-action="Index" asp-controller="Dresses" style="color:#f47590">Bruid</a></li>
+                <li class="active">Dressfinder</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row" style="padding-top:3em">
+        @Html.Partial("Filter")
+        <div class="col-md-8 col-lg-8">
+            <div style="padding-bottom:3em">
+                <label for="sort" style="display:inline;margin-left:60%">Sorteren op: </label>
+                <select id="sort" onchange="sorting()" style="height:2.5em; width:15em">
+                    <option value="hl">Prijs Hoog/ Laag</option>
+                    <option value="lh">Prijs Laag/ Hoog</option>
+                    <option value="a">Alfabetisch</option>
+                    <option value="new">Nieuw/ oud</option>
+                </select>
+            </div>
+            <div id="overview" class="overview" style="width:100%; height:auto;">
+            </div>
+            <div style="display:flex; flex-direction:row; flex-wrap:wrap; margin-top:5em">
+                <div style="flex:auto">
+                    <label for="amnt" style="display:inline">Aantal tonen: </label>
+                    <select id="amnt" onchange="amnt()" style="height:2.5em; width:6em">
+                        <option value="24">24</option>
+                        <option value="27">27</option>
+                        <option value="30">30</option>
+                        <option value="33">33</option>
+                    </select>
+                </div>
+                <div style="flex:auto; text-align:right">
+                    @{
+                        int next = ViewBag.CurrentPage + 1;
+                        int prev = ViewBag.CurrentPage - 1;
+                    }
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li>
+                                <a onclick="goto(@prev)" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            @for (int i = 1; i <= ViewBag.Pages; i++)
+                            {
+                                <li>
+                                    <a onclick="goto(@i)">@i</a>
+                                </li>
+
+                            }
+                            <li>
+                                <a onclick="goto(@next)" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,7 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     Layout = null;
 }
 <div class="col-lg-2 col-md-2 col-md-offset-1 col-lg-offset-1">
@@ -14,7 +11,7 @@
                 <a onclick="catChange(@c.ID, '@c.Name')"><div style="background:#fce8e7; margin-bottom:0.3em; padding:0.4em; padding-left:5%"><b>@c.Name</b></div></a>
             }
         }
-        <a asp-controller="Dresses" asp-action="Overview"><div style="background:#fce8e7; margin-bottom:0.3em; padding:0.4em; padding-left:5%"><b>Nieuwe Collectie</b></div></a>
+        <a onclick="sortNew()"><div style="background:#fce8e7; margin-bottom:0.3em; padding:0.4em; padding-left:5%"><b>Nieuwe Collectie</b></div></a>
         <a asp-controller="Dresses" asp-action="Overview"><div style="background:#fce8e7; margin-bottom:0.3em; padding:0.4em; padding-left:5%"><b>Alle jurken bekijken</b></div></a>
     </div>
 

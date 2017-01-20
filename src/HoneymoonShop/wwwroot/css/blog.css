@@ -54,12 +54,11 @@
 
 
 .blog-top-picture{
+    /*background:url(http://placehold.it/1390x460);*/
     /*height:33.7em;*/
     display:flex;
-    flex-flow: row;
-    /*justify-content:flex-start;*/
+    flex-wrap: wrap;
     align-items:flex-end;
-    /*margin-bottom:1.9em;*/
     box-shadow: 0em 0.23em 1.9em -0.38em rgba(227,227,227,1);
 }
 
@@ -127,6 +126,7 @@
 
 .items-display{
     display: flex;
+    flex-wrap: wrap;
     justify-content:center;
     padding:1.37em;
     padding-left:4.9em;
@@ -153,9 +153,7 @@
 }
 
 .blog-item-picture{
-   background:url(http://placekitten.com/285/308);
    height:20.95em;
-   width:22.15em;
 }
 
 .berichten-display{
@@ -199,3 +197,60 @@
     background:pink;
 }
 
+.center > a{
+    width: 11em;
+    height: 2em;
+    outline: 2px solid black;
+    text-align: center;
+    padding-top: 8px;
+    font-size: 1.5em;
+    margin-right: 0.7em;
+}
+
+.center > a:last-child {
+    margin-right: 0;
+}
+
+
+
+
+.blog-top-item {
+    background:black;
+    height:33em; 
+    flex-basis: 50%;
+}
+
+@media  (max-width: 768px){
+    .blog-top-item{
+        flex-basis: 100%;
+    }
+    .blog-item {
+        flex-basis: 50%;
+    }
+    .blog-top-block {
+        width: 55vw;
+    }
+    .center > a {
+        flex-basis: 40%;
+        margin-right: 0em;
+        margin-bottom: 1em;
+    }
+
+    .center > a:nth-child(even) {
+        margin-left: 0.7em;
+    }
+    div.center{
+        flex-wrap: wrap;
+    }
+}
+
+@media  (max-width: 425px){
+
+    .blog-top-block {
+        width: 100%;
+    }
+    .center > a {
+        font-size: 0.9em;
+    }
+        
+}

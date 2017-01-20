@@ -35,31 +35,7 @@ namespace HoneymoonShop.Controllers
         // GET: Dresses
         public IActionResult Index()
         {
-            List<Dress> newDress = _context.Dress
-                .ToList();
-            newDress.Sort((x, y) => y.ID.CompareTo(x.ID));
-            newDress = newDress.Take(6).ToList();
-
-            var img = new Dictionary<int, string>();
-            foreach (Dress d in newDress)
-            {
-                string path = Path.Combine(_env.WebRootPath, $"images/dress/{d.ID}");
-                DirectoryInfo di = new DirectoryInfo(path);
-                foreach (string s in Directory.GetFiles(path))
-                {
-                    string filename = s.Replace(path + "\\", string.Empty);
-                    if (filename.StartsWith("1")) img.Add(d.ID, $"{d.ID}/" + filename);
-                }
-            }
-
-            ViewData["Images"] = img;
-            ViewData["CategoryID"] = _context.Category.ToList();
-            ViewData["ColorID"] = _context.Color.ToList();
-            ViewData["ManuID"] = _context.Manu.ToList();
-            ViewData["NecklineID"] = _context.Neckline.ToList();
-            ViewData["SilhouetteID"] = _context.Silhouette.ToList();
-            ViewData["StyleID"] = _context.Style.ToList();
-            return View(newDress);
+            return View();
         }
 
         // GET: Dresses/Details/5
@@ -175,6 +151,32 @@ namespace HoneymoonShop.Controllers
         // GET: Dresses/Overview
         public IActionResult Overview()
         {
+            List<Dress> newDress = _context.Dress
+                .ToList();
+            newDress.Sort((x, y) => y.ID.CompareTo(x.ID));
+            newDress = newDress.Take(6).ToList();
+
+            var img = new Dictionary<int, string>();
+            foreach (Dress d in newDress)
+            {
+                string path = Path.Combine(_env.WebRootPath, $"images/dress/{d.ID}");
+                DirectoryInfo di = new DirectoryInfo(path);
+                foreach (string s in Directory.GetFiles(path))
+                {
+                    string filename = s.Replace(path + "\\", string.Empty);
+                    if (filename.StartsWith("1")) img.Add(d.ID, $"{d.ID}/" + filename);
+                }
+            }
+
+            ViewData["Images"] = img;
+            ViewData["CategoryID"] = _context.Category.ToList();
+            ViewData["ColorID"] = _context.Color.ToList();
+            ViewData["ManuID"] = _context.Manu.ToList();
+            ViewData["NecklineID"] = _context.Neckline.ToList();
+            ViewData["SilhouetteID"] = _context.Silhouette.ToList();
+            ViewData["StyleID"] = _context.Style.ToList();
+            ViewData["DressMax"] = _context.Dress.Max(d => d.Price);
+            return View(newDress);
             return RedirectToAction("OverviewFiltered", "Dresses", new
             {
                 manu = new string[1] { "all" },
@@ -186,6 +188,7 @@ namespace HoneymoonShop.Controllers
                 color = new string[1] { "all" },
                 sort = "alf",
                 amnt = 24,
+                cat = 1,
                 page = 1
             });
         }
@@ -204,7 +207,7 @@ namespace HoneymoonShop.Controllers
                     .Where(d => neckline.Contains(d.NecklineID.ToString()) || neckline.Contains("all"))
                     .Where(d => silhouette.Contains(d.SilhouetteID.ToString()) || silhouette.Contains("all"))
                     .Where(d => d.DressColors.Where(dc => dc.DressID == d.ID).Any(dc => color.Contains(dc.ColorID.ToString())) || color.Contains("all"))
-                    //.Where(d => d.CategoryID == int.Parse(cat) || cat.Contains("all"))
+                    //.Where(d => cat.Contains("all") || d.CategoryID == int.Parse(cat))
                     .ToList();
             }
 
@@ -243,6 +246,10 @@ namespace HoneymoonShop.Controllers
                 case "alf":
                     displayedDress.Sort((x, y) => y.Manu.Name.CompareTo(x.Manu.Name));
                     break;
+
+                case "new":
+                    displayedDress.Sort((x, y) => y.ID.CompareTo(x.ID));
+                    break;
             }
 
             ViewData["CurrentPage"] = page;
@@ -266,7 +273,7 @@ namespace HoneymoonShop.Controllers
                 ViewData["Silcheck"] = check(silhouette);
                 ViewData["StyleID"] = _context.Style.ToList();
                 ViewData["Stylecheck"] = check(style);
-                return View("Overview");
+                return View();
             }
         }
 

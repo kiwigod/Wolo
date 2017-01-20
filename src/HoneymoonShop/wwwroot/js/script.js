@@ -6,9 +6,10 @@ $(document).ready(function(){
     $(".button-transparent").click(function(){
         var buttonText = $(this).find("div").text();
         $("#hashtagbutton").text(buttonText);
-
+        $("#hashtagbutton2").text(buttonText);
         $("#text1").text(text[parseInt(buttonText) - 1]);
         $("#text2").text(text[parseInt(buttonText) - 1]);
+        $("#text3").text(text[parseInt(buttonText) - 1]);
     });
 
     for (var i = 0; i < $("#thumbnail").children().length; i++) {

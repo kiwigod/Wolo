@@ -27,7 +27,6 @@ b#ev-txt{
 }
 
 .mySlides{
-    margin-left: 5%;
     position: relative;
     margin-right: 5%;
 }
@@ -46,11 +45,22 @@ b#ev-txt{
 
 
 a#element{
-   margin-left: 40%;
     color:black;
     
 }
 
+@media(max-width:425px) {
+    
+    .title-big {
+    font-size: 5em;
+    }
+
+    .title {
+        font-size:0.9em;
+
+    }
+
+}
 
 /*p#blog-txt-1{
     width:325px;
@@ -101,7 +111,6 @@ p#blog-txt-3{
 
 h4#deel-dit{
     letter-spacing: normal;
-    margin-left: 25%;
 }
 
 img#blog-img{
