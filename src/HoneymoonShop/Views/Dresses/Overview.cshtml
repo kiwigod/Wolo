@@ -22,6 +22,7 @@
                 $("#amount").val('\u20AC' + ui.values[0] + " - \u20AC" + ui.values[1]);
                 $("#pricemin").val(ui.values[0]);
                 $("#pricemax").val(ui.values[1]);
+
             }
         });
         $("#amount").val('\u20AC' + $("#slider-range").slider("values", 0) +
@@ -42,6 +43,7 @@
     var catq = "&cat=all";
 
     $(document).ready(function () {
+        $("#pricemax").val(@ViewBag.DressMax);
         $("#manu input").click(function () {
             var children = $("#manu input");
             manuq = "";

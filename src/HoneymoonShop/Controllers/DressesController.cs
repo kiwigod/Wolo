@@ -194,7 +194,7 @@ namespace HoneymoonShop.Controllers
         }
 
         [HttpGet]
-        public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color, int request, string sort, int amnt, int page)
+        public IActionResult OverviewFiltered(string[] manu, string[] style, int pricemin, int pricemax, string[] neckline, string[] silhouette, string[] color, int request, string sort, int amnt, string cat, int page)
         {
             if (dresses.Count < 1 || pricemin != lastMin || pricemax != lastMax)
             {
@@ -207,7 +207,7 @@ namespace HoneymoonShop.Controllers
                     .Where(d => neckline.Contains(d.NecklineID.ToString()) || neckline.Contains("all"))
                     .Where(d => silhouette.Contains(d.SilhouetteID.ToString()) || silhouette.Contains("all"))
                     .Where(d => d.DressColors.Where(dc => dc.DressID == d.ID).Any(dc => color.Contains(dc.ColorID.ToString())) || color.Contains("all"))
-                    //.Where(d => cat.Contains("all") || d.CategoryID == int.Parse(cat))
+                    .Where(d => cat.Equals(d.CategoryID.ToString()) || cat.Equals("all"))
                     .ToList();
             }
 
