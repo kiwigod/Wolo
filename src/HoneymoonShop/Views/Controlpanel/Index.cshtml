@@ -7,6 +7,7 @@
 @section HeaderOverlay {}
 
 <div class="container" style="background:white">
+    <b style="font-size:1.2em">@Html.Partial("_LoginPartial")</b>
     <div class="row">
         <div class="col-md-6">
             <ul>
@@ -30,7 +31,6 @@
             <ul>
                 <li><b>Artikelen</b></li>
                 <li><a asp-controller="Dresses" asp-action="Create">Voeg een jurk toe</a></li>
-                <li><a data-toggle="modal" data-target="#addSuit">Voeg een pak toe</a></li>
             </ul>
         </div>
         <div class="col-md-6">
@@ -42,6 +42,7 @@
     </div>
     <div class="row">
         <div class="col-md-3 col-sm-12">
+            <p>Zoeken op artikel nr.</p>
             <form asp-action="Search" method="get">
                 <input type="number" name="art" />
                 <button class="btn btn-default" type="submit">Zoek</button>

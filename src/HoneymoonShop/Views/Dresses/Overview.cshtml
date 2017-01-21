@@ -7,156 +7,131 @@
 }
 
 @section Imports {
-<link rel="stylesheet" href="~/css/overview.css" />
-<link rel="stylesheet" href="~/css/jquery-ui.min.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-    $(function () {
-        $("#slider-range").slider({
-            range: true,
-            min: 0,
-            max: @ViewBag.DressMax,
-            values: [0, @ViewBag.DressMax],
-            slide: function (event, ui) {
-                $("#amount").val('\u20AC' + ui.values[0] + " - \u20AC" + ui.values[1]);
-                $("#pricemin").val(ui.values[0]);
-                $("#pricemax").val(ui.values[1]);
-            }
-        });
-        $("#amount").val('\u20AC' + $("#slider-range").slider("values", 0) +
-          " - " + '\u20AC' + $("#slider-range").slider("values", 1));
-    });
-
-    $("#container").ready(function () {
-        $("#overview").load(window.location + "&request=1");
-    });
-
-    var amntq = "&amnt=24";
-    var sortq = "&sort=hl";
-    var manuq = "&manu=all";
-    var styleq = "&style=all";
-    var neckq = "&neckline=all";
-    var silq = "&silhouette=all";
-    var colorq = "&color=all";
-    var catq = "&cat=all";
-
-    $(document).ready(function () {
-        $("#pricemax").val(@ViewBag.DressMax);
-        $("#manu input").click(function () {
-            var children = $("#manu input");
-            manuq = "";
-            for (var i = 0; i < children.length; i++) {
-                if (children.get(i).checked) {
-                    manuq += "&manu=" + children.get(i).value;
+    <link rel="stylesheet" href="~/css/overview.css" />
+    <link rel="stylesheet" href="~/css/jquery-ui.min.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: @ViewBag.DressMax,
+                values: [0, @ViewBag.DressMax],
+                slide: function (event, ui) {
+                    $("#amount").val('\u20AC' + ui.values[0] + " - \u20AC" + ui.values[1]);
+                    $("#pricemin").val(ui.values[0]);
+                    $("#pricemax").val(ui.values[1]);
                 }
-            } if (manuq == "") manuq = "&manu=all";
-            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
-            $("#overview").load(route + "&request=1");
-            doPush(route);
+            });
+            $("#amount").val('\u20AC' + $("#slider-range").slider("values", 0) +
+              " - " + '\u20AC' + $("#slider-range").slider("values", 1));
         });
-        $("#style input").click(function () {
-            var children = $("#style input");
-            styleq = "";
-            for (var i = 0; i < children.length; i++) {
-                if (children.get(i).checked) {
-                    styleq += "&style=" + children.get(i).value;
-                }
-            } if (styleq == "") styleq = "&style=all";
-            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
-            $("#overview").load(route + "&request=1");
-            doPush(route);
+
+        $("#container").ready(function () {
+            $("#overview").load(window.location + "&request=1");
         });
-        $("#neck input").click(function () {
-            var children = $("#neck input");
-            neckq = "";
-            for (var i = 0; i < children.length; i++) {
-                if (children.get(i).checked) {
-                    neckq += "&neckline=" + children.get(i).value;
-                }
-            } if (neckq == "") neckq = "&neckline=all";
-            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
-            $("#overview").load(route + "&request=1");
-            doPush(route);
+
+        var amntq = "&amnt=24";
+        var sortq = "&sort=hl";
+        var manuq = "&manu=all";
+        var styleq = "&style=all";
+        var neckq = "&neckline=all";
+        var silq = "&silhouette=all";
+        var colorq = "&color=all";
+        var catq = "&cat=all";
+        var page = 1;
+
+        $(document).ready(function () {
+            $("#pricemax").val(@ViewBag.DressMax);
+            $("#manu input").click(function () {
+                var children = $("#manu input");
+                manuq = "";
+                for (var i = 0; i < children.length; i++) {
+                    if (children.get(i).checked) {
+                        manuq += "&manu=" + children.get(i).value;
+                    }
+                } if (manuq == "") manuq = "&manu=all";
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+                $("#overview").load(route + "&request=1");
+                doPush(route);
+            });
+            $("#style input").click(function () {
+                var children = $("#style input");
+                styleq = "";
+                for (var i = 0; i < children.length; i++) {
+                    if (children.get(i).checked) {
+                        styleq += "&style=" + children.get(i).value;
+                    }
+                } if (styleq == "") styleq = "&style=all";
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+                $("#overview").load(route + "&request=1");
+                doPush(route);
+            });
+            $("#neck input").click(function () {
+                var children = $("#neck input");
+                neckq = "";
+                for (var i = 0; i < children.length; i++) {
+                    if (children.get(i).checked) {
+                        neckq += "&neckline=" + children.get(i).value;
+                    }
+                } if (neckq == "") neckq = "&neckline=all";
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+                $("#overview").load(route + "&request=1");
+                doPush(route);
+            });
+            $("#sil input").click(function () {
+                var children = $("#sil input");
+                silq = "";
+                for (var i = 0; i < children.length; i++) {
+                    if (children.get(i).checked) {
+                        silq += "&silhouette=" + children.get(i).value;
+                    }
+                } if (silq == "") silq = "&silhouette=all";
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+                $("#overview").load(route + "&request=1");
+                doPush(route);
+            });
+            $("#color input").click(function () {
+                var children = $("#color input");
+                colorq = "";
+                for (var i = 0; i < children.length; i++) {
+                    if (children.get(i).checked) {
+                        colorq += "&color=" + children.get(i).value;
+                    }
+                } if (colorq == "") colorq = "&color=all";
+                var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+                $("#overview").load(route + "&request=1");
+                doPush(route);
+            });
         });
-        $("#sil input").click(function () {
-            var children = $("#sil input");
-            silq = "";
-            for (var i = 0; i < children.length; i++) {
-                if (children.get(i).checked) {
-                    silq += "&silhouette=" + children.get(i).value;
-                }
-            } if (silq == "") silq = "&silhouette=all";
-            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
-            $("#overview").load(route + "&request=1");
+
+        function searchPrice() {
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
             doPush(route);
-        });
-        $("#color input").click(function () {
-            var children = $("#color input");
-            colorq = "";
-            for (var i = 0; i < children.length; i++) {
-                if (children.get(i).checked) {
-                    colorq += "&color=" + children.get(i).value;
-                }
-            } if (colorq == "") colorq = "&color=all";
-            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
-            $("#overview").load(route + "&request=1");
+            window.location.replace(route);
+        }
+
+        function catChange(catid, catname) {
+            catq = "&cat=" + catid;
+            var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
+            document.getElementById("breadcrumb").innerHTML =
+                "<li><a asp-action=\"Index\" asp-controller=\"Home\" style=\"color:#f47590\">Home</a></li>" +
+                "<li><a asp-action=\"Index\" asp-controller=\"Dresses\" style=\"color:#f47590\">Bruid</a></li>" +
+                "<li><a asp-action=\"Overview\" asp-controller=\"Dresses\" style=\"color:#f47590\">Dressfinder</a></li>" +
+                "<li class=\"active\">" + catname + "</li>";
             doPush(route);
-        });
-    });
+        }
 
-    function searchPrice() {
-        console.log($("#pricemax").val());
-        console.log($("#pricemin").val());
-        var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
-        doPush(route);
-    }
-
-    function sorting() {
-        var e = document.getElementById("sort");
-        sortq = "&sort=" + e.options[e.selectedIndex].value;
-        var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
-        $("#overview").load(route + "&request=1");
-        doPush(route);
-    }
-
-    function amnt() {
-        var e = document.getElementById("amnt");
-        amntq = "&amnt=" + e.options[e.selectedIndex].value;
-        var route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + "&page=1";
-        doPush(route);
-        window.location.replace(route);
-    }
-
-    function catChange(catid, catname) {
-        catq = "&cat=" + catid;
-        var route = "OverviewFiltered?pricemin=0" + "&pricemax=@ViewBag.DressMax" + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=1";
-        doPush(route);
-    }
-
-    function sortNew() {
-        sortq = "&sort=new";
-        amntq = "&amnt=24";
-        manuq = "&manu=all";
-        styleq = "&style=all";
-        neckq = "&neckline=all";
-        silq = "&silhouette=all";
-        colorq = "&color=all";
-        catq = "&cat=all";
-        route = "OverviewFiltered?pricemin=" + $("#pricemin").val() + "&pricemax=" + $("#pricemax").val() + manuq + styleq + neckq + silq + colorq + sortq + amntq + catq + "&page=" + page;
-        $("#overview").load(route + "&request=1");
-        doPush(route);
-    }
-
-    function doPush(route) {
-        var state = {},
-            title = "Dress Overview",
-            path = route;
-        history.pushState(state, title, path);
-        location.reload();
-    }
-</script>
-<script>
+        function doPush(route) {
+            var state = {},
+                title = "Dress Overview",
+                path = route;
+            history.pushState(state, title, path);
+            location.reload();
+        }
+    </script>
+    <script>
     function flipArrow(id) {
         var e = document.getElementById(id);
         var trans = e.style.transform;
@@ -177,7 +152,7 @@
             elmnt.style.background = "rgb(246, 246, 246)";
         }
     }
-</script>
+    </script>
 }
 
 @section HeaderOverlay {

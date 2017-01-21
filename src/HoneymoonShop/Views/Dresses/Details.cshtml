@@ -48,7 +48,7 @@
                 }
             </p>
             <p>Kom deze jurk passen!</p>
-            <a class="btn btn-default primary-button index-button" href="#" style="color:white; font-size:1.02em;"><b>PASAFSPRAAK MAKEN</b></a>
+            <a class="btn btn-default primary-button index-button" style="color:white; font-size:1.02em;" asp-action="Create" asp-controller="Appointments"><b>PASAFSPRAAK MAKEN</b></a>
         </div>
     </div>
 
@@ -62,11 +62,11 @@
         </div>
     </div>
     <div class="row" style="margin-top:2em">
-        <div class="overview">
+        <div class="overview" >
             <div>
                 <a href="#" class="overview-item">
                     <div class="overview-item" style="height:auto">
-                        <img src="http://placehold.it/125x150" />
+                        <img src="~/images/web/sieraad1.png" />
                         <h4>Abrazi</h4>
                     </div>
                 </a>
@@ -74,7 +74,7 @@
             <div>
                 <a href="#" class="overview-item">
                     <div class="overview-item" style="height:auto">
-                        <img src="http://placehold.it/125x150" />
+                        <img src="~/images/web/sieraad2.png" />
                         <h4>Abrazi</h4>
                     </div>
                 </a>
@@ -82,7 +82,7 @@
             <div>
                 <a href="#" class="overview-item">
                     <div class="overview-item" style="height:auto">
-                        <img src="http://placehold.it/125x150" />
+                        <img src="~/images/web/sieraad1.png" />
                         <h4>Abrazi</h4>
                     </div>
                 </a>
@@ -90,14 +90,14 @@
             <div>
                 <a href="#" class="overview-item">
                     <div class="overview-item" style="height:auto">
-                        <img src="http://placehold.it/125x150" />
+                        <img src="~/images/web/sieraad2.png" />
                         <h4>Abrazi</h4>
                     </div>
                 </a>
             </div>
         </div>
         <div class="col-md-12" style="text-align:center">
-            <button class="btn index-button" style="color:white; background:#f47590; text-align:center">BEZOEK DE WEBSHOP</button>
+            <a class="btn index-button" style="color:white; background:#f47590; text-align:center" asp-action="Index" asp-controller="Dresses">BEZOEK DE WEBSHOP</a>
         </div>
     </div>
 

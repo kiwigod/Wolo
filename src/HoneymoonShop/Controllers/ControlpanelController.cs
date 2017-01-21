@@ -9,9 +9,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HoneymoonShop.Controllers
 {
+    [Authorize]
     public class ControlpanelController : Controller
     {
         private readonly ApplicationDbContext _context;

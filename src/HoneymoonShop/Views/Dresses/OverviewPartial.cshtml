@@ -1,3 +1,4 @@
+@model IEnumerable<HoneymoonShop.Models.Dress>
 @{
     Layout = null;
 }
@@ -9,7 +10,7 @@
 }
 else
 {
-    foreach (Dress d in ViewBag.Dress)
+    foreach (Dress d in Model)
     {
         <div>
             <a asp-action="Details/@d.ID" class="overview-item">

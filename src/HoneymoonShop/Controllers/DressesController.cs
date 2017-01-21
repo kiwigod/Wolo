@@ -255,11 +255,10 @@ namespace HoneymoonShop.Controllers
             ViewData["CurrentPage"] = page;
             ViewData["Pages"] = (int)Math.Ceiling((double)dresses.Count / 10);
             ViewData["Images"] = img;
-            ViewData["Dress"] = displayedDress;
             ViewData["MinPrice"] = pricemin;
             ViewData["Maxprice"] = pricemax;
             ViewData["DressMax"] = _context.Dress.Max(d => d.Price);
-            if (request == 1) return PartialView("OverviewPartial");
+            if (request == 1) return PartialView("OverviewPartial", displayedDress);
             else
             {
                 ViewData["CategoryID"] = _context.Category.ToList();

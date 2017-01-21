@@ -50,7 +50,7 @@ namespace HoneymoonShop
 
             services.AddMvc(options =>
             {
-                options.SslPort = 44321;
+                options.SslPort = 44352;
                 options.Filters.Add(new RequireHttpsAttribute());
             });
 
@@ -81,6 +81,11 @@ namespace HoneymoonShop
             app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
+            app.UseGoogleAuthentication(new GoogleOptions()
+            {
+                ClientId = Configuration["Authentication:Google:ClientId"],
+                ClientSecret = Configuration["Authentication:Google:ClientSecret"]
+            });
 
             app.UseMvc(routes =>
             {
