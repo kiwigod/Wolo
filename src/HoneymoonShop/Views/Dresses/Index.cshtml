@@ -2,11 +2,24 @@
     ViewData["Title"] = "Jurken";
     ViewData["Background"] = "url(/images/web/top_dresses.jpg)";
     ViewData["HeaderHeight"] = "40em";
+    //Carousel data
+    ViewData["Img"] = new List<string>()
+    {
+        "images/dress/index/1.jpg",
+        "images/dress/index/2.jpg",
+        "images/dress/index/3.jpg",
+        "images/dress/index/4.jpg",
+        "images/dress/index/5.jpg",
+        "images/dress/index/6.jpg",
+    };
+    ViewData["Grad"] = "255, 229, 232";
+    ViewData["Btn"] = "BEKIJK DE JURK";
 }
 
 @section Imports {
     <link rel="stylesheet" href="~/css/blog.css" />
     <script src="~/js/jquery-scrollable.js"></script>
+    <link rel="stylesheet" href="~/css/carousel.css" />
     <script type="text/javascript">
 
         jQuery(function ($) {
@@ -14,41 +27,6 @@
         });
 
     </script>
-    <style>
-        .image-container {
-            position:relative;
-            display:inline-block;
-        }
-        ::-webkit-scrollbar-track {
-            display: none;
-        }
-        ::-webkit-scrollbar-thumb {
-            display: none;
-        }
-        .image-container .text {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: none;
-            color: #FFF;
-        }
-        .image-container:hover .text{
-            display: block;
-            background: none;
-            background: linear-gradient(to right, rgba(255, 229, 232, 0.6), rgba(255, 229, 232, 0));
-        }
-        .image-container>img {
-            width:20.3em; height:45em; margin-right:1.8em;
-        }
-        .text a {
-            text-decoration:none;
-        }
-        .text a>div {
-            height:4em; width:12em; background:white; text-align:center; margin-top:100%; margin-left:18%; padding-top:1.45em
-        }
-    </style>
 }
 @section HeaderOverlay {
     <div class="container-fluid">
@@ -66,83 +44,7 @@
         <div class="col-md-12" style="text-align:center">
             <h2><b>DE TROUWJURK VOOR JE DROOMBRUILOFT</b></h2>
         </div>
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div id="dressview" style="height:45em; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; width:auto; -webkit-overflow-scrolling: touch; position:relative; margin-left:1.2em; margin-top:2em">
-                <script src="~/js/debiki-utterscroll.js"></script>
-                <div class="image-container" >
-                    <img src="~/images/dress/index/1.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index" ><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container" >
-                    <img src="~/images/dress/index/5.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container" >
-                    <img src="~/images/dress/index/3.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container" >
-                    <img src="~/images/dress/index/4.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container" >
-                    <img src="~/images/dress/index/2.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container" >
-                    <img src="~/images/dress/index/6.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container">
-                    <img src="~/images/dress/index/1.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container">
-                    <img src="~/images/dress/index/5.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container">
-                    <img src="~/images/dress/index/3.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container">
-                    <img src="~/images/dress/index/4.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container">
-                    <img src="~/images/dress/index/2.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container">
-                    <img src="~/images/dress/index/6.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container">
-                    <img src="~/images/dress/index/1.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container">
-                    <img src="~/images/dress/index/5.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container">
-                    <img src="~/images/dress/index/3.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container">
-                    <img src="~/images/dress/index/4.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container">
-                    <img src="~/images/dress/index/2.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-                <div class="image-container">
-                    <img src="~/images/dress/index/6.jpg" />
-                    <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>BEKIJK DE JURK</b></div></a></div>
-                </div>
-            </div>
-        </div>
+        @Html.Partial("_Carousel")
     </div>
     <div class="row">
         <div class="col-md-offset-4 col-md-4" >
@@ -160,4 +62,4 @@
         <p style="color:#F0597C; font-size:2em; margin-top:6em">&#9660;</p>
     </div>
 </div>
-@Html.Partial("BlogPartial")
+@Html.Partial("_BlogPartial")

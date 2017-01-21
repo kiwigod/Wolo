@@ -38,19 +38,6 @@ namespace HoneymoonShop.Data
                 .WithMany(f => f.DressFeatures)
                 .HasForeignKey(df => df.FeatureID);
 
-            builder.Entity<SuitFeature>()
-                .HasKey(f => new { f.SuitID, f.FeatureID });
-
-            builder.Entity<SuitFeature>()
-                .HasOne(sf => sf.Suit)
-                .WithMany(s => s.SuitFeatures)
-                .HasForeignKey(sf => sf.SuitID);
-
-            builder.Entity<SuitFeature>()
-                .HasOne(sf => sf.Feature)
-                .WithMany(f => f.SuitFeatures)
-                .HasForeignKey(sf => sf.FeatureID);
-
             builder.Entity<DressColor>()
                 .HasKey(c => new { c.DressID, c.ColorID });
 
@@ -63,19 +50,6 @@ namespace HoneymoonShop.Data
                 .HasOne(dc => dc.Color)
                 .WithMany(c => c.DressColors)
                 .HasForeignKey(dc => dc.ColorID);
-
-            builder.Entity<SuitColor>()
-                .HasKey(c => new { c.SuitID, c.ColorID });
-
-            builder.Entity<SuitColor>()
-                .HasOne(sc => sc.Suit)
-                .WithMany(s => s.SuitColors)
-                .HasForeignKey(sc => sc.SuitID);
-
-            builder.Entity<SuitColor>()
-                .HasOne(sc => sc.Color)
-                .WithMany(c => c.SuitColors)
-                .HasForeignKey(sc => sc.ColorID);
         }
 
         public DbSet<DressFeature> DressFeature { get; set; }
@@ -101,11 +75,5 @@ namespace HoneymoonShop.Data
         public DbSet<Blog> Blog { get; set; }
 
         public DbSet<Post> Post { get; set; }
-
-        public DbSet<Suit> Suit { get; set; }
-
-        public DbSet<SuitFeature> SuitFeature { get; set; }
-
-        public DbSet<SuitColor> SuitColor { get; set; }
     }
 }

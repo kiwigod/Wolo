@@ -1,0 +1,93 @@
+﻿@{
+    Layout = null;
+    var img1 = ViewBag.Img[0];
+    var img2 = ViewBag.Img[1];
+    var img3 = ViewBag.Img[2];
+    var img4 = ViewBag.Img[3];
+    var img5 = ViewBag.Img[4];
+    var img6 = ViewBag.Img[5];
+    var gradv = ViewBag.Grad;
+    var btnText = ViewBag.Btn;
+}
+<style>
+    .image-container:hover .text {
+        background: linear-gradient(to right, rgba(@gradv, 0.6), rgba(@gradv, 0));
+    }
+</style>
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div id="dressview" style="height:45em; overflow-x:scroll; overflow-y:hidden; white-space:nowrap; width:auto; -webkit-overflow-scrolling: touch; position:relative; margin-left:1.2em; margin-top:2em">
+        <script src="~/js/debiki-utterscroll.js"></script>
+        <div class="image-container">
+            <img src="@img1" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img2" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img3" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img4" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img5" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img6" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img1" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img2" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img3" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img4" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img5" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img6" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img1" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img2" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img3" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img4" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img5" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+        <div class="image-container">
+            <img src="@img6" />
+            <div class="text"><a asp-controller="Dresses" asp-action="Index"><div><b>@btnText</b></div></a></div>
+        </div>
+    </div>
+</div>

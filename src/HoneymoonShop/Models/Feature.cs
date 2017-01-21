@@ -11,6 +11,5 @@ namespace HoneymoonShop.Models
         public string Name { get; set; }
 
         public List<DressFeature> DressFeatures { get; set; }
-        public List<SuitFeature> SuitFeatures { get; set; }
     }
 }

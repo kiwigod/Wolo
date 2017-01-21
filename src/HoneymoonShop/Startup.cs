@@ -50,7 +50,7 @@ namespace HoneymoonShop
 
             services.AddMvc(options =>
             {
-                options.SslPort = 44352;
+                options.SslPort = 44321;
                 options.Filters.Add(new RequireHttpsAttribute());
             });
 

@@ -1,41 +1,73 @@
-@model IEnumerable<HoneymoonShop.Models.Suit>
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Pakken";
+    ViewData["Background"] = "url(/images/web/top_dresses.jpg)";
+    ViewData["HeaderHeight"] = "40em";
+    //Carousel data
+    ViewData["Img"] = new List<string>()
+    {
+        "images/dress/index/1.jpg",
+        "images/dress/index/2.jpg",
+        "images/dress/index/3.jpg",
+        "images/dress/index/4.jpg",
+        "images/dress/index/5.jpg",
+        "images/dress/index/6.jpg",
+    };
+    ViewData["Grad"] = "226, 237, 243";
+    ViewData["Btn"] = "BEKIJK HET PAK";
 }
 
-<h2>Index</h2>
+@section Imports {
+    <link rel="stylesheet" href="~/css/blog.css" />
+    <script src="~/js/jquery-scrollable.js"></script>
+    <link rel="stylesheet" href="~/css/carousel.css" />
+    <script type="text/javascript">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
+        jQuery(function ($) {
+            debiki.Utterscroll.enable();
+        });
+
+    </script>
 }
-    </tbody>
-</table>
+
+@section HeaderOverlay {
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12" style="text-align:center; color:white; margin-top:12%">
+                <p style="font-size:2em; margin-bottom:0">Opzoek naar het perfecte pak</p>
+                <p style="font-size:3em;"><b>VAN BEGIN TOT EIND KUNNEN Wij JE HELPEN</b></p>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container" style="background:white">
+    <div class="row">
+        <div class="col-md-12" style="text-align:center">
+            <h2><b>HET PAK VOOR JE DROOMBRUILOFT</b></h2>
+        </div>
+        @Html.Partial("_Carousel")
+    </div>
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+            <a asp-controller="Dresses" asp-action="Overview" style="text-decoration:none"><div style="background:#F0597C; padding-top:0.6em; padding-bottom:0.6em; text-align:center; color:white; font-size:2em"><b>NAAR DE DRESSFINDER</b></div></a>
+            <p style="text-align:center; color:#F0597C; font-size:2em; margin-top:2em">&#9660;</p>
+        </div>
+    </div>
+</div>
+<div class="container" style="background:white; padding-bottom:7em">
+    <div class="row" style="text-align:center">
+        <h2 class="col-md-12"><b>WAT KOMT ERBIJ KIJKEN?</b></h2>
+    </div>
+    @Html.Partial("_ButtonPartial")
+    <div class="row" style="text-align:center">
+        <p style="color:#F0597C; font-size:2em; margin-top:6em">&#9660;</p>
+    </div>
+</div>
+<div class="container" style="background:white">
+    <div class="row">
+        <div class="col-md-12" style="text-align:center">
+            <h2><b>TIPS &Aacute; TRICKS, EVENEMENTEN<br />EN MEER INSPIRATIE</b></h2>
+        </div>
+    </div>
+</div>
+@Html.Partial("_BlogPartial")
