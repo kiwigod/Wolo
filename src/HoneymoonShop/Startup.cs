@@ -93,6 +93,8 @@ namespace HoneymoonShop
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            Seed.Init(env, app.ApplicationServices.GetRequiredService<ApplicationDbContext>());
         }
     }
 }

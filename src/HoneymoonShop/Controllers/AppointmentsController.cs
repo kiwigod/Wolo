@@ -6,6 +6,7 @@ using HoneymoonShop.Data;
 using HoneymoonShop.Models;
 using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HoneymoonShop.Controllers
 {
@@ -13,7 +14,7 @@ namespace HoneymoonShop.Controllers
     {
         private readonly ApplicationDbContext _context;
         private IHostingEnvironment _env;
-        private Dictionary<int, double[]> opening;
+        public Dictionary<int, double[]> opening;
 
         public AppointmentsController(ApplicationDbContext context, IHostingEnvironment env)
         {
@@ -42,7 +43,6 @@ namespace HoneymoonShop.Controllers
         [HttpPost]
         public async Task<IActionResult> Validate(string date, string time, string name, string mdate, string phone, string mail, bool newsletter)
         {
-            string state;
             /***************
              * [0] - year
              * [1] - month
@@ -74,9 +74,8 @@ namespace HoneymoonShop.Controllers
                 );
                 await _context.SaveChangesAsync();
             }
-            catch (Exception e)
+            catch
             {
-                state = e.Message;
                 return NotFound();
             }
 
@@ -136,12 +135,12 @@ namespace HoneymoonShop.Controllers
             return s;
         }
 
+        [Authorize]
         public IActionResult Overview()
         {
             List<Appointment> appointments = _context.Appointment
-                .Where(a => a.Date.Date.Day >= DateTime.Now.Day)
-                .Where(a => a.Date.Date.Month >= DateTime.Now.Month)
-                .Where(a => a.Date.Date.Year >= DateTime.Now.Year)
+                .Where(a => a.Date.Year >= DateTime.Now.Year)
+                .Where(a => a.Date.Month >= DateTime.Now.Month)
                 .ToList();
             return View(appointments);
         }

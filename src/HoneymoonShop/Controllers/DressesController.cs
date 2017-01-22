@@ -177,20 +177,20 @@ namespace HoneymoonShop.Controllers
             ViewData["StyleID"] = _context.Style.ToList();
             ViewData["DressMax"] = _context.Dress.Max(d => d.Price);
             return View(newDress);
-            return RedirectToAction("OverviewFiltered", "Dresses", new
-            {
-                manu = new string[1] { "all" },
-                style = new string[1] { "all" },
-                pricemin = 0,
-                pricemax = _context.Dress.Max(d => d.Price),
-                neckline = new string[1] { "all" },
-                silhouette = new string[1] { "all" },
-                color = new string[1] { "all" },
-                sort = "alf",
-                amnt = 24,
-                cat = 1,
-                page = 1
-            });
+            //return RedirectToAction("OverviewFiltered", "Dresses", new
+            //{
+            //    manu = new string[1] { "all" },
+            //    style = new string[1] { "all" },
+            //    pricemin = 0,
+            //    pricemax = _context.Dress.Max(d => d.Price),
+            //    neckline = new string[1] { "all" },
+            //    silhouette = new string[1] { "all" },
+            //    color = new string[1] { "all" },
+            //    sort = "alf",
+            //    amnt = 24,
+            //    cat = 1,
+            //    page = 1
+            //});
         }
 
         [HttpGet]
@@ -483,7 +483,6 @@ namespace HoneymoonShop.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, int cat, string desc, int manu, int neck, int price, int sil, int style, int[] color, int[] feature, int[] image)
         {
-            string s = String.Empty;
             Dress d = new Dress() { ID = id, CategoryID = cat, Description = desc, ManuID = manu, NecklineID = neck, Price = price, SilhouetteID = sil, StyleID = style };
             _context.Update(d);
 
@@ -492,24 +491,20 @@ namespace HoneymoonShop.Controllers
             foreach (var dc in currentCol)
             {
                 _context.Remove(dc);
-                s += $"removing{dc.ColorID}";
             }
             foreach (var df in currentFeat)
             {
                 _context.Remove(df);
-                s += $"removing{df.FeatureID}";
             }
             _context.SaveChanges();
 
             foreach (int c in color)
             {
                 _context.Add(new DressColor() { DressID = id, ColorID = c });
-                s += $"adding{c} (color)";
             }
             foreach (int f in feature)
             {
                 _context.Add(new DressFeature() { DressID = id, FeatureID = f });
-                s += $"adding{f} (feature)";
             }
             _context.SaveChanges();
 
